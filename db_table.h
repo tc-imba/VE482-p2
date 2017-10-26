@@ -195,6 +195,13 @@ public:
         return this->fields;
     }
 
+    size_t clear() {
+        auto result = keySet.size();
+        data.clear();
+        keySet.clear();
+        return result;
+    }
+
     Iterator        begin()       {return Iterator(data.begin(), this); }
     Iterator        end()         {return Iterator(data.end(), this);   }
     ConstIterator   begin() const {return ConstIterator(data.cbegin(), this);}

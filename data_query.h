@@ -56,5 +56,20 @@ public:
     std::string toString() override;
 };
 
+class DuplicateQuery : public ComplexQuery {
+    static constexpr const char* qname = "DUPLICATE";
+public:
+    using ComplexQuery::ComplexQuery;
+    QueryResult::Ptr execute() override;
+    std::string toString() override;
+};
+
+class SwapQuery : public ComplexQuery {
+    static constexpr const char* qname = "SWAP";
+public:
+    using ComplexQuery::ComplexQuery;
+    QueryResult::Ptr execute() override;
+    std::string toString() override;
+};
 
 #endif //SRC_DATA_QUERY_H

@@ -11,6 +11,7 @@ set(SOURCE_FILES
         query_results.cpp query_results.h
         management_query.cpp management_query.h
         data_query.cpp data_query.h
+        arithmetics_query.cpp arithmetics_query.h
         formatter.h uexception.h)
 
 add_executable(lemondb main.cpp ${SOURCE_FILES})

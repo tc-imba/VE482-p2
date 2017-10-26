@@ -73,6 +73,10 @@ QueryResult::Ptr DeleteQuery::execute() {
     int counter = 0;
     try {
         auto &table = db[this->targetTable];
+        if (condition.empty()) {
+            counter = table.clear();
+            return make_unique<RecordCountResult>(counter);
+        }
         for (auto it = table.begin(); it != table.end();) {
             if (evalCondition(condition, *it)) {
                 it = table.erase(it);
@@ -118,8 +122,11 @@ QueryResult::Ptr InsertQuery::execute() {
                     qname, this->targetTable.c_str(),
                     "Invalid number of operands (? operands)."_f % operands.size()
             );
-        table.insertByIndex(this->operands.front(),
-                            vector<Table::ValueType>(++this->operands.begin(), this->operands.end()));
+        vector<Table::ValueType> data;
+        for (auto it = ++this->operands.begin(); it != this->operands.end(); ++it) {
+            data.push_back(stoi(*it));
+        }
+        table.insertByIndex(this->operands.front(), data);
 
         return make_unique<NullQueryResult>();
     } catch (const TableNameNotFound &e) {
@@ -152,7 +159,23 @@ std::string InsertQuery::toString() {
 }
 
 QueryResult::Ptr SelectQuery::execute() {
+    using namespace std;
+    Database &db = Database::getInstance();
+    try {
+        auto &table = db[this->targetTable];
+        if (this->operands.empty() || this->operands.size() > 1 + table.field().size())
+            return make_unique<ErrorMsgResult>(
+                    qname, this->targetTable.c_str(),
+                    "Invalid number of operands (? operands)."_f % operands.size()
+            );
 
+
+    } catch (const TableNameNotFound &e) {
+        return make_unique<ErrorMsgResult>(
+                qname, this->targetTable.c_str(),
+                "No such table."s
+        );
+    }
 }
 
 std::string SelectQuery::toString() {
