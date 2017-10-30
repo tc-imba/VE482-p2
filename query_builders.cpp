@@ -123,6 +123,19 @@ Query::Ptr ComplexQueryBuilder::tryExtractQuery(TokenizedQueryString &query) {
         std::cout << e.what() << std::endl;
         return this->nextBuilder->tryExtractQuery(query);
     }
+    std::string operation = query.token.front();
+    if(operation == "INSERT")
+        return std::make_unique<InsertQuery>(
+                    this->targetTable, this->operandToken, this->conditionToken);
+    if(operation == "UPDATE")
+        return std::make_unique<UpdateQuery>(
+                this->targetTable, this->operandToken, this->conditionToken);
+   if(operation == "SELECT")
+       return std::make_unique<SelectQuery>(
+               this->targetTable, this->operandToken, this->conditionToken);
+    if(operation == "DELETE")
+        return std::make_unique<DeleteQuery>(
+                this->targetTable, this->operandToken, this->conditionToken);
     std::cout << "Complicated query found!" << std::endl;
     std::cout << "Operation = " << query.token.front() << std::endl;
     std::cout << "    Operands : ";
@@ -148,11 +161,11 @@ void ComplexQueryBuilder::clear() {
     this->nextBuilder->clear();
 }
 
-Query::Ptr UpdateTableQueryBuilder::tryExtractQuery(TokenizedQueryString &query) {
-    if (query.token.front() != "UPDATE")
-        return this->nextBuilder->tryExtractQuery(query);
-    this->parseToken(query); // Expects throw on failure.
-    return std::make_unique<UpdateQuery> (
-            this->targetTable, this->operandToken, this->conditionToken
-    );
-}
+// Query::Ptr UpdateTableQueryBuilder::tryExtractQuery(TokenizedQueryString &query) {
+//     if (query.token.front() != "UPDATE")
+//         return this->nextBuilder->tryExtractQuery(query);
+//     this->parseToken(query); // Expects throw on failure.
+//     return std::make_unique<UpdateQuery> (
+//             this->targetTable, this->operandToken, this->conditionToken
+//     );
+// }

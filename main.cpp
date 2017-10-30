@@ -25,7 +25,7 @@ std::string extractQueryString() {
 int main() {
     QueryParser p;
     //p.registerQueryBuilder(std::make_unique<FakeQueryBuilder>());
-    p.registerQueryBuilder(std::make_unique<QueryBuilder(UpdateTable)>());
+    p.registerQueryBuilder(std::make_unique<QueryBuilder(Complex)>());
     p.registerQueryBuilder(std::make_unique<QueryBuilder(Debug)>());
     p.registerQueryBuilder(std::make_unique<QueryBuilder(ManageTable)>());
     while (cin) {

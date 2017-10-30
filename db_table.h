@@ -61,13 +61,13 @@ private:
             }
     };
 
-    typedef std::list<Datum>::iterator       DataIterator;
-    typedef std::list<Datum>::const_iterator ConstDataIterator;
+    typedef std::vector<Datum>::iterator       DataIterator;
+    typedef std::vector<Datum>::const_iterator ConstDataIterator;
 
     const std::vector<std::string> fields;
     const Datum blankDatum; // Used to speed up processesing
 
-    std::list<Datum> data;
+    std::vector<Datum> data;
     std::string tableName;
     std::unordered_set<KeyType> keySet;
 
@@ -148,10 +148,10 @@ public:
         IteratorImpl&           operator++()    {++it; return *this;}
         IteratorImpl&           operator--()    {--it; return *this;}
         IteratorImpl            operator++(int) {
-            auto retVal = it; ++it; return IteratorImpl(retVal);
+            auto retVal = IteratorImpl(*this); ++it; return retVal;
         }
         IteratorImpl            operator--(int) {
-            auto retVal = it; --it; return IteratorImpl(retVal);
+            auto retVal = IteratorImpl(*this); --it; return retVal;
         }
         bool operator==(const IteratorImpl& other) {return this->it == other.it;}
         bool operator!=(const IteratorImpl& other) {return this->it != other.it;}
@@ -176,6 +176,9 @@ public:
     template<class FieldIDContainer>
         Table(std::string name, const FieldIDContainer& fields);
 
+    Table(std::string name, const Table& origin):
+        fields(origin.fields), tableName(name), keySet(origin.keySet), data(origin.data){}
+        
     template<class AssocContainer>
         void insert(KeyType key,const AssocContainer& data);
 
@@ -184,8 +187,16 @@ public:
 
     Iterator erase(Iterator it) {
         this->keySet.erase(it.it->key);
-        return Iterator(this->data.erase(it.it), it.table);
+        *it.it = std::move(data.back());
+        this->data.pop_back();
+        return Iterator(it.it, it.table);
     }
+
+    void clear() {
+        this->keySet.clear();
+        this->data.clear();
+    }
+
     void setName(std::string name) {this->tableName = name;}
     std::string name()  const {return this->tableName; }
     bool        empty() const {return this->data.empty();}
