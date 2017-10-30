@@ -7,6 +7,8 @@
 constexpr const char *LoadTableQuery::qname;
 constexpr const char *DropTableQuery::qname;
 constexpr const char *DumpTableQuery::qname;
+constexpr const char* TruncateTableQuery::qname;
+constexpr const char* CopytableTableQuery::qname;
 constexpr const char *ListTableQuery::qname;
 constexpr const char *PrintTableQuery::qname;
 

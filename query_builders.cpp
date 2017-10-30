@@ -28,15 +28,16 @@ Query::Ptr ManageTableQueryBuilder::tryExtractQuery
             return std::make_unique<LoadTableQuery>(query.token[1]);
         if (query.token.front() == "DROP")
             return std::make_unique<DropTableQuery>(query.token[1]);
+        if (query.token.front() == "TRUNCATE")
+            return std::make_unique<TruncateTableQuery>(query.token[1]);
     }
     if (query.token.size() == 3) {
         if (query.token.front() == "DUMP")
             return std::make_unique<DumpTableQuery>(
                     query.token[1], query.token[2]
             );
-        if (query.token.front() == "DUPLICATE")
-            return std::make_unique<NopQuery>(); // Not implemented
-            //return std::make_unique<DropTableQuery>(queryString.token[1]);
+        if (query.token.front() == "COPYTABLE")
+            return std::make_unique<CopytableTableQuery>(query.token[1], query.token[2]);
     }
     return this->nextBuilder->tryExtractQuery(query);
 }

@@ -192,11 +192,6 @@ public:
         return Iterator(it.it, it.table);
     }
 
-    void clear() {
-        this->keySet.clear();
-        this->data.clear();
-    }
-
     void setName(std::string name) {this->tableName = name;}
     std::string name()  const {return this->tableName; }
     bool        empty() const {return this->data.empty();}
