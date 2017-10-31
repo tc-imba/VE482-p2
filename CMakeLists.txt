@@ -16,3 +16,6 @@ set(SOURCE_FILES
 
 add_executable(lemondb main.cpp ${SOURCE_FILES})
 add_executable(table_test main_test_table.cpp ${SOURCE_FILES})
+
+
+add_subdirectory(benchmark)

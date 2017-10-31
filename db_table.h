@@ -48,8 +48,12 @@ public:
 
 private:
     struct Datum {
+        /** Unique key of this datum */
         KeyType key;
+        /** Field-Value pair (may be faster with map when n < 100) */
         std::unordered_map<FieldID, ValueType> datum;
+        /** Mark as true when it is lazy-deleted */
+        bool isDelete = false;
 
         Datum()             = default;
         Datum(const Datum&) = default;
@@ -68,6 +72,9 @@ private:
     const Datum blankDatum; // Used to speed up processesing
 
     std::vector<Datum> data;
+    /** Store the iterator of deleted data */
+    std::queue<std::vector<Datum>::iterator > deletedSlots;
+
     std::string tableName;
     std::unordered_set<KeyType> keySet;
 

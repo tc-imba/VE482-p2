@@ -124,7 +124,7 @@ QueryResult::Ptr InsertQuery::execute() {
             );
         vector<Table::ValueType> data;
         for (auto it = ++this->operands.begin(); it != this->operands.end(); ++it) {
-            data.push_back(stoi(*it));
+            data.push_back(strtol(it->c_str(), NULL, 10));
         }
         table.insertByIndex(this->operands.front(), data);
 
@@ -168,7 +168,9 @@ QueryResult::Ptr SelectQuery::execute() {
                     qname, this->targetTable.c_str(),
                     "Invalid number of operands (? operands)."_f % operands.size()
             );
-
+        /**
+         * @TODO complete here
+         */
 
     } catch (const TableNameNotFound &e) {
         return make_unique<ErrorMsgResult>(
@@ -181,3 +183,46 @@ QueryResult::Ptr SelectQuery::execute() {
 std::string SelectQuery::toString() {
     return "QUERY = SELECT " + this->targetTable + "\"";
 }
+
+QueryResult::Ptr DuplicateQuery::execute() {
+    using namespace std;
+    if (this->operands.size() != 0)
+        return make_unique<ErrorMsgResult>(
+                qname, this->targetTable.c_str(),
+                "Invalid number of operands (? operands)."_f % operands.size()
+        );
+    Database &db = Database::getInstance();
+    int counter = 0;
+    try {
+        auto &table = db[this->targetTable];
+        for (auto it = table.begin(); it != table.end();) {
+            if (evalCondition(condition, *it)) {
+
+                counter++;
+            } else ++it;
+        }
+        return make_unique<RecordCountResult>(counter);
+    } catch (const TableNameNotFound &e) {
+        return make_unique<ErrorMsgResult>(
+                qname, this->targetTable.c_str(),
+                "No such table."s
+        );
+    } catch (const IllFormedQueryCondition &e) {
+        return std::make_unique<ErrorMsgResult>(
+                qname, this->targetTable.c_str(),
+                e.what()
+        );
+    } catch (const invalid_argument &e) {
+        // Cannot convert operand to string
+        return std::make_unique<ErrorMsgResult>(
+                qname, this->targetTable.c_str(),
+                "Unknown error '?'"_f % e.what()
+        );
+    } catch (const exception &e) {
+        return std::make_unique<ErrorMsgResult>(
+                qname, this->targetTable.c_str(),
+                "Unkonwn error '?'."_f % e.what()
+        );
+    }
+}
+
