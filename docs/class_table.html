@@ -117,6 +117,8 @@ Public Types</h2></td></tr>
 <tr class="separator:a81943310bc4161c0ef96a737bfaaf39d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaa438add915f9459416dab957f52ee63"><td class="memItemLeft" align="right" valign="top">typedef int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#aaa438add915f9459416dab957f52ee63">ValueType</a></td></tr>
 <tr class="separator:aaa438add915f9459416dab957f52ee63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5796c55702b4b5e3eeb35670d9b242a"><td class="memItemLeft" align="right" valign="top">typedef size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#af5796c55702b4b5e3eeb35670d9b242a">SizeType</a></td></tr>
+<tr class="separator:af5796c55702b4b5e3eeb35670d9b242a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a15892db3d57f25fafe199f593614ffdf"><td class="memItemLeft" align="right" valign="top">typedef std::unique_ptr&lt; <a class="el" href="class_table.html">Table</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a15892db3d57f25fafe199f593614ffdf">Ptr</a></td></tr>
 <tr class="separator:a15892db3d57f25fafe199f593614ffdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a930877dd111fb5403afff7c400c25925"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="class_table_1_1_object_impl.html">ObjectImpl</a>&lt; <a class="el" href="class_table.html#ab29800f155ed4b4091bd10a9e1e5f9fa">DataIterator</a>, <a class="el" href="class_table.html#aaa438add915f9459416dab957f52ee63">ValueType</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a930877dd111fb5403afff7c400c25925">Object</a></td></tr>
@@ -182,18 +184,18 @@ Static Private Member Functions</h2></td></tr>
 Private Attributes</h2></td></tr>
 <tr class="memitem:aebf5a21d1c371623808cfd3239baa6e2"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_table.html#a2903c32f8b8fdb0ffc0bc27bc0e34d0e">FieldID</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#aebf5a21d1c371623808cfd3239baa6e2">fields</a></td></tr>
 <tr class="separator:aebf5a21d1c371623808cfd3239baa6e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae3d056ec8b9aadbc81ef221da37767b1"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; <a class="el" href="class_table.html#a2903c32f8b8fdb0ffc0bc27bc0e34d0e">FieldID</a>, <a class="el" href="class_table.html#aaa438add915f9459416dab957f52ee63">ValueType</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#ae3d056ec8b9aadbc81ef221da37767b1">fieldMap</a></td></tr>
-<tr class="separator:ae3d056ec8b9aadbc81ef221da37767b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cf9e33d85b6cb5e2cc22c206bff4310"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; <a class="el" href="class_table.html#a2903c32f8b8fdb0ffc0bc27bc0e34d0e">FieldID</a>, <a class="el" href="class_table.html#af5796c55702b4b5e3eeb35670d9b242a">SizeType</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a2cf9e33d85b6cb5e2cc22c206bff4310">fieldMap</a></td></tr>
+<tr class="separator:a2cf9e33d85b6cb5e2cc22c206bff4310"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5f49825bd6b391c5ca9a0d04b9ddebe9"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="struct_table_1_1_datum.html">Datum</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a5f49825bd6b391c5ca9a0d04b9ddebe9">blankDatum</a></td></tr>
 <tr class="separator:a5f49825bd6b391c5ca9a0d04b9ddebe9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3fbd6517e36011d3fd8833e0a2019a9e"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="struct_table_1_1_datum.html">Datum</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a3fbd6517e36011d3fd8833e0a2019a9e">data</a></td></tr>
 <tr class="separator:a3fbd6517e36011d3fd8833e0a2019a9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4e8183fb97f46430db553cdb9059b583"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="struct_table_1_1_datum.html">Datum</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a4e8183fb97f46430db553cdb9059b583">dataNew</a></td></tr>
 <tr class="separator:a4e8183fb97f46430db553cdb9059b583"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acef59d937d1517cc712d8d9144b8f7e7"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#acef59d937d1517cc712d8d9144b8f7e7">tableName</a></td></tr>
-<tr class="separator:acef59d937d1517cc712d8d9144b8f7e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9ca1d477ad16a6cb01de94666af476a6"><td class="memItemLeft" align="right" valign="top">std::unordered_set&lt; <a class="el" href="class_table.html#a7ec536bb39802e0f446dad42e08d4fdf">KeyType</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a9ca1d477ad16a6cb01de94666af476a6">keySet</a></td></tr>
 <tr class="separator:a9ca1d477ad16a6cb01de94666af476a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acef59d937d1517cc712d8d9144b8f7e7"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#acef59d937d1517cc712d8d9144b8f7e7">tableName</a></td></tr>
+<tr class="separator:acef59d937d1517cc712d8d9144b8f7e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
@@ -331,6 +333,18 @@ Friends</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">typedef std::unique_ptr&lt;<a class="el" href="class_table.html">Table</a>&gt; <a class="el" href="class_table.html#a15892db3d57f25fafe199f593614ffdf">Table::Ptr</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="af5796c55702b4b5e3eeb35670d9b242a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef size_t <a class="el" href="class_table.html#af5796c55702b4b5e3eeb35670d9b242a">Table::SizeType</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -845,6 +859,7 @@ template&lt;class ValueTypeContainer &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Defined by tripack, seems to be used to speed up processing </p>
 
 </div>
 </div>
@@ -865,6 +880,7 @@ template&lt;class ValueTypeContainer &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>The rows are saved in a vector, which is unsorted </p>
 
 </div>
 </div>
@@ -885,11 +901,11 @@ template&lt;class ValueTypeContainer &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Saves new table after delete / duplicate </p>
+<p>Saves data in a new vector after delete or duplicate </p>
 
 </div>
 </div>
-<a class="anchor" id="ae3d056ec8b9aadbc81ef221da37767b1"></a>
+<a class="anchor" id="a2cf9e33d85b6cb5e2cc22c206bff4310"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -897,7 +913,7 @@ template&lt;class ValueTypeContainer &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::unordered_map&lt;<a class="el" href="class_table.html#a2903c32f8b8fdb0ffc0bc27bc0e34d0e">FieldID</a>, <a class="el" href="class_table.html#aaa438add915f9459416dab957f52ee63">ValueType</a>&gt; Table::fieldMap</td>
+          <td class="memname">std::unordered_map&lt;<a class="el" href="class_table.html#a2903c32f8b8fdb0ffc0bc27bc0e34d0e">FieldID</a>, <a class="el" href="class_table.html#af5796c55702b4b5e3eeb35670d9b242a">SizeType</a>&gt; Table::fieldMap</td>
         </tr>
       </table>
   </td>
@@ -906,6 +922,7 @@ template&lt;class ValueTypeContainer &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Map field name into index </p>
 
 </div>
 </div>
@@ -926,6 +943,7 @@ template&lt;class ValueTypeContainer &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>The fields, ordered as defined in fieldMap </p>
 
 </div>
 </div>
@@ -946,6 +964,7 @@ template&lt;class ValueTypeContainer &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Used to keep the keys unique </p>
 
 </div>
 </div>
@@ -966,6 +985,7 @@ template&lt;class ValueTypeContainer &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>The name of table </p>
 
 </div>
 </div>

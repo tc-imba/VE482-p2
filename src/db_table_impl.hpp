@@ -25,7 +25,7 @@ template<class FieldIDContainer>
             );
 }
 
-template<class AssocContainer>
+/*template<class AssocContainer>
     void Table::insert(KeyType key, const AssocContainer& data) {
     if (this->keySet.find(key) != this->keySet.end()) {
         std::string err = "In Table \"" + this->tableName
@@ -40,7 +40,7 @@ template<class AssocContainer>
     }
     this->data.push_back(d);
     this->keySet.insert(key);
-}
+}*/
 
 template<class ValueTypeContainer>
     void Table::insertByIndex(KeyType key, const ValueTypeContainer& data) {

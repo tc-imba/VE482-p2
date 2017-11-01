@@ -45,6 +45,7 @@ public:
     typedef std::string FieldID;
     typedef int FieldIndex;
     typedef int ValueType;
+    typedef size_t SizeType;
 
 private:
     /** A row in the table */
@@ -57,34 +58,54 @@ private:
         Datum() = default;
         Datum(const Datum &) = default;
 
-        template<class FieldIDContainer>
-        explicit Datum(const FieldIDContainer &fields) {
-            datum = std::vector<ValueType>(fields.size(), ValueType());
+        explicit Datum(const SizeType &size) {
+            datum = std::vector<ValueType>(size, ValueType());
+        }
+
+        template<class ValueTypeContainer>
+        explicit Datum(const ValueTypeContainer &datum) {
+            this->datum = datum;
+        }
+
+        explicit Datum(std::vector<ValueType > &&datum) {
+            this->datum = datum;
         }
     };
 
     typedef std::vector<Datum>::iterator DataIterator;
     typedef std::vector<Datum>::const_iterator ConstDataIterator;
 
+    /** The fields, ordered as defined in fieldMap */
     std::vector<FieldID> fields;
-    std::unordered_map<FieldID, ValueType> fieldMap;
-    const Datum blankDatum; // Used to speed up processesing
+    /** Map field name into index */
+    std::unordered_map<FieldID, SizeType> fieldMap;
+    /** Defined by tripack, seems to be used to speed up processing */
+    const Datum blankDatum;
 
+    /** The rows are saved in a vector, which is unsorted */
     std::vector<Datum> data;
-    /** Saves new table after delete / duplicate */
+    /** Saves data in a new vector after delete or duplicate */
     std::vector<Datum> dataNew;
-
-    std::string tableName;
+    /** Used to keep the keys unique */
     std::unordered_set<KeyType> keySet;
+
+    /** The name of table */
+    std::string tableName;
 
 public:
     typedef std::unique_ptr<Table> Ptr;
 
+    /**
+     * A proxy class that provides abstraction on internal
+     * Implementation. Allows independent variation on the
+     * Representation for a table object
+     *
+     * @tparam Iterator
+     * @tparam VType
+     */
     template<class Iterator, class VType>
     class ObjectImpl {
-        // A proxy class that provides abstraction on internal
-        // Implementation. Allows independent variation on the
-        // Representation for a table object
+        //
         friend class Table;
 
         const Table *table;
@@ -97,9 +118,9 @@ public:
                 : it(datumIt), table(t) {}
 
         ObjectImpl(const ObjectImpl &) = default;
-        ObjectImpl(ObjectImpl &&) = default;
+        ObjectImpl(ObjectImpl &&) noexcept = default;
         ObjectImpl &operator=(const ObjectImpl &) = default;
-        ObjectImpl &operator=(ObjectImpl &&)      = default;
+        ObjectImpl &operator=(ObjectImpl &&) noexcept = default;
         ~ObjectImpl() = default;
 
         KeyType key() const { return it->key; }
@@ -206,7 +227,7 @@ public:
             fields(origin.fields), tableName(name), keySet(origin.keySet), data(origin.data) {}
 
     template<class AssocContainer>
-    void insert(KeyType key, const AssocContainer &data);
+    void insert(KeyType key, const AssocContainer &data) = delete;
 
     template<class ValueTypeContainer>
     void insertByIndex(KeyType key, const ValueTypeContainer &data);
