@@ -91,10 +91,11 @@ std::ostream &operator<<(std::ostream &os, const Table &table) {
         buffer << std::setw(width) << field;
     }
     buffer << "\n";
+    int numFields = table.fields.size();
     for (const auto &datum : table.data) {
         buffer << std::setw(width) << datum.key;
-        for (const auto &field : table.fields) {
-            buffer << std::setw(width) << datum.datum.at(field);
+        for (int i = 0; i < numFields; ++i) {
+            buffer << std::setw(width) << datum.datum[i];
         }
         buffer << "\n";
     }
