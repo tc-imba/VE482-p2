@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>lemondb: QueryBuilder Class Reference</title>
+<title>LemonDB: QueryBuilder Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,8 +23,9 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">lemondb
+   <div id="projectname">LemonDB
    </div>
+   <div id="projectbrief">Asimplekey-valuedatabasebyLemonion.Inc.</div>
   </td>
  </tr>
  </tbody>
@@ -90,8 +91,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">QueryBuilder Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p><code>#include &lt;<a class="el" href="query__parser_8h_source.html">query_parser.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for QueryBuilder:</div>
 <div class="dyncontent">
@@ -106,135 +105,22 @@ Inheritance diagram for QueryBuilder:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a7398eb0c7e35f50ba1e652f48e56cfe8"><td class="memItemLeft" align="right" valign="top">typedef std::unique_ptr&lt; <a class="el" href="class_query_builder.html">QueryBuilder</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_query_builder.html#a7398eb0c7e35f50ba1e652f48e56cfe8">Ptr</a></td></tr>
+<tr class="memitem:a7398eb0c7e35f50ba1e652f48e56cfe8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7398eb0c7e35f50ba1e652f48e56cfe8"></a>
+typedef std::unique_ptr&lt; <a class="el" href="class_query_builder.html">QueryBuilder</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Ptr</b></td></tr>
 <tr class="separator:a7398eb0c7e35f50ba1e652f48e56cfe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac072e9756978c3235e935a46ba7bf3de"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="class_query.html#a0a0a7f0fc1097f196ecd56a44baec036">Query::Ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_query_builder.html#ac072e9756978c3235e935a46ba7bf3de">tryExtractQuery</a> (<a class="el" href="struct_tokenized_query_string.html">TokenizedQueryString</a> &amp;queryString)=0</td></tr>
+<tr class="memitem:ac072e9756978c3235e935a46ba7bf3de"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac072e9756978c3235e935a46ba7bf3de"></a>
+virtual Query::Ptr&#160;</td><td class="memItemRight" valign="bottom"><b>tryExtractQuery</b> (<a class="el" href="struct_tokenized_query_string.html">TokenizedQueryString</a> &amp;queryString)=0</td></tr>
 <tr class="separator:ac072e9756978c3235e935a46ba7bf3de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45ba6361743c5b9942cf8264662fab62"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_query_builder.html#a45ba6361743c5b9942cf8264662fab62">setNext</a> (<a class="el" href="class_query_builder.html#a7398eb0c7e35f50ba1e652f48e56cfe8">Ptr</a> &amp;&amp;builder)=0</td></tr>
+<tr class="memitem:a45ba6361743c5b9942cf8264662fab62"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a45ba6361743c5b9942cf8264662fab62"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setNext</b> (Ptr &amp;&amp;builder)=0</td></tr>
 <tr class="separator:a45ba6361743c5b9942cf8264662fab62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0be553ef138e355c4f7dd8e5d5711bee"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_query_builder.html#a0be553ef138e355c4f7dd8e5d5711bee">clear</a> ()=0</td></tr>
+<tr class="memitem:a0be553ef138e355c4f7dd8e5d5711bee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0be553ef138e355c4f7dd8e5d5711bee"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> ()=0</td></tr>
 <tr class="separator:a0be553ef138e355c4f7dd8e5d5711bee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a953d0859a5127df641cb41836ea82ad3"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_query_builder.html#a953d0859a5127df641cb41836ea82ad3">~QueryBuilder</a> ()=default</td></tr>
-<tr class="separator:a953d0859a5127df641cb41836ea82ad3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Typedef Documentation</h2>
-<a class="anchor" id="a7398eb0c7e35f50ba1e652f48e56cfe8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef std::unique_ptr&lt;<a class="el" href="class_query_builder.html">QueryBuilder</a>&gt; <a class="el" href="class_query_builder.html#a7398eb0c7e35f50ba1e652f48e56cfe8">QueryBuilder::Ptr</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a953d0859a5127df641cb41836ea82ad3"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual QueryBuilder::~QueryBuilder </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">default</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a0be553ef138e355c4f7dd8e5d5711bee"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void QueryBuilder::clear </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Implemented in <a class="el" href="class_complex_query_builder.html#aaf3f971daf43452502fc6fed296494e9">ComplexQueryBuilder</a>, <a class="el" href="class_basic_query_builder.html#ad519076333d8b586fa75cc6a4f65379e">BasicQueryBuilder</a>, and <a class="el" href="class_failed_query_builder.html#acfb81aa5e49f10869aca93a47d175c23">FailedQueryBuilder</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a45ba6361743c5b9942cf8264662fab62"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void QueryBuilder::setNext </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_query_builder.html#a7398eb0c7e35f50ba1e652f48e56cfe8">Ptr</a> &amp;&amp;&#160;</td>
-          <td class="paramname"><em>builder</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Implemented in <a class="el" href="class_basic_query_builder.html#a6f58c9f285534e2328181b7c68246280">BasicQueryBuilder</a>, and <a class="el" href="class_failed_query_builder.html#add3120fe7949f737a6c833db1dcd34d8">FailedQueryBuilder</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ac072e9756978c3235e935a46ba7bf3de"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual <a class="el" href="class_query.html#a0a0a7f0fc1097f196ecd56a44baec036">Query::Ptr</a> QueryBuilder::tryExtractQuery </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_tokenized_query_string.html">TokenizedQueryString</a> &amp;&#160;</td>
-          <td class="paramname"><em>queryString</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Implemented in <a class="el" href="class_complex_query_builder.html#aab521c81b6ecb9bc4466a61cdf9ccfed">ComplexQueryBuilder</a>, <a class="el" href="class_basic_query_builder.html#a3e8fdcf7b700314b4375c2e46a4499b4">BasicQueryBuilder</a>, and <a class="el" href="class_failed_query_builder.html#a3f6d775ce553c92eb1c12fe87e90f60e">FailedQueryBuilder</a>.</p>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/<a class="el" href="query__parser_8h_source.html">query_parser.h</a></li>
 </ul>

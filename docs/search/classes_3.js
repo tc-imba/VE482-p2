@@ -1,7 +1,6 @@
 var searchData=
 [
   ['database',['Database',['../class_database.html',1,'']]],
-  ['datum',['Datum',['../struct_table_1_1_datum.html',1,'Table']]],
   ['deletequery',['DeleteQuery',['../class_delete_query.html',1,'']]],
   ['droptablequery',['DropTableQuery',['../class_drop_table_query.html',1,'']]],
   ['dumptablequery',['DumpTableQuery',['../class_dump_table_query.html',1,'']]],

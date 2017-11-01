@@ -12,13 +12,12 @@
 #include <exception>
 
 
-
 template<class FieldIDContainer>
-    Table::Table(std::string name, const FieldIDContainer& fields_)
-    : tableName(name),
-      fields(fields_.cbegin(), fields_.cend()),
-      blankDatum(fields_) {
-    for (const auto& field : fields)
+Table::Table(const std::string &name, const FieldIDContainer &_fields)
+        : tableName(name),
+          fields(_fields.cbegin(), _fields.cend()),
+          blankDatum(_fields.size()) {
+    for (const auto &field : fields)
         if (field == "KEY")
             throw MultipleKey(
                     "Error creating table \"" + name + "\": Multiple KEY field."
@@ -43,20 +42,13 @@ template<class FieldIDContainer>
 }*/
 
 template<class ValueTypeContainer>
-    void Table::insertByIndex(KeyType key, const ValueTypeContainer& data) {
+void Table::insertByIndex(KeyType key, const ValueTypeContainer &data) {
     if (this->keySet.find(key) != this->keySet.end()) {
         std::string err = "In Table \"" + this->tableName
                           + "\" : Key \"" + key + "\" already exists!";
         throw ConflictingKey(err);
     }
-    Datum d(blankDatum);
-    d.key = key;
-    auto it = data.begin();
-    for (const auto& field : this->fields) {
-        d.datum[field] = *it ;
-        ++it;
-    }
-    this->data.push_back(d);
+    this->data.emplace_back(key, data);
     this->keySet.insert(key);
 }
 

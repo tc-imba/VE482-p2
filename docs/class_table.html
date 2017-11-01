@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>lemondb: Table Class Reference</title>
+<title>LemonDB: Table Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,8 +23,9 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">lemondb
+   <div id="projectname">LemonDB
    </div>
+   <div id="projectbrief">Asimplekey-valuedatabasebyLemonion.Inc.</div>
   </td>
  </tr>
  </tbody>
@@ -86,22 +87,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pri-types">Private Types</a> &#124;
-<a href="#pri-static-methods">Static Private Member Functions</a> &#124;
-<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="class_table-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Table Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p><code>#include &lt;<a class="el" href="db__table_8h_source.html">db_table.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_table_1_1_datum.html">Datum</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table_1_1_iterator_impl.html">IteratorImpl</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table_1_1_object_impl.html">ObjectImpl</a></td></tr>
@@ -109,886 +103,94 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a7ec536bb39802e0f446dad42e08d4fdf"><td class="memItemLeft" align="right" valign="top">typedef std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a7ec536bb39802e0f446dad42e08d4fdf">KeyType</a></td></tr>
+<tr class="memitem:a7ec536bb39802e0f446dad42e08d4fdf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7ec536bb39802e0f446dad42e08d4fdf"></a>
+typedef std::string&#160;</td><td class="memItemRight" valign="bottom"><b>KeyType</b></td></tr>
 <tr class="separator:a7ec536bb39802e0f446dad42e08d4fdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2903c32f8b8fdb0ffc0bc27bc0e34d0e"><td class="memItemLeft" align="right" valign="top">typedef std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a2903c32f8b8fdb0ffc0bc27bc0e34d0e">FieldID</a></td></tr>
+<tr class="memitem:a2903c32f8b8fdb0ffc0bc27bc0e34d0e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2903c32f8b8fdb0ffc0bc27bc0e34d0e"></a>
+typedef std::string&#160;</td><td class="memItemRight" valign="bottom"><b>FieldID</b></td></tr>
 <tr class="separator:a2903c32f8b8fdb0ffc0bc27bc0e34d0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a81943310bc4161c0ef96a737bfaaf39d"><td class="memItemLeft" align="right" valign="top">typedef int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a81943310bc4161c0ef96a737bfaaf39d">FieldIndex</a></td></tr>
+<tr class="memitem:a81943310bc4161c0ef96a737bfaaf39d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a81943310bc4161c0ef96a737bfaaf39d"></a>
+typedef int&#160;</td><td class="memItemRight" valign="bottom"><b>FieldIndex</b></td></tr>
 <tr class="separator:a81943310bc4161c0ef96a737bfaaf39d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa438add915f9459416dab957f52ee63"><td class="memItemLeft" align="right" valign="top">typedef int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#aaa438add915f9459416dab957f52ee63">ValueType</a></td></tr>
+<tr class="memitem:aaa438add915f9459416dab957f52ee63"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaa438add915f9459416dab957f52ee63"></a>
+typedef int&#160;</td><td class="memItemRight" valign="bottom"><b>ValueType</b></td></tr>
 <tr class="separator:aaa438add915f9459416dab957f52ee63"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af5796c55702b4b5e3eeb35670d9b242a"><td class="memItemLeft" align="right" valign="top">typedef size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#af5796c55702b4b5e3eeb35670d9b242a">SizeType</a></td></tr>
+<tr class="memitem:af5796c55702b4b5e3eeb35670d9b242a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af5796c55702b4b5e3eeb35670d9b242a"></a>
+typedef size_t&#160;</td><td class="memItemRight" valign="bottom"><b>SizeType</b></td></tr>
 <tr class="separator:af5796c55702b4b5e3eeb35670d9b242a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a15892db3d57f25fafe199f593614ffdf"><td class="memItemLeft" align="right" valign="top">typedef std::unique_ptr&lt; <a class="el" href="class_table.html">Table</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a15892db3d57f25fafe199f593614ffdf">Ptr</a></td></tr>
+<tr class="memitem:a15892db3d57f25fafe199f593614ffdf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a15892db3d57f25fafe199f593614ffdf"></a>
+typedef std::unique_ptr&lt; <a class="el" href="class_table.html">Table</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Ptr</b></td></tr>
 <tr class="separator:a15892db3d57f25fafe199f593614ffdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a930877dd111fb5403afff7c400c25925"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="class_table_1_1_object_impl.html">ObjectImpl</a>&lt; <a class="el" href="class_table.html#ab29800f155ed4b4091bd10a9e1e5f9fa">DataIterator</a>, <a class="el" href="class_table.html#aaa438add915f9459416dab957f52ee63">ValueType</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a930877dd111fb5403afff7c400c25925">Object</a></td></tr>
+<tr class="memitem:a930877dd111fb5403afff7c400c25925"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a930877dd111fb5403afff7c400c25925"></a>
+typedef <a class="el" href="class_table_1_1_object_impl.html">ObjectImpl</a>&lt; DataIterator, ValueType &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Object</b></td></tr>
 <tr class="separator:a930877dd111fb5403afff7c400c25925"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adbcee28c19fcaa0904e71f2d76b80c31"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="class_table_1_1_object_impl.html">ObjectImpl</a>&lt; <a class="el" href="class_table.html#a9b453acbb329ee1eaf26f671d135f9c2">ConstDataIterator</a>, const <a class="el" href="class_table.html#aaa438add915f9459416dab957f52ee63">ValueType</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#adbcee28c19fcaa0904e71f2d76b80c31">ConstObject</a></td></tr>
+<tr class="memitem:adbcee28c19fcaa0904e71f2d76b80c31"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adbcee28c19fcaa0904e71f2d76b80c31"></a>
+typedef <a class="el" href="class_table_1_1_object_impl.html">ObjectImpl</a>&lt; ConstDataIterator, const ValueType &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>ConstObject</b></td></tr>
 <tr class="separator:adbcee28c19fcaa0904e71f2d76b80c31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a41a3e845dfe45869c641cc564a70b328"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="class_table_1_1_iterator_impl.html">IteratorImpl</a>&lt; <a class="el" href="class_table.html#a930877dd111fb5403afff7c400c25925">Object</a>, decltype(data.begin())&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a41a3e845dfe45869c641cc564a70b328">Iterator</a></td></tr>
+<tr class="memitem:a41a3e845dfe45869c641cc564a70b328"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a41a3e845dfe45869c641cc564a70b328"></a>
+typedef <a class="el" href="class_table_1_1_iterator_impl.html">IteratorImpl</a>&lt; <a class="el" href="class_table_1_1_object_impl.html">Object</a>, decltype(data.begin())&gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Iterator</b></td></tr>
 <tr class="separator:a41a3e845dfe45869c641cc564a70b328"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a745f59742a52fe738da52323c23dbe29"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="class_table_1_1_iterator_impl.html">IteratorImpl</a>&lt; <a class="el" href="class_table.html#adbcee28c19fcaa0904e71f2d76b80c31">ConstObject</a>, decltype(data.cbegin())&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a745f59742a52fe738da52323c23dbe29">ConstIterator</a></td></tr>
+<tr class="memitem:a745f59742a52fe738da52323c23dbe29"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a745f59742a52fe738da52323c23dbe29"></a>
+typedef <a class="el" href="class_table_1_1_iterator_impl.html">IteratorImpl</a>&lt; <a class="el" href="class_table_1_1_object_impl.html">ConstObject</a>, decltype(data.cbegin())&gt;&#160;</td><td class="memItemRight" valign="bottom"><b>ConstIterator</b></td></tr>
 <tr class="separator:a745f59742a52fe738da52323c23dbe29"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae98dea025df49b147eb4cb885fb9316e"><td class="memTemplParams" colspan="2">template&lt;class FieldIDContainer &gt; </td></tr>
-<tr class="memitem:ae98dea025df49b147eb4cb885fb9316e"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_table.html#ae98dea025df49b147eb4cb885fb9316e">Table</a> (std::string <a class="el" href="class_table.html#a6c30cc08ab5a43e20d32c137956dff3d">name</a>, const FieldIDContainer &amp;<a class="el" href="class_table.html#aebf5a21d1c371623808cfd3239baa6e2">fields</a>)</td></tr>
-<tr class="separator:ae98dea025df49b147eb4cb885fb9316e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9efda1846fa5fe1e1c11e79896c26211"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a9efda1846fa5fe1e1c11e79896c26211">Table</a> (std::string <a class="el" href="class_table.html#a6c30cc08ab5a43e20d32c137956dff3d">name</a>, const <a class="el" href="class_table.html">Table</a> &amp;origin)</td></tr>
+<tr class="memitem:aeb192735d371cc146836b7a4c1fe627c"><td class="memTemplParams" colspan="2"><a class="anchor" id="aeb192735d371cc146836b7a4c1fe627c"></a>
+template&lt;class FieldIDContainer &gt; </td></tr>
+<tr class="memitem:aeb192735d371cc146836b7a4c1fe627c"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Table</b> (const std::string &amp;name, const FieldIDContainer &amp;_fields)</td></tr>
+<tr class="separator:aeb192735d371cc146836b7a4c1fe627c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9efda1846fa5fe1e1c11e79896c26211"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9efda1846fa5fe1e1c11e79896c26211"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Table</b> (std::string name, const <a class="el" href="class_table.html">Table</a> &amp;origin)</td></tr>
 <tr class="separator:a9efda1846fa5fe1e1c11e79896c26211"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01371f5cc93ba765d4aa4c3e76b1776b"><td class="memTemplParams" colspan="2">template&lt;class AssocContainer &gt; </td></tr>
-<tr class="memitem:a01371f5cc93ba765d4aa4c3e76b1776b"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_table.html#a01371f5cc93ba765d4aa4c3e76b1776b">insert</a> (<a class="el" href="class_table.html#a7ec536bb39802e0f446dad42e08d4fdf">KeyType</a> key, const AssocContainer &amp;<a class="el" href="class_table.html#a3fbd6517e36011d3fd8833e0a2019a9e">data</a>)</td></tr>
-<tr class="separator:a01371f5cc93ba765d4aa4c3e76b1776b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4abc8b47696c07171b014c08c4df49b7"><td class="memTemplParams" colspan="2">template&lt;class ValueTypeContainer &gt; </td></tr>
-<tr class="memitem:a4abc8b47696c07171b014c08c4df49b7"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_table.html#a4abc8b47696c07171b014c08c4df49b7">insertByIndex</a> (<a class="el" href="class_table.html#a7ec536bb39802e0f446dad42e08d4fdf">KeyType</a> key, const ValueTypeContainer &amp;<a class="el" href="class_table.html#a3fbd6517e36011d3fd8833e0a2019a9e">data</a>)</td></tr>
+<tr class="memitem:a363408b84dc70d3b33a265af94d84f21"><td class="memTemplParams" colspan="2"><a class="anchor" id="a363408b84dc70d3b33a265af94d84f21"></a>
+template&lt;class AssocContainer &gt; </td></tr>
+<tr class="memitem:a363408b84dc70d3b33a265af94d84f21"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>insert</b> (KeyType key, const AssocContainer &amp;data)=delete</td></tr>
+<tr class="separator:a363408b84dc70d3b33a265af94d84f21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4abc8b47696c07171b014c08c4df49b7"><td class="memTemplParams" colspan="2"><a class="anchor" id="a4abc8b47696c07171b014c08c4df49b7"></a>
+template&lt;class ValueTypeContainer &gt; </td></tr>
+<tr class="memitem:a4abc8b47696c07171b014c08c4df49b7"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>insertByIndex</b> (KeyType key, const ValueTypeContainer &amp;data)</td></tr>
 <tr class="separator:a4abc8b47696c07171b014c08c4df49b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8c06bdf3d5c6dea2e31a1463feb5625"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_table.html#a41a3e845dfe45869c641cc564a70b328">Iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#ad8c06bdf3d5c6dea2e31a1463feb5625">erase</a> (<a class="el" href="class_table.html#a41a3e845dfe45869c641cc564a70b328">Iterator</a> it)</td></tr>
+<tr class="memitem:ad8c06bdf3d5c6dea2e31a1463feb5625"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad8c06bdf3d5c6dea2e31a1463feb5625"></a>
+<a class="el" href="class_table_1_1_iterator_impl.html">Iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><b>erase</b> (<a class="el" href="class_table_1_1_iterator_impl.html">Iterator</a> it)</td></tr>
 <tr class="separator:ad8c06bdf3d5c6dea2e31a1463feb5625"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaee2603a21e2ad0de4e073ada88e4b8d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#aaee2603a21e2ad0de4e073ada88e4b8d">setName</a> (std::string <a class="el" href="class_table.html#a6c30cc08ab5a43e20d32c137956dff3d">name</a>)</td></tr>
+<tr class="memitem:aaee2603a21e2ad0de4e073ada88e4b8d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaee2603a21e2ad0de4e073ada88e4b8d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setName</b> (std::string name)</td></tr>
 <tr class="separator:aaee2603a21e2ad0de4e073ada88e4b8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c30cc08ab5a43e20d32c137956dff3d"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a6c30cc08ab5a43e20d32c137956dff3d">name</a> () const </td></tr>
-<tr class="separator:a6c30cc08ab5a43e20d32c137956dff3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac1c5f109901db513d05663b4d361e7be"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#ac1c5f109901db513d05663b4d361e7be">empty</a> () const </td></tr>
+<tr class="memitem:afd47b564dba2b1a8ff9013cbf9a6adff"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afd47b564dba2b1a8ff9013cbf9a6adff"></a>
+const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>name</b> () const </td></tr>
+<tr class="separator:afd47b564dba2b1a8ff9013cbf9a6adff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1c5f109901db513d05663b4d361e7be"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac1c5f109901db513d05663b4d361e7be"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>empty</b> () const </td></tr>
 <tr class="separator:ac1c5f109901db513d05663b4d361e7be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f91a50448df40f79c8077378b06ac6e"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a4f91a50448df40f79c8077378b06ac6e">size</a> () const </td></tr>
+<tr class="memitem:a4f91a50448df40f79c8077378b06ac6e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4f91a50448df40f79c8077378b06ac6e"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>size</b> () const </td></tr>
 <tr class="separator:a4f91a50448df40f79c8077378b06ac6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9318cebbc8a5c84092224109aa683cc6"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="class_table.html#a2903c32f8b8fdb0ffc0bc27bc0e34d0e">FieldID</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a9318cebbc8a5c84092224109aa683cc6">field</a> () const </td></tr>
+<tr class="memitem:a9318cebbc8a5c84092224109aa683cc6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9318cebbc8a5c84092224109aa683cc6"></a>
+const std::vector&lt; FieldID &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>field</b> () const </td></tr>
 <tr class="separator:a9318cebbc8a5c84092224109aa683cc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af94164c4dde76690be6b7f3a1d5e7733"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#af94164c4dde76690be6b7f3a1d5e7733">clear</a> ()</td></tr>
+<tr class="memitem:af94164c4dde76690be6b7f3a1d5e7733"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af94164c4dde76690be6b7f3a1d5e7733"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> ()</td></tr>
 <tr class="separator:af94164c4dde76690be6b7f3a1d5e7733"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9df56e33923bbff648f98367d723ddb5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_table.html#a41a3e845dfe45869c641cc564a70b328">Iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a9df56e33923bbff648f98367d723ddb5">begin</a> ()</td></tr>
+<tr class="memitem:a9df56e33923bbff648f98367d723ddb5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9df56e33923bbff648f98367d723ddb5"></a>
+<a class="el" href="class_table_1_1_iterator_impl.html">Iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><b>begin</b> ()</td></tr>
 <tr class="separator:a9df56e33923bbff648f98367d723ddb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b5c1e536a44af329e2a9e35e469fde7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_table.html#a41a3e845dfe45869c641cc564a70b328">Iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a5b5c1e536a44af329e2a9e35e469fde7">end</a> ()</td></tr>
+<tr class="memitem:a5b5c1e536a44af329e2a9e35e469fde7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5b5c1e536a44af329e2a9e35e469fde7"></a>
+<a class="el" href="class_table_1_1_iterator_impl.html">Iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><b>end</b> ()</td></tr>
 <tr class="separator:a5b5c1e536a44af329e2a9e35e469fde7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52cd800068dee5bc2007fa7e0e1f3a27"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_table.html#a745f59742a52fe738da52323c23dbe29">ConstIterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a52cd800068dee5bc2007fa7e0e1f3a27">begin</a> () const </td></tr>
+<tr class="memitem:a52cd800068dee5bc2007fa7e0e1f3a27"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a52cd800068dee5bc2007fa7e0e1f3a27"></a>
+<a class="el" href="class_table_1_1_iterator_impl.html">ConstIterator</a>&#160;</td><td class="memItemRight" valign="bottom"><b>begin</b> () const </td></tr>
 <tr class="separator:a52cd800068dee5bc2007fa7e0e1f3a27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a241c6a19cd9bb8cf63b0dc419add8652"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_table.html#a745f59742a52fe738da52323c23dbe29">ConstIterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a241c6a19cd9bb8cf63b0dc419add8652">end</a> () const </td></tr>
+<tr class="memitem:a241c6a19cd9bb8cf63b0dc419add8652"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a241c6a19cd9bb8cf63b0dc419add8652"></a>
+<a class="el" href="class_table_1_1_iterator_impl.html">ConstIterator</a>&#160;</td><td class="memItemRight" valign="bottom"><b>end</b> () const </td></tr>
 <tr class="separator:a241c6a19cd9bb8cf63b0dc419add8652"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
-Private Types</h2></td></tr>
-<tr class="memitem:ab29800f155ed4b4091bd10a9e1e5f9fa"><td class="memItemLeft" align="right" valign="top">typedef std::vector&lt; <a class="el" href="struct_table_1_1_datum.html">Datum</a> &gt;::iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#ab29800f155ed4b4091bd10a9e1e5f9fa">DataIterator</a></td></tr>
-<tr class="separator:ab29800f155ed4b4091bd10a9e1e5f9fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b453acbb329ee1eaf26f671d135f9c2"><td class="memItemLeft" align="right" valign="top">typedef std::vector&lt; <a class="el" href="struct_table_1_1_datum.html">Datum</a> &gt;::const_iterator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a9b453acbb329ee1eaf26f671d135f9c2">ConstDataIterator</a></td></tr>
-<tr class="separator:a9b453acbb329ee1eaf26f671d135f9c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-methods"></a>
-Static Private Member Functions</h2></td></tr>
-<tr class="memitem:a2b9b5c8ae551633b5eb7601f4fa1262b"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_table_1_1_object_impl.html#a892fc764cb681fc422127e79d4ed63fe">ConstObject::Ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a2b9b5c8ae551633b5eb7601f4fa1262b">createProxy</a> (<a class="el" href="class_table.html#a9b453acbb329ee1eaf26f671d135f9c2">ConstDataIterator</a> it, const <a class="el" href="class_table.html">Table</a> *table)</td></tr>
-<tr class="separator:a2b9b5c8ae551633b5eb7601f4fa1262b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a005a64280774a71a1ff12bae39f94fbd"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_table_1_1_object_impl.html#a892fc764cb681fc422127e79d4ed63fe">Object::Ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a005a64280774a71a1ff12bae39f94fbd">createProxy</a> (<a class="el" href="class_table.html#ab29800f155ed4b4091bd10a9e1e5f9fa">DataIterator</a> it, const <a class="el" href="class_table.html">Table</a> *table)</td></tr>
-<tr class="separator:a005a64280774a71a1ff12bae39f94fbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
-Private Attributes</h2></td></tr>
-<tr class="memitem:aebf5a21d1c371623808cfd3239baa6e2"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_table.html#a2903c32f8b8fdb0ffc0bc27bc0e34d0e">FieldID</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#aebf5a21d1c371623808cfd3239baa6e2">fields</a></td></tr>
-<tr class="separator:aebf5a21d1c371623808cfd3239baa6e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2cf9e33d85b6cb5e2cc22c206bff4310"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; <a class="el" href="class_table.html#a2903c32f8b8fdb0ffc0bc27bc0e34d0e">FieldID</a>, <a class="el" href="class_table.html#af5796c55702b4b5e3eeb35670d9b242a">SizeType</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a2cf9e33d85b6cb5e2cc22c206bff4310">fieldMap</a></td></tr>
-<tr class="separator:a2cf9e33d85b6cb5e2cc22c206bff4310"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f49825bd6b391c5ca9a0d04b9ddebe9"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="struct_table_1_1_datum.html">Datum</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a5f49825bd6b391c5ca9a0d04b9ddebe9">blankDatum</a></td></tr>
-<tr class="separator:a5f49825bd6b391c5ca9a0d04b9ddebe9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3fbd6517e36011d3fd8833e0a2019a9e"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="struct_table_1_1_datum.html">Datum</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a3fbd6517e36011d3fd8833e0a2019a9e">data</a></td></tr>
-<tr class="separator:a3fbd6517e36011d3fd8833e0a2019a9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e8183fb97f46430db553cdb9059b583"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="struct_table_1_1_datum.html">Datum</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a4e8183fb97f46430db553cdb9059b583">dataNew</a></td></tr>
-<tr class="separator:a4e8183fb97f46430db553cdb9059b583"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ca1d477ad16a6cb01de94666af476a6"><td class="memItemLeft" align="right" valign="top">std::unordered_set&lt; <a class="el" href="class_table.html#a7ec536bb39802e0f446dad42e08d4fdf">KeyType</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a9ca1d477ad16a6cb01de94666af476a6">keySet</a></td></tr>
-<tr class="separator:a9ca1d477ad16a6cb01de94666af476a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acef59d937d1517cc712d8d9144b8f7e7"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#acef59d937d1517cc712d8d9144b8f7e7">tableName</a></td></tr>
-<tr class="separator:acef59d937d1517cc712d8d9144b8f7e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
-<tr class="memitem:ac91202688e17b1c145b7d98d90ace349"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#ac91202688e17b1c145b7d98d90ace349">operator&lt;&lt;</a> (std::ostream &amp;os, const <a class="el" href="class_table.html">Table</a> &amp;table)</td></tr>
+<tr class="memitem:ac91202688e17b1c145b7d98d90ace349"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac91202688e17b1c145b7d98d90ace349"></a>
+std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator&lt;&lt;</b> (std::ostream &amp;os, const <a class="el" href="class_table.html">Table</a> &amp;table)</td></tr>
 <tr class="separator:ac91202688e17b1c145b7d98d90ace349"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Typedef Documentation</h2>
-<a class="anchor" id="a9b453acbb329ee1eaf26f671d135f9c2"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef std::vector&lt;<a class="el" href="struct_table_1_1_datum.html">Datum</a>&gt;::const_iterator <a class="el" href="class_table.html#a9b453acbb329ee1eaf26f671d135f9c2">Table::ConstDataIterator</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a745f59742a52fe738da52323c23dbe29"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef <a class="el" href="class_table_1_1_iterator_impl.html">IteratorImpl</a>&lt;<a class="el" href="class_table.html#adbcee28c19fcaa0904e71f2d76b80c31">ConstObject</a>, decltype(data.cbegin())&gt; <a class="el" href="class_table.html#a745f59742a52fe738da52323c23dbe29">Table::ConstIterator</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="adbcee28c19fcaa0904e71f2d76b80c31"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef <a class="el" href="class_table_1_1_object_impl.html">ObjectImpl</a>&lt;<a class="el" href="class_table.html#a9b453acbb329ee1eaf26f671d135f9c2">ConstDataIterator</a>, const <a class="el" href="class_table.html#aaa438add915f9459416dab957f52ee63">ValueType</a>&gt; <a class="el" href="class_table.html#adbcee28c19fcaa0904e71f2d76b80c31">Table::ConstObject</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ab29800f155ed4b4091bd10a9e1e5f9fa"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef std::vector&lt;<a class="el" href="struct_table_1_1_datum.html">Datum</a>&gt;::iterator <a class="el" href="class_table.html#ab29800f155ed4b4091bd10a9e1e5f9fa">Table::DataIterator</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a2903c32f8b8fdb0ffc0bc27bc0e34d0e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef std::string <a class="el" href="class_table.html#a2903c32f8b8fdb0ffc0bc27bc0e34d0e">Table::FieldID</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a81943310bc4161c0ef96a737bfaaf39d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef int <a class="el" href="class_table.html#a81943310bc4161c0ef96a737bfaaf39d">Table::FieldIndex</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a41a3e845dfe45869c641cc564a70b328"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef <a class="el" href="class_table_1_1_iterator_impl.html">IteratorImpl</a>&lt;<a class="el" href="class_table.html#a930877dd111fb5403afff7c400c25925">Object</a>, decltype(data.begin())&gt; <a class="el" href="class_table.html#a41a3e845dfe45869c641cc564a70b328">Table::Iterator</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a7ec536bb39802e0f446dad42e08d4fdf"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef std::string <a class="el" href="class_table.html#a7ec536bb39802e0f446dad42e08d4fdf">Table::KeyType</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a930877dd111fb5403afff7c400c25925"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef <a class="el" href="class_table_1_1_object_impl.html">ObjectImpl</a>&lt;<a class="el" href="class_table.html#ab29800f155ed4b4091bd10a9e1e5f9fa">DataIterator</a>, <a class="el" href="class_table.html#aaa438add915f9459416dab957f52ee63">ValueType</a>&gt; <a class="el" href="class_table.html#a930877dd111fb5403afff7c400c25925">Table::Object</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a15892db3d57f25fafe199f593614ffdf"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef std::unique_ptr&lt;<a class="el" href="class_table.html">Table</a>&gt; <a class="el" href="class_table.html#a15892db3d57f25fafe199f593614ffdf">Table::Ptr</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="af5796c55702b4b5e3eeb35670d9b242a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef size_t <a class="el" href="class_table.html#af5796c55702b4b5e3eeb35670d9b242a">Table::SizeType</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="aaa438add915f9459416dab957f52ee63"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef int <a class="el" href="class_table.html#aaa438add915f9459416dab957f52ee63">Table::ValueType</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ae98dea025df49b147eb4cb885fb9316e"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class FieldIDContainer &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">Table::Table </td>
-          <td>(</td>
-          <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const FieldIDContainer &amp;&#160;</td>
-          <td class="paramname"><em>fields</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a9efda1846fa5fe1e1c11e79896c26211"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Table::Table </td>
-          <td>(</td>
-          <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="class_table.html">Table</a> &amp;&#160;</td>
-          <td class="paramname"><em>origin</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a9df56e33923bbff648f98367d723ddb5"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_table.html#a41a3e845dfe45869c641cc564a70b328">Iterator</a> Table::begin </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a52cd800068dee5bc2007fa7e0e1f3a27"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_table.html#a745f59742a52fe738da52323c23dbe29">ConstIterator</a> Table::begin </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="af94164c4dde76690be6b7f3a1d5e7733"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t Table::clear </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a2b9b5c8ae551633b5eb7601f4fa1262b"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="class_table_1_1_object_impl.html#a892fc764cb681fc422127e79d4ed63fe">ConstObject::Ptr</a> Table::createProxy </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_table.html#a9b453acbb329ee1eaf26f671d135f9c2">ConstDataIterator</a>&#160;</td>
-          <td class="paramname"><em>it</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="class_table.html">Table</a> *&#160;</td>
-          <td class="paramname"><em>table</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a005a64280774a71a1ff12bae39f94fbd"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="class_table_1_1_object_impl.html#a892fc764cb681fc422127e79d4ed63fe">Object::Ptr</a> Table::createProxy </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_table.html#ab29800f155ed4b4091bd10a9e1e5f9fa">DataIterator</a>&#160;</td>
-          <td class="paramname"><em>it</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="class_table.html">Table</a> *&#160;</td>
-          <td class="paramname"><em>table</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ac1c5f109901db513d05663b4d361e7be"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool Table::empty </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a5b5c1e536a44af329e2a9e35e469fde7"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_table.html#a41a3e845dfe45869c641cc564a70b328">Iterator</a> Table::end </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a241c6a19cd9bb8cf63b0dc419add8652"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_table.html#a745f59742a52fe738da52323c23dbe29">ConstIterator</a> Table::end </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ad8c06bdf3d5c6dea2e31a1463feb5625"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_table.html#a41a3e845dfe45869c641cc564a70b328">Iterator</a> Table::erase </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_table.html#a41a3e845dfe45869c641cc564a70b328">Iterator</a>&#160;</td>
-          <td class="paramname"><em>it</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a9318cebbc8a5c84092224109aa683cc6"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::vector&lt;<a class="el" href="class_table.html#a2903c32f8b8fdb0ffc0bc27bc0e34d0e">FieldID</a>&gt;&amp; Table::field </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a01371f5cc93ba765d4aa4c3e76b1776b"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class AssocContainer &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">void Table::insert </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_table.html#a7ec536bb39802e0f446dad42e08d4fdf">KeyType</a>&#160;</td>
-          <td class="paramname"><em>key</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const AssocContainer &amp;&#160;</td>
-          <td class="paramname"><em>data</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a4abc8b47696c07171b014c08c4df49b7"></a>
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class ValueTypeContainer &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">void Table::insertByIndex </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_table.html#a7ec536bb39802e0f446dad42e08d4fdf">KeyType</a>&#160;</td>
-          <td class="paramname"><em>key</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const ValueTypeContainer &amp;&#160;</td>
-          <td class="paramname"><em>data</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a6c30cc08ab5a43e20d32c137956dff3d"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string Table::name </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="aaee2603a21e2ad0de4e073ada88e4b8d"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Table::setName </td>
-          <td>(</td>
-          <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>name</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a4f91a50448df40f79c8077378b06ac6e"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t Table::size </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Friends And Related Function Documentation</h2>
-<a class="anchor" id="ac91202688e17b1c145b7d98d90ace349"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::ostream&amp; operator&lt;&lt; </td>
-          <td>(</td>
-          <td class="paramtype">std::ostream &amp;&#160;</td>
-          <td class="paramname"><em>os</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="class_table.html">Table</a> &amp;&#160;</td>
-          <td class="paramname"><em>table</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="a5f49825bd6b391c5ca9a0d04b9ddebe9"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="struct_table_1_1_datum.html">Datum</a> Table::blankDatum</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Defined by tripack, seems to be used to speed up processing </p>
-
-</div>
-</div>
-<a class="anchor" id="a3fbd6517e36011d3fd8833e0a2019a9e"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::vector&lt;<a class="el" href="struct_table_1_1_datum.html">Datum</a>&gt; Table::data</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>The rows are saved in a vector, which is unsorted </p>
-
-</div>
-</div>
-<a class="anchor" id="a4e8183fb97f46430db553cdb9059b583"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::vector&lt;<a class="el" href="struct_table_1_1_datum.html">Datum</a>&gt; Table::dataNew</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Saves data in a new vector after delete or duplicate </p>
-
-</div>
-</div>
-<a class="anchor" id="a2cf9e33d85b6cb5e2cc22c206bff4310"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::unordered_map&lt;<a class="el" href="class_table.html#a2903c32f8b8fdb0ffc0bc27bc0e34d0e">FieldID</a>, <a class="el" href="class_table.html#af5796c55702b4b5e3eeb35670d9b242a">SizeType</a>&gt; Table::fieldMap</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Map field name into index </p>
-
-</div>
-</div>
-<a class="anchor" id="aebf5a21d1c371623808cfd3239baa6e2"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::vector&lt;<a class="el" href="class_table.html#a2903c32f8b8fdb0ffc0bc27bc0e34d0e">FieldID</a>&gt; Table::fields</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>The fields, ordered as defined in fieldMap </p>
-
-</div>
-</div>
-<a class="anchor" id="a9ca1d477ad16a6cb01de94666af476a6"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::unordered_set&lt;<a class="el" href="class_table.html#a7ec536bb39802e0f446dad42e08d4fdf">KeyType</a>&gt; Table::keySet</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Used to keep the keys unique </p>
-
-</div>
-</div>
-<a class="anchor" id="acef59d937d1517cc712d8d9144b8f7e7"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string Table::tableName</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>The name of table </p>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/<a class="el" href="db__table_8h_source.html">db_table.h</a></li>
 <li>src/<a class="el" href="db__table__impl_8hpp_source.html">db_table_impl.hpp</a></li>

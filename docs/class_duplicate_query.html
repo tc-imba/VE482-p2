@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>lemondb: DuplicateQuery Class Reference</title>
+<title>LemonDB: DuplicateQuery Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,8 +23,9 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">lemondb
+   <div id="projectname">LemonDB
    </div>
+   <div id="projectbrief">Asimplekey-valuedatabasebyLemonion.Inc.</div>
   </td>
  </tr>
  </tbody>
@@ -84,14 +85,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="class_duplicate_query-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">DuplicateQuery Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p><code>#include &lt;<a class="el" href="data__query_8h_source.html">data_query.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for DuplicateQuery:</div>
 <div class="dyncontent">
@@ -106,113 +104,41 @@ Inheritance diagram for DuplicateQuery:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab7ce5d0d57cc839ff330de7e016354b0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_query_result.html#ad0886002733ecc0922dea3e43d4f7610">QueryResult::Ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_duplicate_query.html#ab7ce5d0d57cc839ff330de7e016354b0">execute</a> () override</td></tr>
+<tr class="memitem:ab7ce5d0d57cc839ff330de7e016354b0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab7ce5d0d57cc839ff330de7e016354b0"></a>
+QueryResult::Ptr&#160;</td><td class="memItemRight" valign="bottom"><b>execute</b> () override</td></tr>
 <tr class="separator:ab7ce5d0d57cc839ff330de7e016354b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af1f379a04b6eb6940e97fe4c33d171a7"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_duplicate_query.html#af1f379a04b6eb6940e97fe4c33d171a7">toString</a> () override</td></tr>
+<tr class="memitem:af1f379a04b6eb6940e97fe4c33d171a7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af1f379a04b6eb6940e97fe4c33d171a7"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> () override</td></tr>
 <tr class="separator:af1f379a04b6eb6940e97fe4c33d171a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_complex_query"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_complex_query')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_complex_query.html">ComplexQuery</a></td></tr>
-<tr class="memitem:a0ab75a149ad7e5b9adb6fb20a40bc1d5 inherit pub_methods_class_complex_query"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_complex_query.html#a0ab75a149ad7e5b9adb6fb20a40bc1d5">ComplexQuery</a> (const std::string &amp;<a class="el" href="class_complex_query.html#a524fdd535af1d47de39b73345cb8fd63">targetTable</a>, const std::vector&lt; std::string &gt; &amp;<a class="el" href="class_complex_query.html#a00f38ae7b87fefa8668d7bac95addd94">operands</a>, const std::vector&lt; <a class="el" href="struct_query_condition.html">QueryCondition</a> &gt; &amp;<a class="el" href="class_complex_query.html#ac65a30ad8b99278b03d6a64ad34a8a75">condition</a>)</td></tr>
+<tr class="memitem:a0ab75a149ad7e5b9adb6fb20a40bc1d5 inherit pub_methods_class_complex_query"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0ab75a149ad7e5b9adb6fb20a40bc1d5"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>ComplexQuery</b> (const std::string &amp;targetTable, const std::vector&lt; std::string &gt; &amp;operands, const std::vector&lt; <a class="el" href="struct_query_condition.html">QueryCondition</a> &gt; &amp;condition)</td></tr>
 <tr class="separator:a0ab75a149ad7e5b9adb6fb20a40bc1d5 inherit pub_methods_class_complex_query"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_class_query"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_query')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_query.html">Query</a></td></tr>
-<tr class="memitem:a57f6f5206459a239362448560d1054fc inherit pub_methods_class_query"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_query.html#a57f6f5206459a239362448560d1054fc">~Query</a> ()=default</td></tr>
-<tr class="separator:a57f6f5206459a239362448560d1054fc inherit pub_methods_class_query"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
-Static Private Attributes</h2></td></tr>
-<tr class="memitem:abd4d1be5d18e28be3dfddfb77535dce2"><td class="memItemLeft" align="right" valign="top">static constexpr const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_duplicate_query.html#abd4d1be5d18e28be3dfddfb77535dce2">qname</a> = &quot;DUPLICATE&quot;</td></tr>
-<tr class="separator:abd4d1be5d18e28be3dfddfb77535dce2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_types_class_query"><td colspan="2" onclick="javascript:toggleInherit('pub_types_class_query')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="class_query.html">Query</a></td></tr>
-<tr class="memitem:a0a0a7f0fc1097f196ecd56a44baec036 inherit pub_types_class_query"><td class="memItemLeft" align="right" valign="top">typedef std::unique_ptr&lt; <a class="el" href="class_query.html">Query</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_query.html#a0a0a7f0fc1097f196ecd56a44baec036">Ptr</a></td></tr>
+<tr class="memitem:a0a0a7f0fc1097f196ecd56a44baec036 inherit pub_types_class_query"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0a0a7f0fc1097f196ecd56a44baec036"></a>
+typedef std::unique_ptr&lt; <a class="el" href="class_query.html">Query</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Ptr</b></td></tr>
 <tr class="separator:a0a0a7f0fc1097f196ecd56a44baec036 inherit pub_types_class_query"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_class_conditioned_query"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_conditioned_query')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_conditioned_query.html">ConditionedQuery</a></td></tr>
-<tr class="memitem:a7e0c907c067251e5efcc2aa29e93d9d6 inherit pro_methods_class_conditioned_query"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_conditioned_query.html#a7e0c907c067251e5efcc2aa29e93d9d6">evalCondition</a> (const std::vector&lt; <a class="el" href="struct_query_condition.html">QueryCondition</a> &gt; &amp;conditions, const <a class="el" href="class_table.html#a930877dd111fb5403afff7c400c25925">Table::Object</a> &amp;object)</td></tr>
+<tr class="memitem:a7e0c907c067251e5efcc2aa29e93d9d6 inherit pro_methods_class_conditioned_query"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7e0c907c067251e5efcc2aa29e93d9d6"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>evalCondition</b> (const std::vector&lt; <a class="el" href="struct_query_condition.html">QueryCondition</a> &gt; &amp;conditions, const <a class="el" href="class_table_1_1_object_impl.html">Table::Object</a> &amp;object)</td></tr>
 <tr class="separator:a7e0c907c067251e5efcc2aa29e93d9d6 inherit pro_methods_class_conditioned_query"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_complex_query"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_complex_query')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_complex_query.html">ComplexQuery</a></td></tr>
-<tr class="memitem:a524fdd535af1d47de39b73345cb8fd63 inherit pro_attribs_class_complex_query"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_complex_query.html#a524fdd535af1d47de39b73345cb8fd63">targetTable</a></td></tr>
+<tr class="memitem:a524fdd535af1d47de39b73345cb8fd63 inherit pro_attribs_class_complex_query"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a524fdd535af1d47de39b73345cb8fd63"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>targetTable</b></td></tr>
 <tr class="separator:a524fdd535af1d47de39b73345cb8fd63 inherit pro_attribs_class_complex_query"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00f38ae7b87fefa8668d7bac95addd94 inherit pro_attribs_class_complex_query"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_complex_query.html#a00f38ae7b87fefa8668d7bac95addd94">operands</a></td></tr>
+<tr class="memitem:a00f38ae7b87fefa8668d7bac95addd94 inherit pro_attribs_class_complex_query"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a00f38ae7b87fefa8668d7bac95addd94"></a>
+std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>operands</b></td></tr>
 <tr class="separator:a00f38ae7b87fefa8668d7bac95addd94 inherit pro_attribs_class_complex_query"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac65a30ad8b99278b03d6a64ad34a8a75 inherit pro_attribs_class_complex_query"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="struct_query_condition.html">QueryCondition</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_complex_query.html#ac65a30ad8b99278b03d6a64ad34a8a75">condition</a></td></tr>
+<tr class="memitem:ac65a30ad8b99278b03d6a64ad34a8a75 inherit pro_attribs_class_complex_query"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac65a30ad8b99278b03d6a64ad34a8a75"></a>
+std::vector&lt; <a class="el" href="struct_query_condition.html">QueryCondition</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>condition</b></td></tr>
 <tr class="separator:ac65a30ad8b99278b03d6a64ad34a8a75 inherit pro_attribs_class_complex_query"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="ab7ce5d0d57cc839ff330de7e016354b0"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_query_result.html#ad0886002733ecc0922dea3e43d4f7610">QueryResult::Ptr</a> DuplicateQuery::execute </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Implements <a class="el" href="class_query.html#a758043f481c17af17a48e120ff9ea741">Query</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="af1f379a04b6eb6940e97fe4c33d171a7"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string DuplicateQuery::toString </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Implements <a class="el" href="class_query.html#afaa6bbe4624620f71e71e259d3f22e31">Query</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="abd4d1be5d18e28be3dfddfb77535dce2"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr const char* DuplicateQuery::qname = &quot;DUPLICATE&quot;</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/<a class="el" href="data__query_8h_source.html">data_query.h</a></li>
-<li>src/<a class="el" href="data__query_8cpp.html">data_query.cpp</a></li>
+<li>src/data_query.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

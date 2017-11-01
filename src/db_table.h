@@ -5,7 +5,6 @@
 #include <memory>
 #include <fstream>
 #include <unordered_map>
-//#include <list>
 #include <vector>
 #include <iterator>
 #include <ostream>
@@ -21,7 +20,7 @@ do {\
         return it->datum.at(index);\
     } catch (const std::out_of_range& e) {\
         throw TableFieldNotFound (\
-            R"(Field name "?" doesn't exists.)"_f % field\
+            R"(Field name "?" doesn't exists.)"_f % (field)\
         );\
     }\
 } while(0)
@@ -32,7 +31,7 @@ do {\
         return it->datum.at(index);\
     } catch (const std::out_of_range& e) {\
         throw TableFieldNotFound (\
-            R"(Field index ? out of range.)"_f % index\
+            R"(Field index ? out of range.)"_f % (index)\
         );\
     }\
 } while(0)
@@ -63,11 +62,13 @@ private:
         }
 
         template<class ValueTypeContainer>
-        explicit Datum(const ValueTypeContainer &datum) {
+        explicit Datum(const KeyType &key, const ValueTypeContainer &datum) {
+            this->key = key;
             this->datum = datum;
         }
 
-        explicit Datum(std::vector<ValueType > &&datum) {
+        explicit Datum(const KeyType &key, std::vector<ValueType> &&datum) {
+            this->key = key;
             this->datum = datum;
         }
     };
@@ -160,7 +161,7 @@ public:
 
         friend class Table;
 
-        const Table *table;
+        const Table *table = nullptr;
         DatumIterator it;
 
     public:
@@ -169,9 +170,9 @@ public:
 
         IteratorImpl() = default;
         IteratorImpl(const IteratorImpl &) = default;
-        IteratorImpl(IteratorImpl &&) = default;
-        IteratorImpl &operator=(const IteratorImpl &) = default;
-        IteratorImpl &operator=(IteratorImpl &&)      = default;
+        IteratorImpl(IteratorImpl &&) noexcept = default;
+        IteratorImpl &operator=(const IteratorImpl &)     = default;
+        IteratorImpl &operator=(IteratorImpl &&) noexcept = default;
         ~IteratorImpl() = default;
 
         pointer operator->() { return createProxy(it, table); }
@@ -221,10 +222,10 @@ private:
 public:
     // Accept any container that contains string.
     template<class FieldIDContainer>
-    Table(std::string name, const FieldIDContainer &fields);
+    Table(const std::string &name, const FieldIDContainer &_fields);
 
     Table(std::string name, const Table &origin) :
-            fields(origin.fields), tableName(name), keySet(origin.keySet), data(origin.data) {}
+            fields(origin.fields), tableName(std::move(name)), keySet(origin.keySet), data(origin.data) {}
 
     template<class AssocContainer>
     void insert(KeyType key, const AssocContainer &data) = delete;
@@ -232,25 +233,68 @@ public:
     template<class ValueTypeContainer>
     void insertByIndex(KeyType key, const ValueTypeContainer &data);
 
-    Iterator erase(Iterator it) {
+    /**
+     * Erase the key in the table
+     * Caution: this function only erases the key in keySet, leaves data unchanged
+     * @param it
+     */
+    void erase(Iterator it) {
         this->keySet.erase(it.it->key);
-        *it.it = std::move(data.back());
-        this->data.pop_back();
-        return Iterator(it.it, it.table);
     }
 
-    void setName(std::string name) { this->tableName = name; }
+    /**
+     * Move datum from data to dataNew
+     * Caution: iterator it can't be accessed again after move() is called
+     * @param it
+     */
+    void move(Iterator it) {
+        this->dataNew.push_back(std::move(*(it.it)));
+    }
 
-    std::string name() const { return this->tableName; }
+    /**
+     * Swap data and newData
+     * vector::clear ensures that the capacity of dataNew unchanged
+     * so push_back to dataNew is efficient
+     */
+    void swapData() {
+        std::swap(this->data, this->dataNew);
+        dataNew.clear();
+    }
 
+    /**
+     * Set the name of the table
+     * @param name
+     */
+    void setName(std::string name) { this->tableName = std::move(name); }
+
+    /**
+     * Get the name of the table
+     * @return
+     */
+    const std::string &name() const { return this->tableName; }
+
+    /**
+     * Return whether the table is empty
+     * @return
+     */
     bool empty() const { return this->data.empty(); }
 
+    /**
+     * Return the num of data stored in the table
+     * @return
+     */
     size_t size() const { return this->data.size(); }
 
-    const std::vector<FieldID> &field() const {
-        return this->fields;
-    }
+    /**
+     * Return the fields in the table
+     * @return
+     */
+    const std::vector<FieldID> &field() const { return this->fields; }
 
+    /**
+     * Clear all content in the table
+     * @return rows affected
+     */
     size_t clear() {
         auto result = keySet.size();
         data.clear();
@@ -258,14 +302,36 @@ public:
         return result;
     }
 
+    /**
+     * Get a begin iterator similar to the standard iterator
+     * @return
+     */
     Iterator begin() { return Iterator(data.begin(), this); }
 
+    /**
+     * Get a end iterator similar to the standard iterator
+     * @return
+     */
     Iterator end() { return Iterator(data.end(), this); }
 
+    /**
+     * Get a const begin iterator similar to the standard iterator
+     * @return
+     */
     ConstIterator begin() const { return ConstIterator(data.cbegin(), this); }
 
+    /**
+     * Get a const end iterator similar to the standard iterator
+     * @return
+     */
     ConstIterator end() const { return ConstIterator(data.cend(), this); }
 
+    /**
+     * Overload the << operator for complete print of the table
+     * @param os
+     * @param table
+     * @return
+     */
     friend std::ostream &operator<<(std::ostream &os, const Table &table);
 };
 

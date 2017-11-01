@@ -2,6 +2,8 @@
 #include "uexception.h"
 #include "formatter.h"
 
+
+
 Table::Ptr loadTableFromStream(std::istream &infile, std::string source) {
     std::string errString =
             source != "" ?

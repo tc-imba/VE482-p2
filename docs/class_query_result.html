@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>lemondb: QueryResult Class Reference</title>
+<title>LemonDB: QueryResult Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -23,8 +23,9 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">lemondb
+   <div id="projectname">LemonDB
    </div>
+   <div id="projectbrief">Asimplekey-valuedatabasebyLemonion.Inc.</div>
   </td>
  </tr>
  </tbody>
@@ -90,8 +91,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">QueryResult Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p><code>#include &lt;<a class="el" href="query__results_8h_source.html">query_results.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for QueryResult:</div>
 <div class="dyncontent">
@@ -110,106 +109,19 @@ Inheritance diagram for QueryResult:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:ad0886002733ecc0922dea3e43d4f7610"><td class="memItemLeft" align="right" valign="top">typedef std::unique_ptr&lt; <a class="el" href="class_query_result.html">QueryResult</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_query_result.html#ad0886002733ecc0922dea3e43d4f7610">Ptr</a></td></tr>
+<tr class="memitem:ad0886002733ecc0922dea3e43d4f7610"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad0886002733ecc0922dea3e43d4f7610"></a>
+typedef std::unique_ptr&lt; <a class="el" href="class_query_result.html">QueryResult</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Ptr</b></td></tr>
 <tr class="separator:ad0886002733ecc0922dea3e43d4f7610"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a86854387690b31012408c0ed27451db6"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_query_result.html#a86854387690b31012408c0ed27451db6">success</a> ()=0</td></tr>
+<tr class="memitem:a86854387690b31012408c0ed27451db6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a86854387690b31012408c0ed27451db6"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>success</b> ()=0</td></tr>
 <tr class="separator:a86854387690b31012408c0ed27451db6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98bbf11625700569bd4c1b078f10ceea"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_query_result.html#a98bbf11625700569bd4c1b078f10ceea">toString</a> ()=0</td></tr>
+<tr class="memitem:a98bbf11625700569bd4c1b078f10ceea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a98bbf11625700569bd4c1b078f10ceea"></a>
+virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> ()=0</td></tr>
 <tr class="separator:a98bbf11625700569bd4c1b078f10ceea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a97d9d0251cd0364118330ce2358d493e"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_query_result.html#a97d9d0251cd0364118330ce2358d493e">~QueryResult</a> ()=default</td></tr>
-<tr class="separator:a97d9d0251cd0364118330ce2358d493e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Typedef Documentation</h2>
-<a class="anchor" id="ad0886002733ecc0922dea3e43d4f7610"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef std::unique_ptr&lt;<a class="el" href="class_query_result.html">QueryResult</a>&gt; <a class="el" href="class_query_result.html#ad0886002733ecc0922dea3e43d4f7610">QueryResult::Ptr</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a97d9d0251cd0364118330ce2358d493e"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual QueryResult::~QueryResult </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">default</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a86854387690b31012408c0ed27451db6"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual bool QueryResult::success </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Implemented in <a class="el" href="class_suceeded_query_result.html#a9080ba9ec97b32638efab6fa9472de94">SuceededQueryResult</a>, and <a class="el" href="class_failed_query_result.html#a4e742c22aa57a13cca1cfb3b3b05f63d">FailedQueryResult</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a98bbf11625700569bd4c1b078f10ceea"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual std::string QueryResult::toString </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Implemented in <a class="el" href="class_select_result.html#a797ee6d6678401b69ed87d850af06a20">SelectResult</a>, <a class="el" href="class_record_count_result.html#a6d29eca18107e0ef190e458d714c011e">RecordCountResult</a>, <a class="el" href="class_success_msg_result.html#a97af69dd704091d77dcf48ca726690e3">SuccessMsgResult</a>, <a class="el" href="class_error_msg_result.html#a6cf0d89a560e0857bbb95a702e0fbfc8">ErrorMsgResult</a>, and <a class="el" href="class_null_query_result.html#ac51149e3f91cc4bc40c05796be2b5815">NullQueryResult</a>.</p>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/<a class="el" href="query__results_8h_source.html">query_results.h</a></li>
 </ul>
