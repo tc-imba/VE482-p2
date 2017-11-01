@@ -156,7 +156,7 @@ public:
         using value_type        = ObjType;
         using pointer           = typename ObjType::Ptr;
         using reference         = ObjType;
-        using iterator_category = std::bidirectional_iterator_tag;
+        using iterator_category = std::random_access_iterator_tag;
         // See https://stackoverflow.com/questions/37031805/
 
         friend class Table;
@@ -204,6 +204,30 @@ public:
         bool operator==(const IteratorImpl &other) { return this->it == other.it; }
 
         bool operator!=(const IteratorImpl &other) { return this->it != other.it; }
+
+        bool operator<=(const IteratorImpl &other) { return this->it <= other.it; }
+
+        bool operator>=(const IteratorImpl &other) { return this->it >= other.it; }
+
+        bool operator<(const IteratorImpl &other) { return this->it < other.it; }
+
+        bool operator>(const IteratorImpl &other) { return this->it > other.it; }
+
+        IteratorImpl operator+(int n) {
+            return IteratorImpl(it + n, table);
+        }
+
+        IteratorImpl operator-(int n) {
+            return IteratorImpl(it - n, table);
+        }
+
+        IteratorImpl &operator+=(int n) {
+            it += n; return *this;
+        }
+
+        IteratorImpl &operator-=(int n) {
+            it -= n; return *this;
+        }
     };
 
     typedef IteratorImpl<Object, decltype(data.begin())> Iterator;
