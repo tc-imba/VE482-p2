@@ -78,12 +78,14 @@ QueryResult::Ptr DeleteQuery::execute() {
             counter = table.clear();
             return make_unique<RecordCountResult>(counter);
         }
-        for (auto it = table.begin(); it != table.end();) {
+        for (auto it = table.begin(); it != table.end(); ++it) {
             if (evalCondition(condition, *it)) {
                 table.erase(it);
-                table.move(it);
                 counter++;
-            } else ++it;
+            } else {
+                table.move(it);
+//                ++it;
+            }
         }
         table.swapData();
         return make_unique<RecordCountResult>(counter);
