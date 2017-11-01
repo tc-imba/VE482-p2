@@ -58,10 +58,8 @@ private:
         Datum(const Datum &) = default;
 
         template<class FieldIDContainer>
-        Datum(const FieldIDContainer &fields) {
-            for (const auto &FieldID: fields) {
-                datum.emplace(datum.end(), ValueType());
-            }
+        explicit Datum(const FieldIDContainer &fields) {
+            datum = std::vector<ValueType>(fields.size(), ValueType());
         }
     };
 

@@ -10,8 +10,8 @@
 #include <cmath>
 #include <thread>
 
-#include "../query_results.h"
-#include "../query.h"
+#include "../src/query_results.h"
+#include "../src/query.h"
 
 using namespace std;
 
