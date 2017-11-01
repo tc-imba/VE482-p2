@@ -15,14 +15,14 @@ QueryResult::Ptr UpdateQuery::execute() {
                 "Invalid number of operands (? operands)."_f % operands.size()
         );
     Database &db = Database::getInstance();
-    string field = operands[0];
-    int counter = 0;
+    Table::SizeType counter = 0;
     try {
-        int newValue = std::stoi(operands[1]);
         auto &table = db[this->targetTable];
-        for (auto object : table) {
+        auto index = table.getFieldIndex(operands[0]);
+        int newValue = std::stoi(operands[1]);
+        for (auto &object : table) {
             if (evalCondition(condition, object)) {
-                object[field] = newValue;
+                object[index] = newValue;
                 counter++;
             }
         }
@@ -70,18 +70,20 @@ QueryResult::Ptr DeleteQuery::execute() {
                 "Invalid number of operands (? operands)."_f % operands.size()
         );
     Database &db = Database::getInstance();
-    int counter = 0;
+    Table::SizeType counter = 0;
     try {
         auto &table = db[this->targetTable];
         if (condition.empty()) {
             counter = table.clear();
             return make_unique<RecordCountResult>(counter);
         }
-        for (auto it = table.begin(); it != table.end();) {
+        for (auto it = table.begin(); it != table.end(); ++it) {
             if (evalCondition(condition, *it)) {
-                it = table.erase(it);
+                table.erase(it);
                 counter++;
-            } else ++it;
+            } else {
+                table.move(it);
+            }
         }
         return make_unique<RecordCountResult>(counter);
     } catch (const TableNameNotFound &e) {

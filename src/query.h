@@ -6,6 +6,7 @@
 #include "uexception.h"
 #include "db_table.h"
 #include "query_results.h"
+#include "task_results.h"
 
 class Query {
 public:

@@ -42,7 +42,7 @@ class Table {
 public:
     typedef std::string KeyType;
     typedef std::string FieldID;
-    typedef int FieldIndex;
+    typedef size_t FieldIndex;
     typedef int ValueType;
     typedef size_t SizeType;
 
@@ -227,6 +227,16 @@ public:
     Table(std::string name, const Table &origin) :
             fields(origin.fields), tableName(std::move(name)), keySet(origin.keySet), data(origin.data) {}
 
+    FieldIndex getFieldIndex(const FieldID &field) {
+        try {
+            return this->fieldMap.at(field);
+        } catch (const std::out_of_range &e) {
+            throw TableFieldNotFound(
+                    R"(Field name "?" doesn't exists.)"_f % (field)
+            );
+        }
+    }
+
     template<class AssocContainer>
     void insert(KeyType key, const AssocContainer &data) = delete;
 
@@ -238,7 +248,7 @@ public:
      * Caution: this function only erases the key in keySet, leaves data unchanged
      * @param it
      */
-    void erase(Iterator it) {
+    void erase(const Iterator &it) {
         this->keySet.erase(it.it->key);
     }
 
@@ -247,7 +257,7 @@ public:
      * Caution: iterator it can't be accessed again after move() is called
      * @param it
      */
-    void move(Iterator it) {
+    void move(Iterator &it) {
         this->dataNew.push_back(std::move(*(it.it)));
     }
 
