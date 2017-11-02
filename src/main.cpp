@@ -3,7 +3,7 @@
 #include "db_table.h"
 #include "query_parser.h"
 #include "query_builders.h"
-#include "query.h"
+#include "query/query.h"
 #include "db.h"
 
 #include <vector>

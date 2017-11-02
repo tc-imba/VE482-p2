@@ -1,7 +1,7 @@
 #ifndef SRC_MANAGEMENT_QUERY_H
 #define SRC_MANAGEMENT_QUERY_H
 
-#include "query.h"
+#include "query/query.h"
 
 class LoadTableQuery : public Query {
     static constexpr const char* qname = "LOAD";

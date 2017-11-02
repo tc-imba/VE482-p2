@@ -251,7 +251,7 @@ public:
     Table(std::string name, const Table &origin) :
             fields(origin.fields), tableName(std::move(name)), keySet(origin.keySet), data(origin.data) {}
 
-    FieldIndex getFieldIndex(const FieldID &field) {
+    FieldIndex getFieldIndex(const FieldID &field) const {
         try {
             return this->fieldMap.at(field);
         } catch (const std::out_of_range &e) {

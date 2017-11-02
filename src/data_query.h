@@ -1,21 +1,8 @@
 #ifndef SRC_DATA_QUERY_H
 #define SRC_DATA_QUERY_H
 
-#include "query.h"
+#include "query/query.h"
 
-class ComplexQuery : public ConditionedQuery {
-protected:
-    std::string targetTable;
-    std::vector<std::string> operands;
-    std::vector<QueryCondition> condition;
-public:
-    ComplexQuery(const std::string& targetTable,
-                 const std::vector<std::string>& operands,
-                 const std::vector<QueryCondition>& condition)
-            : targetTable(targetTable),
-              operands(operands),
-              condition(condition) { }
-};
 
 // Here follows the basic CURD Queries:
 // C - Create (insert) an entry
@@ -31,13 +18,7 @@ public:
     std::string toString() override;
 };
 
-class DeleteQuery : public ComplexQuery {
-    static constexpr const char* qname = "DELETE";
-public:
-    using ComplexQuery::ComplexQuery;
-    QueryResult::Ptr execute() override;
-    std::string toString() override;
-};
+
 
 
 class InsertQuery : public ComplexQuery {

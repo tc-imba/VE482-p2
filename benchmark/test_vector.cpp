@@ -11,7 +11,7 @@
 #include <thread>
 
 #include "../src/query_results.h"
-#include "../src/query.h"
+#include "../src/query/query.h"
 
 using namespace std;
 

@@ -4,7 +4,8 @@ set(SOURCE_FILES
         db.cpp db.h
         db_table.cpp db_table.h db_table_impl.hpp
         query_parser.cpp query_parser.h
-        query.cpp query.h
+        query/query.cpp query/query.h
+        query/delete_query.cpp query/delete_query.h
         query_builders.cpp query_builders.h
         query_results.cpp query_results.h
         task_results.h

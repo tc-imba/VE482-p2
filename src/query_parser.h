@@ -1,7 +1,7 @@
 #ifndef SRC_QUERY_PARSER_H
 #define SRC_QUERY_PARSER_H
 
-#include "query.h"
+#include "query/query.h"
 #include <string>
 #include <exception>
 #include <vector>
