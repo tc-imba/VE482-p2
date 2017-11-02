@@ -6,6 +6,7 @@ constexpr const char *InsertQuery::qname;
 constexpr const char *UpdateQuery::qname;
 constexpr const char *DeleteQuery::qname;
 constexpr const char *SelectQuery::qname;
+constexpr const char *DuplicateQuery::qname;
 
 QueryResult::Ptr UpdateQuery::execute() {
     using namespace std;
@@ -85,6 +86,7 @@ QueryResult::Ptr DeleteQuery::execute() {
                 table.move(it);
             }
         }
+        table.swapData();
         return make_unique<RecordCountResult>(counter);
     } catch (const TableNameNotFound &e) {
         return make_unique<ErrorMsgResult>(
@@ -228,3 +230,6 @@ QueryResult::Ptr DuplicateQuery::execute() {
     }
 }
 
+std::string DuplicateQuery::toString() {
+    return "QUERY = DUPLICATE " + this->targetTable + "\"";
+}

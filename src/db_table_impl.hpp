@@ -17,11 +17,14 @@ Table::Table(const std::string &name, const FieldIDContainer &_fields)
         : tableName(name),
           fields(_fields.cbegin(), _fields.cend()),
           blankDatum(_fields.size()) {
-    for (const auto &field : fields)
+    size_t i = 0;
+    for (const auto &field : fields) {
         if (field == "KEY")
             throw MultipleKey(
                     "Error creating table \"" + name + "\": Multiple KEY field."
             );
+        fieldMap.insert({{field}, {i++}});
+    }
 }
 
 /*template<class AssocContainer>
