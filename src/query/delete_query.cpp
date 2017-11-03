@@ -60,3 +60,15 @@ QueryResult::Ptr DeleteQuery::execute() {
 std::string DeleteQuery::toString() {
     return "QUERY = DELETE " + this->targetTable + "\"";
 }
+
+void DeleteTask::execute() {
+    for (auto it = begin; it != end; ++it) {
+        if (query->evalCondition(query->getCondition(), *it)) {
+            table.erase(it);
+            counter++;
+        } else {
+            table.move(it);
+        }
+    }
+}
+

@@ -8,6 +8,8 @@
 #include "../query_results.h"
 #include "../task_results.h"
 
+class Task;
+
 class Query {
 public:
     typedef std::shared_ptr<Query> Ptr;
@@ -35,7 +37,7 @@ public:
 
 
 class ConditionedQuery : public Query {
-protected:
+public:
     bool evalCondition(const std::vector<QueryCondition> &conditions,
                        const Table::Object &object);
 };
@@ -45,18 +47,37 @@ protected:
     std::string targetTable;
     std::vector<std::string> operands;
     std::vector<QueryCondition> condition;
+    std::vector<std::shared_ptr<Task> > tasks;
 public:
+    typedef std::shared_ptr<ComplexQuery> Ptr;
+
     ComplexQuery(const std::string &targetTable,
                  const std::vector<std::string> &operands,
                  const std::vector<QueryCondition> &condition)
             : targetTable(targetTable),
               operands(operands),
               condition(condition) {}
+
+    const std::vector<QueryCondition> &getCondition() {
+        return condition;
+    }
+
+    void combine();
 };
 
 class Task {
-    Query::Ptr query;
-    virtual QueryResult::Ptr execute() = 0;
+    Task() = default;
+protected:
+    std::shared_ptr<ComplexQuery> query;
+    Table &table;
+    /** Count affected rows in this task */
+    Table::SizeType counter = 0;
+    Table::Iterator begin, end;
+public:
+    typedef std::shared_ptr<Task> Ptr;
+    explicit Task(const std::shared_ptr<ComplexQuery> &query, Table &table) :
+            query(query), table(table) {};
+    virtual void execute() = 0;
     virtual ~Task() = default;
 };
 

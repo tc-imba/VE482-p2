@@ -8,11 +8,22 @@
 #include "query.h"
 
 class DeleteQuery : public ComplexQuery {
-    static constexpr const char* qname = "DELETE";
+    static constexpr const char *qname = "DELETE";
 public:
     using ComplexQuery::ComplexQuery;
     QueryResult::Ptr execute() override;
     std::string toString() override;
+    friend class DeleteTask;
+};
+
+class DeleteTask : public Task {
+private:
+    DeleteQuery *getQuery() {
+        return (DeleteQuery *) query.get();
+    }
+
+public:
+    void execute() override;
 };
 
 #endif //LEMONDB_DELETE_QUERY_H
