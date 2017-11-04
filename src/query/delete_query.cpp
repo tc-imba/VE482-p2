@@ -5,6 +5,7 @@
 #include "delete_query.h"
 #include "../db.h"
 #include "../db_table.h"
+#include "../formatter.h"
 
 constexpr const char *DeleteQuery::qname;
 
@@ -61,14 +62,39 @@ std::string DeleteQuery::toString() {
     return "QUERY = DELETE " + this->targetTable + "\"";
 }
 
+QueryResult::Ptr DeleteQuery::combine() {
+    using namespace std;
+    if (taskCompelete < tasks.size()) {
+        return make_unique<ErrorMsgResult>(
+                qname, this->targetTable.c_str(),
+                "Not completed yet."s
+        );
+    }
+    Database &db = Database::getInstance();
+    auto &table = db[this->targetTable];
+    Table::SizeType counter = 0;
+    for (auto &task:tasks) {
+        counter += task->getCounter();
+    }
+    table.swapData();
+    return make_unique<RecordCountResult>(counter);
+}
+
 void DeleteTask::execute() {
-    for (auto it = begin; it != end; ++it) {
-        if (query->evalCondition(query->getCondition(), *it)) {
-            table.erase(it);
-            counter++;
-        } else {
-            table.move(it);
+    try {
+        for (auto it = begin; it != end; ++it) {
+            if (query->evalCondition(query->getCondition(), *it)) {
+                table.erase(it);
+                counter++;
+            } else {
+                table.move(it);
+            }
         }
+    } catch (const IllFormedQueryCondition &e) {
+        return std::make_unique<ErrorMsgResult>(
+                query->qname, table.name(),
+                e.what()
+        );
     }
 }
 

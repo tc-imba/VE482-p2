@@ -13,7 +13,7 @@ public:
     using ComplexQuery::ComplexQuery;
     QueryResult::Ptr execute() override;
     std::string toString() override;
-    friend class DeleteTask;
+    QueryResult::Ptr combine() override;
 };
 
 class DeleteTask : public Task {

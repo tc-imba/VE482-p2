@@ -48,6 +48,7 @@ protected:
     std::vector<std::string> operands;
     std::vector<QueryCondition> condition;
     std::vector<std::shared_ptr<Task> > tasks;
+    int taskCompelete = 0;
 public:
     typedef std::shared_ptr<ComplexQuery> Ptr;
 
@@ -62,23 +63,31 @@ public:
         return condition;
     }
 
-    void combine();
+    void complete() {
+        taskCompelete++;
+    }
+
+    virtual QueryResult::Ptr combine() {};
 };
 
 class Task {
-    Task() = default;
 protected:
     std::shared_ptr<ComplexQuery> query;
     Table &table;
     /** Count affected rows in this task */
     Table::SizeType counter = 0;
     Table::Iterator begin, end;
+    QueryResult::Ptr errorResult = nullptr;
 public:
     typedef std::shared_ptr<Task> Ptr;
+    Task() = delete;
     explicit Task(const std::shared_ptr<ComplexQuery> &query, Table &table) :
             query(query), table(table) {};
     virtual void execute() = 0;
     virtual ~Task() = default;
+    Table::SizeType getCounter() {
+        return counter;
+    };
 };
 
 
