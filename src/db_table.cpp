@@ -3,7 +3,6 @@
 #include "formatter.h"
 
 
-
 Table::Ptr loadTableFromStream(std::istream &infile, std::string source) {
     std::string errString =
             source != "" ?
@@ -101,3 +100,64 @@ std::ostream &operator<<(std::ostream &os, const Table &table) {
     }
     return os << buffer.str();
 }
+
+void Table::addQuery(Query::Ptr &query) {
+    queryQueueMutex.lock();
+    if (queryQueueCounter < 0) {
+        // writing, push back the query
+        queryQueue.push_back(query);
+        queryQueueMutex.unlock();
+        return;
+    }
+    // idle/reading
+    if (query->isWriter()) {
+        // add a writer or execute it if idle
+        if (queryQueueCounter == 0) {
+            queryQueueCounter = -1;
+            queryQueueMutex.unlock();
+            query->execute();
+        }
+        else {
+            queryQueue.push_back(query);
+            queryQueueMutex.unlock();
+        }
+    }
+    else {
+        // add a reader and execute it at once
+        ++queryQueueCounter;
+        queryQueueMutex.unlock();
+        query->execute();
+    }
+
+}
+
+void Table::refreshQuery() {
+    queryQueueMutex.lock();
+    if (queryQueueCounter <= 0) {
+        // writing or idle (should not happen), reset the counter
+        queryQueueCounter = 0;
+    }
+    else {
+        --queryQueueCounter;
+    }
+    if (queryQueueCounter == 0 && queryQueue.front()->isWriter()) {
+        // if idle with a write query, execute it
+        queryQueueCounter = -1;
+        auto query = queryQueue.front();
+        queryQueue.pop_front();
+        queryQueueMutex.unlock();
+        query->execute();
+    }
+    else {
+        // if reading, execute all read query before next write query
+        decltype(queryQueue) list;
+        auto it = queryQueue.begin();
+        for (it != queryQueue.end(); !(*it)->isWriter(); ++it) {}
+        list.splice(list.begin(), queryQueue, queryQueue.begin(), it);
+        queryQueueMutex.unlock();
+        for (auto &item:list) {
+            item->execute();
+        }
+    }
+}
+

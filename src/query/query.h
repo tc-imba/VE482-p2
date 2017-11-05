@@ -11,11 +11,14 @@
 class Task;
 
 class Query {
+private:
+    bool writer = false;
 public:
     typedef std::shared_ptr<Query> Ptr;
     virtual QueryResult::Ptr execute() = 0;
     virtual std::string toString() = 0;
     virtual ~Query() = default;
+    bool isWriter() { return writer; }
 };
 
 struct QueryCondition {
@@ -81,10 +84,12 @@ protected:
 public:
     typedef std::shared_ptr<Task> Ptr;
     Task() = delete;
+
     explicit Task(const std::shared_ptr<ComplexQuery> &query, Table &table) :
             query(query), table(table) {};
     virtual void execute() = 0;
     virtual ~Task() = default;
+
     Table::SizeType getCounter() {
         return counter;
     };

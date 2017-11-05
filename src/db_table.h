@@ -6,12 +6,15 @@
 #include <fstream>
 #include <unordered_map>
 #include <vector>
+#include <list>
 #include <iterator>
 #include <ostream>
 #include <unordered_set>
+#include <mutex>
 
 #include "uexception.h"
 #include "formatter.h"
+#include "query/query.h"
 
 #define _DBTABLE_ACCESS_WITH_NAME_EXCEPTION(field)\
 do {\
@@ -367,6 +370,28 @@ public:
      * @return
      */
     friend std::ostream &operator<<(std::ostream &os, const Table &table);
+
+private:
+    /**
+     * (protected by @see queryQueueMutex)
+     * A reader/writer queue implemented with std::list
+     * only push_back, pop_front and splice with forward iterator should be used
+     * std::queue is not used because it doesn't support iterator
+     */
+    std::list<Query::Ptr> queryQueue;
+    /**
+     * (protected by @see queryQueueMutex)
+     * The value of queryQueueCounter have different meanings
+     * -1 : writing
+     * 0  : idle
+     * 1+ : reading (the number of readers)
+     */
+    int queryQueueCounter = 0;
+    /** queryQueue and queryQueueCounter must be locked for multi-thread */
+    std::mutex queryQueueMutex;
+
+    void addQuery(Query::Ptr &query);
+    void refreshQuery();
 };
 
 Table::Ptr loadTableFromStream(std::istream &is, std::string source = "");
