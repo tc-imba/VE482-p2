@@ -1,10 +1,10 @@
 #include <iostream>
 
-#include "db_table.h"
+#include "db/db_table.h"
 #include "query_parser.h"
 #include "query_builders.h"
 #include "query/query.h"
-#include "db.h"
+#include "db/db.h"
 
 #include <vector>
 #include <map>

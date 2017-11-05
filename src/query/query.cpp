@@ -1,6 +1,6 @@
 #include "query.h"
-#include "../db.h"
-#include "../db_table.h"
+#include "../db/db.h"
+#include "../db/db_table.h"
 #include <fstream>
 #include <iostream>
 #include <cassert>

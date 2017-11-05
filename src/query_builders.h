@@ -2,7 +2,7 @@
 #define SRC_QUERY_BUILDERS_H
 
 #include "query_parser.h"
-#include "db_table.h"
+#include "db/db_table.h"
 
 #define QueryBuilder(name) name##QueryBuilder
 

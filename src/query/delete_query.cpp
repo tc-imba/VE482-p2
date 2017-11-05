@@ -3,8 +3,8 @@
 //
 
 #include "delete_query.h"
-#include "../db.h"
-#include "../db_table.h"
+#include "../db/db.h"
+#include "../db/db_table.h"
 #include "../formatter.h"
 
 constexpr const char *DeleteQuery::qname;
@@ -91,10 +91,11 @@ void DeleteTask::execute() {
             }
         }
     } catch (const IllFormedQueryCondition &e) {
-        return std::make_unique<ErrorMsgResult>(
+        return;
+        /*return std::make_unique<ErrorMsgResult>(
                 query->qname, table.name(),
                 e.what()
-        );
+        );*/
     }
 }
 

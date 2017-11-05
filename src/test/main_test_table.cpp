@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "db_table.h"
+#include "../db/db_table.h"
 
 #include <vector>
 #include <map>

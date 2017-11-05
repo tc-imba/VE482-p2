@@ -3,23 +3,13 @@
 
 #include <string>
 #include <memory>
+#include "query_base.h"
 #include "../uexception.h"
-#include "../db_table.h"
+#include "../db/db_table.h"
 #include "../query_results.h"
 #include "../task_results.h"
 
 class Task;
-
-class Query {
-private:
-    bool writer = false;
-public:
-    typedef std::shared_ptr<Query> Ptr;
-    virtual QueryResult::Ptr execute() = 0;
-    virtual std::string toString() = 0;
-    virtual ~Query() = default;
-    bool isWriter() { return writer; }
-};
 
 struct QueryCondition {
     std::string field;
@@ -47,7 +37,6 @@ public:
 
 class ComplexQuery : public ConditionedQuery {
 protected:
-    std::string targetTable;
     std::vector<std::string> operands;
     std::vector<QueryCondition> condition;
     std::vector<std::shared_ptr<Task> > tasks;

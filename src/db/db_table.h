@@ -12,9 +12,9 @@
 #include <unordered_set>
 #include <mutex>
 
-#include "uexception.h"
-#include "formatter.h"
-#include "query/query.h"
+#include "../uexception.h"
+#include "../formatter.h"
+#include "../query/query_base.h"
 
 #define _DBTABLE_ACCESS_WITH_NAME_EXCEPTION(field)\
 do {\
@@ -389,7 +389,7 @@ private:
     int queryQueueCounter = 0;
     /** queryQueue and queryQueueCounter must be locked for multi-thread */
     std::mutex queryQueueMutex;
-
+public:
     void addQuery(Query::Ptr &query);
     void refreshQuery();
 };

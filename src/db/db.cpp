@@ -1,6 +1,6 @@
 #include <iostream>
 #include "db.h"
-#include "uexception.h"
+#include "../uexception.h"
 
 std::unique_ptr<Database> Database::instance = nullptr;
 
@@ -47,11 +47,30 @@ void Database::printAllTable() {
     std::cout << std::setw(15) << "Table name";
     std::cout << std::setw(15) << "# of fields";
     std::cout << std::setw(15) << "# of entries" << std::endl;
-    for (const auto& table : this->tables) {
+    for (const auto &table : this->tables) {
         std::cout << std::setw(15) << table.first;
         std::cout << std::setw(15) << (*table.second).field().size() + 1;
         std::cout << std::setw(15) << (*table.second).size() << std::endl;
     }
     std::cout << "Total " << this->tables.size() << " tables." << std::endl;
     std::cout << "=========================" << std::endl;
+}
+
+void Database::addQuery(Query::Ptr &&query) {
+    const auto &tableName = query->getTableName();
+    if (tableName.empty()) {
+        // no-target query
+        return;
+    }
+    tablesMutex.lock();
+    auto it = this->tables.find(query->getTableName());
+    if (it == this->tables.end()) {
+        // table already exists, add the query
+        (*it->second).addQuery(query);
+    } else {
+        // table doesn't exists, add the table
+        it = tables.emplace(std::make_pair(tableName, std::make_unique<Table>()));
+    }
+
+    tablesMutex.unlock();
 }

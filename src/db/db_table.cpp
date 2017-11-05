@@ -1,6 +1,6 @@
 #include "db_table.h"
-#include "uexception.h"
-#include "formatter.h"
+#include "../uexception.h"
+#include "../formatter.h"
 
 
 Table::Ptr loadTableFromStream(std::istream &infile, std::string source) {
