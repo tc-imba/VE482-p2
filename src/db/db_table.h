@@ -95,8 +95,9 @@ private:
     /** Saves data in a new vector after delete or duplicate */
     std::vector<Datum> dataNew;
     /** Used to keep the keys unique */
-    std::unordered_set<KeyType> keySet;
-
+    //std::unordered_set<KeyType> keySet;
+    /** Used to keep the keys unique and provide O(1) access with key */
+    std::unordered_map<KeyType, std::vector<Datum>::iterator> keyMap;
     /** The name of table */
     std::string tableName;
 
@@ -116,14 +117,15 @@ public:
         //
         friend class Table;
 
-        const Table *table;
+        /** Not const because key can be updated */
+        Table *table;
         Iterator it;
 
     public:
         typedef std::unique_ptr<ObjectImpl> Ptr;
 
         ObjectImpl(Iterator datumIt, const Table *t)
-                : it(datumIt), table(t) {}
+                : it(datumIt), table(const_cast<Table *>(t)) {}
 
         ObjectImpl(const ObjectImpl &) = default;
 
@@ -138,8 +140,10 @@ public:
         KeyType key() const { return it->key; }
 
         void setKey(KeyType key) {
-            std::remove(table->keySet.begin(), table->keySet.end(), it->key);
-            table->keySet.insert(key);
+            auto keyMapIt = table->keyMap.find(it->key);
+            auto dataIt = std::move(keyMapIt->second);
+            table->keyMap.erase(keyMapIt);
+            table->keyMap.emplace(key, dataIt);
             it->key = std::move(key);
         }
 
@@ -275,7 +279,8 @@ public:
     Table(const std::string &name, const FieldIDContainer &_fields);
 
     Table(std::string name, const Table &origin) :
-            fields(origin.fields), tableName(std::move(name)), keySet(origin.keySet), data(origin.data) {}
+            fields(origin.fields), tableName(std::move(name)),
+            keyMap(origin.keyMap), data(origin.data) {}
 
     bool isInited() const { return initialized; }
 
@@ -296,21 +301,39 @@ public:
     void insertByIndex(KeyType key, const ValueTypeContainer &data);
 
     /**
+     * Access the value according to the key
+     * @param key
+     * @return the Object that KEY = key, or nullptr if key doesn't exist
+     */
+    Object::Ptr operator[](const KeyType &key) const {
+        auto it = keyMap.find(key);
+        if (it == keyMap.end()) {
+            // not found
+            return nullptr;
+        } else {
+            return createProxy(it->second, this);
+        }
+    }
+
+    /**
      * Erase the key in the table
-     * Caution: this function only erases the key in keySet, leaves data unchanged
+     * Caution: this function only erases the key in keyMap, leaves data unchanged
+     * no other operation related to keyMap can be applied before swapData is called
      * @param it
      */
     void erase(const Iterator &it) {
-        this->keySet.erase(it.it->key);
+        this->keyMap.erase(it.it->key);
     }
 
     /**
      * Move datum from data to dataNew
      * Caution: iterator it can't be accessed again after move() is called
+     * no other operation related to keyMap can be applied before swapData is called
      * @param it
      */
     void move(Iterator &it) {
-        this->dataNew.push_back(std::move(*(it.it)));
+        keyMap.at(it.it->key) = dataNew.end();
+        dataNew.push_back(std::move(*(it.it)));
     }
 
     /**
@@ -319,7 +342,7 @@ public:
      * so push_back to dataNew is efficient
      */
     void swapData() {
-        std::swap(this->data, this->dataNew);
+        std::swap(data, dataNew);
         dataNew.clear();
     }
 
@@ -358,9 +381,9 @@ public:
      * @return rows affected
      */
     size_t clear() {
-        auto result = keySet.size();
+        auto result = keyMap.size();
         data.clear();
-        keySet.clear();
+        keyMap.clear();
         return result;
     }
 
