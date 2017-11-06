@@ -137,6 +137,12 @@ public:
 
         KeyType key() const { return it->key; }
 
+        void setKey(KeyType key) {
+            std::remove(table->keySet.begin(), table->keySet.end(), it->key);
+            table->keySet.insert(key);
+            it->key = std::move(key);
+        }
+
         // Accessing by index should be, at least as fast as
         // accessing by field name. Clients should perfer
         // accessing by index if the same field is accessed frequently
