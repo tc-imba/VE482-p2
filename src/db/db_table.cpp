@@ -152,7 +152,7 @@ void Table::refreshQuery() {
         // if reading, execute all read query before next write query
         decltype(queryQueue) list;
         auto it = queryQueue.begin();
-        for (it != queryQueue.end(); !(*it)->isWriter(); ++it) {}
+        for (; it != queryQueue.end() && !(*it)->isWriter(); ++it) {}
         list.splice(list.begin(), queryQueue, queryQueue.begin(), it);
         queryQueueMutex.unlock();
         for (auto &item:list) {
