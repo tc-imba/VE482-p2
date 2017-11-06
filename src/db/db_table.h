@@ -88,7 +88,7 @@ private:
     /** Map field name into index */
     std::unordered_map<FieldID, SizeType> fieldMap;
     /** Defined by tripack, seems to be used to speed up processing */
-    const Datum blankDatum;
+    //const Datum blankDatum;
 
     /** The rows are saved in a vector, which is unsorted */
     std::vector<Datum> data;
