@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "db_table.h"
 #include "../uexception.h"
 #include "../formatter.h"
@@ -116,13 +117,11 @@ void Table::addQuery(Query::Ptr &query) {
             queryQueueCounter = -1;
             queryQueueMutex.unlock();
             query->execute();
-        }
-        else {
+        } else {
             queryQueue.push_back(query);
             queryQueueMutex.unlock();
         }
-    }
-    else {
+    } else {
         // add a reader and execute it at once
         ++queryQueueCounter;
         queryQueueMutex.unlock();
@@ -136,8 +135,7 @@ void Table::refreshQuery() {
     if (queryQueueCounter <= 0) {
         // writing or idle (should not happen), reset the counter
         queryQueueCounter = 0;
-    }
-    else {
+    } else {
         --queryQueueCounter;
     }
     if (queryQueueCounter == 0 && queryQueue.front()->isWriter()) {
@@ -147,12 +145,15 @@ void Table::refreshQuery() {
         queryQueue.pop_front();
         queryQueueMutex.unlock();
         query->execute();
-    }
-    else {
+    } else {
         // if reading, execute all read query before next write query
         decltype(queryQueue) list;
-        auto it = queryQueue.begin();
-        for (; it != queryQueue.end() && !(*it)->isWriter(); ++it) {}
+        // STL may be a bit faster ?
+        auto it = std::find_if(queryQueue.begin(), queryQueue.end(), [](const Query::Ptr &ptr) {
+            return !ptr->isWriter();
+        });
+        //auto it = queryQueue.begin();
+        //for (; it != queryQueue.end() && !(*it)->isWriter(); ++it) {}
         list.splice(list.begin(), queryQueue, queryQueue.begin(), it);
         queryQueueMutex.unlock();
         for (auto &item:list) {

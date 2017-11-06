@@ -6,6 +6,7 @@
 #define LEMONDB_DELETE_QUERY_H
 
 #include "query.h"
+#include "task.h"
 
 class DeleteQuery : public ComplexQuery {
     static constexpr const char *qname = "DELETE";
@@ -21,8 +22,10 @@ private:
     DeleteQuery *getQuery() {
         return (DeleteQuery *) query.get();
     }
-
 public:
+    DeleteTask(const std::shared_ptr<ComplexQuery> &query,
+               Table &table, Table::Iterator begin, Table::Iterator end) :
+            Task(query, table, begin, end) {};
     void execute() override;
 };
 

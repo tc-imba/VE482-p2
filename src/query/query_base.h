@@ -23,4 +23,7 @@ public:
     const std::string &getTableName() { return targetTable; }
 };
 
+class Task;
+class ComplexQuery;
+
 #endif //LEMONDB_QUERY_BASE_H

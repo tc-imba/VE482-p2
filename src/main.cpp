@@ -23,6 +23,7 @@ std::string extractQueryString() {
 
 
 int main() {
+    Database::getInstance();
     QueryParser p;
     //p.registerQueryBuilder(std::make_unique<FakeQueryBuilder>());
     p.registerQueryBuilder(std::make_unique<QueryBuilder(Debug)>());

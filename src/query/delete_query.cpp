@@ -24,15 +24,7 @@ QueryResult::Ptr DeleteQuery::execute() {
             counter = table.clear();
             return make_unique<RecordCountResult>(counter);
         }
-        for (auto it = table.begin(); it != table.end(); ++it) {
-            if (evalCondition(condition, *it)) {
-                table.erase(it);
-                counter++;
-            } else {
-                table.move(it);
-            }
-        }
-        table.swapData();
+        addIterationTask<DeleteTask>(db, table);
         return make_unique<RecordCountResult>(counter);
     } catch (const TableNameNotFound &e) {
         return make_unique<ErrorMsgResult>(
@@ -64,7 +56,7 @@ std::string DeleteQuery::toString() {
 
 QueryResult::Ptr DeleteQuery::combine() {
     using namespace std;
-    if (taskCompelete < tasks.size()) {
+    if (taskComplete < tasks.size()) {
         return make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
                 "Not completed yet."s
@@ -90,8 +82,10 @@ void DeleteTask::execute() {
                 table.move(it);
             }
         }
+        Task::execute();
     } catch (const IllFormedQueryCondition &e) {
         return;
+        // @TODO manage query exceptions later
         /*return std::make_unique<ErrorMsgResult>(
                 query->qname, table.name(),
                 e.what()

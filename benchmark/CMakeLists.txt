@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.8)
-
+add_definitions()
 add_executable(test_vector test_vector.cpp)
+target_link_libraries(test_vector pthread m)
 add_executable(test_vector_move test_vector_move.cpp)
 add_executable(test_virtual test_virtual.cpp)

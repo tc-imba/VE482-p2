@@ -58,6 +58,7 @@ private:
         std::vector<ValueType> datum;
 
         Datum() = default;
+
         Datum(const Datum &) = default;
 
         explicit Datum(const SizeType &size) {
@@ -78,6 +79,9 @@ private:
 
     typedef std::vector<Datum>::iterator DataIterator;
     typedef std::vector<Datum>::const_iterator ConstDataIterator;
+
+    /** Whether the table can be used now */
+    bool initialized = false;
 
     /** The fields, ordered as defined in fieldMap */
     std::vector<FieldID> fields;
@@ -122,9 +126,13 @@ public:
                 : it(datumIt), table(t) {}
 
         ObjectImpl(const ObjectImpl &) = default;
+
         ObjectImpl(ObjectImpl &&) noexcept = default;
+
         ObjectImpl &operator=(const ObjectImpl &) = default;
+
         ObjectImpl &operator=(ObjectImpl &&) noexcept = default;
+
         ~ObjectImpl() = default;
 
         KeyType key() const { return it->key; }
@@ -172,10 +180,15 @@ public:
                 : it(datumIt), table(t) {}
 
         IteratorImpl() = default;
+
         IteratorImpl(const IteratorImpl &) = default;
+
         IteratorImpl(IteratorImpl &&) noexcept = default;
+
         IteratorImpl &operator=(const IteratorImpl &)     = default;
+
         IteratorImpl &operator=(IteratorImpl &&) noexcept = default;
+
         ~IteratorImpl() = default;
 
         pointer operator->() { return createProxy(it, table); }
@@ -225,11 +238,13 @@ public:
         }
 
         IteratorImpl &operator+=(int n) {
-            it += n; return *this;
+            it += n;
+            return *this;
         }
 
         IteratorImpl &operator-=(int n) {
-            it -= n; return *this;
+            it -= n;
+            return *this;
         }
     };
 
@@ -247,12 +262,16 @@ private:
     }
 
 public:
+    Table() = default;
+
     // Accept any container that contains string.
     template<class FieldIDContainer>
     Table(const std::string &name, const FieldIDContainer &_fields);
 
     Table(std::string name, const Table &origin) :
             fields(origin.fields), tableName(std::move(name)), keySet(origin.keySet), data(origin.data) {}
+
+    bool isInited() const { return initialized; }
 
     FieldIndex getFieldIndex(const FieldID &field) const {
         try {
@@ -341,25 +360,25 @@ public:
 
     /**
      * Get a begin iterator similar to the standard iterator
-     * @return
+     * @return begin iterator
      */
     Iterator begin() { return Iterator(data.begin(), this); }
 
     /**
      * Get a end iterator similar to the standard iterator
-     * @return
+     * @return end iterator
      */
     Iterator end() { return Iterator(data.end(), this); }
 
     /**
      * Get a const begin iterator similar to the standard iterator
-     * @return
+     * @return const begin iterator
      */
     ConstIterator begin() const { return ConstIterator(data.cbegin(), this); }
 
     /**
      * Get a const end iterator similar to the standard iterator
-     * @return
+     * @return const end iterator
      */
     ConstIterator end() const { return ConstIterator(data.cend(), this); }
 
@@ -367,7 +386,7 @@ public:
      * Overload the << operator for complete print of the table
      * @param os
      * @param table
-     * @return
+     * @return the origin ostream
      */
     friend std::ostream &operator<<(std::ostream &os, const Table &table);
 
@@ -391,6 +410,7 @@ private:
     std::mutex queryQueueMutex;
 public:
     void addQuery(Query::Ptr &query);
+
     void refreshQuery();
 };
 

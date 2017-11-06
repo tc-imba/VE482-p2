@@ -4,6 +4,23 @@
 
 std::unique_ptr<Database> Database::instance = nullptr;
 
+void Database::threadWork(Database *db) {
+    fprintf(stderr, "Start thread %lu\n", std::this_thread::get_id());
+    while (true) {
+        db->tasksMutex.lock();
+        if (db->tasks.empty()) {
+            db->tasksMutex.unlock();
+            if (db->readyExit) return;
+            std::this_thread::yield();
+        } else
+        {
+            auto task = db->tasks.front();
+            db->tasks.pop();
+            db->tasksMutex.unlock();
+            task->execute();
+        }
+    }
+}
 
 void Database::registerTable(Table::Ptr &&table) {
     auto name = table->name();
@@ -56,6 +73,7 @@ void Database::printAllTable() {
     std::cout << "=========================" << std::endl;
 }
 
+
 void Database::addQuery(Query::Ptr &&query) {
     const auto &tableName = query->getTableName();
     if (tableName.empty()) {
@@ -65,12 +83,15 @@ void Database::addQuery(Query::Ptr &&query) {
     tablesMutex.lock();
     auto it = this->tables.find(query->getTableName());
     if (it == this->tables.end()) {
-        // table already exists, add the query
-        (*it->second).addQuery(query);
-    } else {
-        // table doesn't exists, add the table
-        it = tables.emplace(std::make_pair(tableName, std::make_unique<Table>()));
+        // table doesn't exist, add the table
+        it = tables.emplace(std::make_pair(tableName, std::make_unique<Table>())).first;
     }
-
+    (*it->second).addQuery(query);
     tablesMutex.unlock();
+}
+
+void Database::addTask(Task::Ptr &&task) {
+    tasksMutex.lock();
+    tasks.push(task);
+    tasksMutex.unlock();
 }
