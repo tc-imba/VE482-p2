@@ -15,8 +15,7 @@
 template<class FieldIDContainer>
 Table::Table(const std::string &name, const FieldIDContainer &_fields)
         : tableName(name),
-          fields(_fields.cbegin(), _fields.cend()),
-          blankDatum(_fields.size()) {
+          fields(_fields.cbegin(), _fields.cend()) {
     size_t i = 0;
     for (const auto &field : fields) {
         if (field == "KEY")
