@@ -10,13 +10,13 @@
 // R - Read   (read existsing queries, implemented as dump)
 // D - Delete (delete existing query)
 
-class UpdateQuery : public ComplexQuery {
+/*class UpdateQuery : public ComplexQuery {
     static constexpr const char* qname = "UPDATE";
 public:
     using ComplexQuery::ComplexQuery;
     QueryResult::Ptr execute() override;
     std::string toString() override;
-};
+};*/
 
 
 

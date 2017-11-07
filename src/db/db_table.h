@@ -103,6 +103,32 @@ private:
 
 public:
     typedef std::unique_ptr<Table> Ptr;
+    /**
+     * This class is for tasks of queries to store their results, and to combine
+     */
+    class resultArray {
+
+    private:
+        std::vector<Datum> results;
+
+    public:
+
+        void push_back (const KeyType &key, std::vector<ValueType> &&datum) {
+            results.push_back(Datum(key, datum));
+        }
+
+        static bool comp (const Datum &a, const Datum &b) {
+            return a.key < b.key;
+        }
+
+        decltype(results.begin()) begin() { return results.begin(); }
+
+        decltype(results.begin()) end() { return results.end(); }
+
+        std::vector<Datum>::iterator insert (std::vector<Datum>::iterator pos, std::vector<Datum>::iterator begin, std::vector<Datum>::iterator end) {
+            return results.insert(pos, begin, end);
+        }
+    };
 
     /**
      * A proxy class that provides abstraction on internal

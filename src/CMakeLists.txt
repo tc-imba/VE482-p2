@@ -6,12 +6,12 @@ set(SOURCE_FILES
         query_parser.cpp query_parser.h
         query/query.cpp query/query.h
         query/delete_query.cpp query/delete_query.h
-        query/update_query.cpp query/update_query.h
+        query/select_query.cpp query/select_query.h
         query_builders.cpp query_builders.h
         query_results.cpp query_results.h
         task_results.h
         management_query.cpp management_query.h
-        data_query.cpp data_query.h
+        #data_query.cpp data_query.h
         arithmetics_query.cpp arithmetics_query.h
         formatter.h uexception.h query/query_base.h query/task.h query/task.cpp)
 
