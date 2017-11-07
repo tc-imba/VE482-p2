@@ -76,7 +76,7 @@ public:
     virtual QueryResult::Ptr combine() {
         return nullptr;
     };
-
+    
     template<class TaskType>
     void addIterationTask(Database &db, Table &table) {
         auto begin = table.begin();
@@ -94,7 +94,8 @@ public:
             db.addTask(std::move(task));
         }
     }
-};
 
+};
+ 
 
 #endif //LEMONDB_QUERY_H

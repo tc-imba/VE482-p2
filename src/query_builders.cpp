@@ -1,8 +1,13 @@
 #include "query_builders.h"
 #include "management_query.h"
 #include "data_query.h"
+#include "query/update_query.h"
 #include "query/delete_query.h"
-
+#include "query/select_query.h"
+#include "query/count_query.h"
+#include "query/insert_query.h"
+#include "query/min_query.h"
+#include "query/max_query.h"
 #include <iostream>
 #include <iomanip>
 
