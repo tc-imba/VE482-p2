@@ -10,6 +10,7 @@ set(SOURCE_FILES
         query/select_query.cpp query/select_query.h
         query/count_query.cpp query/count_query.h
         query/insert_query.cpp query/insert_query.h
+        query/duplicate_query.cpp query/duplicate_query.h
         query_builders.cpp query_builders.h
         query_results.cpp query_results.h
         task_results.h

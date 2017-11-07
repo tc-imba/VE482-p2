@@ -94,6 +94,8 @@ private:
     std::vector<Datum> data;
     /** Saves data in a new vector after delete or duplicate */
     std::vector<Datum> dataNew;
+    /** mutex to protect dataNew */
+    std::mutex dataNewMutex;
     /** Used to keep the keys unique */
     //std::unordered_set<KeyType> keySet;
     /** Used to keep the keys unique and provide O(1) access with key */
@@ -358,8 +360,10 @@ public:
      * @param it
      */
     void move(Iterator &it) {
+        dataNewMutex.lock();
         keyMap.at(it.it->key) = dataNew.end();
         dataNew.push_back(std::move(*(it.it)));
+        dataNewMutex.unlock();
     }
 
     /**
@@ -369,6 +373,27 @@ public:
      */
     void swapData() {
         std::swap(data, dataNew);
+        dataNew.clear();
+    }
+
+    /**
+     * Duplicate it and put it into dataNew
+     * new key is oldkey_copy, datum is identical
+     * this function is used only in duplicate query
+     */
+    void duplicate(Iterator &it) {
+        dataNewMutex.lock();
+        dataNew.push_back(Datum((*it).key() + "_copy", (*it).it->datum));
+        dataNewMutex.unlock();
+    }
+    
+    /**
+     * insert dataNew to the end of data
+     * then dataNew is cleared for future query
+     * this function is used only in duplicate query
+     */
+    void mergeData() {
+        data.insert(data.end(), dataNew.begin(), dataNew.end());
         dataNew.clear();
     }
 
