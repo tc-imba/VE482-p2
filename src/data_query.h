@@ -16,7 +16,7 @@ public:
     using ComplexQuery::ComplexQuery;
     QueryResult::Ptr execute() override;
     std::string toString() override;
-};*/
+};
 
 
 
@@ -35,7 +35,7 @@ public:
     using ComplexQuery::ComplexQuery;
     QueryResult::Ptr execute() override;
     std::string toString() override;
-};
+};*/
 
 class DuplicateQuery : public ComplexQuery {
     static constexpr const char* qname = "DUPLICATE";
