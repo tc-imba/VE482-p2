@@ -45,13 +45,15 @@ Table::Table(const std::string &name, const FieldIDContainer &_fields)
 
 template<class ValueTypeContainer>
 void Table::insertByIndex(KeyType key, const ValueTypeContainer &data) {
-    if (this->keySet.find(key) != this->keySet.end()) {
+    if (this->keyMap.find(key) != this->keyMap.end()) {
         std::string err = "In Table \"" + this->tableName
                           + "\" : Key \"" + key + "\" already exists!";
         throw ConflictingKey(err);
     }
+    auto it = this->data.end();
     this->data.emplace_back(key, data);
-    this->keySet.insert(key);
+    //this->keySet.insert(key);
+    this->keyMap.emplace(key, it);
 }
 
 std::ostream &operator<<(std::ostream &os, const Table &table);

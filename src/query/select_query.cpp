@@ -76,7 +76,7 @@ void SelectTask::execute() {
         for (auto it = begin; it != end; ++it) {
             if (query->evalCondition(query->getCondition(), *it)) {
                 std::vector<int> tuple;
-                for (auto &operand : this->getQuery()->getOperands()) {
+                for (auto operand : this->getQuery()->getOperands()) {
                     tuple.push_back((*it)[operand]);
                 }
                 this->getQuery()->pushToResultArray(index, it->key(), std::move(tuple));

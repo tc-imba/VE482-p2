@@ -23,7 +23,7 @@ std::string extractQueryString() {
 
 
 int main() {
-    Database::getInstance();
+    Database &db =Database::getInstance();
     QueryParser p;
     //p.registerQueryBuilder(std::make_unique<FakeQueryBuilder>());
     p.registerQueryBuilder(std::make_unique<QueryBuilder(Debug)>());
@@ -35,6 +35,7 @@ int main() {
             // REPL: Read-Evaluate-Print-Loop
             std::string queryStr = extractQueryString();
             Query::Ptr query = p.parseQuery(queryStr);
+            //db.addQuery(std::move(query));
             QueryResult::Ptr result = query->execute();
             cout << endl;
             if (result->success()) {
