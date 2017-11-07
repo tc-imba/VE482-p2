@@ -5,6 +5,7 @@
 #include <memory>
 #include <vector>
 #include <map>
+#include <sstream>
 #include "formatter.h"
 
 class QueryResult {
@@ -63,6 +64,17 @@ public:
 	SuccessMsgResult(const int number) {
 		this->msg = R"(Answer = "?".)"_f % number;
 	}
+
+    SuccessMsgResult(std::vector<int> results) {
+        std::stringstream ss;
+        ss << "Answer = ( ";
+        for (auto result : results) {
+            ss << result << " ";
+        }
+        ss << ")";
+        this->msg = ss.str();
+    }
+
     SuccessMsgResult(const char *qname) {
         this->msg = R"(Query "?" success.)"_f % qname;
     }
