@@ -23,7 +23,7 @@ QueryResult::Ptr SelectQuery::execute() {
         addIterationTask<SelectTask>(db, table);
         for (int i = 0; i < tasks.size(); ++i) {
             taskResults.emplace_back();
-            taskToIndex.insert({tasks[i],i});
+            taskToIndex.insert({tasks[i].get(),i});
         }
         return make_unique<SuccessMsgResult>("");
     } catch (const TableNameNotFound &e) {
@@ -64,7 +64,7 @@ QueryResult::Ptr SelectQuery::combine() {
     }
     for (int i = 1; i < tasks.size(); ++i) {
         auto it = taskResults[0].insert(taskResults[0].end(), taskResults[i].begin(),taskResults[i].end());
-        std::inplace_merge(taskResults[0].begin(), it, taskResults[0].end());
+        std::inplace_merge(taskResults[0].begin(), it, taskResults[0].end(), taskResults[0].comp);
     }
     //TODO: output taskResults[0] somehow
     return make_unique<SuccessMsgResult>("");

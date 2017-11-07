@@ -9,17 +9,17 @@
 #include "task.h"
 
 class SelectQuery : public ComplexQuery {
-    static constexpr const char *qname = "INSERT";
+    static constexpr const char *qname = "SELECT";
 private:
     std::vector<Table::resultArray> taskResults;
-    std::unordered_map<Task::Ptr, int> taskToIndex;
+    std::unordered_map<Task*, int> taskToIndex;
 public:
     using ComplexQuery::ComplexQuery;
     QueryResult::Ptr execute() override;
     std::string toString() override;
     QueryResult::Ptr combine() override;
 
-    int whichTask (const Task::Ptr &ptr) {return taskToIndex[ptr];}
+    int whichTask (Task *ptr) {return taskToIndex[ptr];}
 
     std::vector<std::string> &getOperands () {return operands;}
 

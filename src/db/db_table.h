@@ -117,8 +117,8 @@ public:
             results.push_back(Datum(key, datum));
         }
 
-        int comp (const Datum &a, const Datum &b) {
-            return a.key.compare(b.key);
+        static bool comp (const Datum &a, const Datum &b) {
+            return a.key < b.key;
         }
 
         decltype(results.begin()) begin() { return results.begin(); }
