@@ -3,11 +3,11 @@
 #include <vector>
 
 constexpr const char *InsertQuery::qname;
-constexpr const char *UpdateQuery::qname;
+//constexpr const char *UpdateQuery::qname;
 constexpr const char *SelectQuery::qname;
 constexpr const char *DuplicateQuery::qname;
 
-QueryResult::Ptr UpdateQuery::execute() {
+/*QueryResult::Ptr UpdateQuery::execute() {
     using namespace std;
     if (this->operands.size() != 2)
         return make_unique<ErrorMsgResult>(
@@ -59,7 +59,7 @@ QueryResult::Ptr UpdateQuery::execute() {
 
 std::string UpdateQuery::toString() {
     return "QUERY = UPDATE " + this->targetTable + "\"";
-}
+}*/
 
 QueryResult::Ptr InsertQuery::execute() {
     using namespace std;
