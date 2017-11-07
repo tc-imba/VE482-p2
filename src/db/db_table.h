@@ -278,6 +278,9 @@ public:
     template<class FieldIDContainer>
     Table(const std::string &name, const FieldIDContainer &_fields);
 
+    template<class FieldIDContainer>
+    void init(const FieldIDContainer &fields);
+
     Table(std::string name, const Table &origin) :
             fields(origin.fields), tableName(std::move(name)),
             keyMap(origin.keyMap), data(origin.data) {}

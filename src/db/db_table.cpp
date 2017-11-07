@@ -6,13 +6,13 @@
 
 Table::Ptr loadTableFromStream(std::istream &infile, std::string source) {
     std::string errString =
-            source != "" ?
+            !source.empty() ?
             R"(Invalid table (from "?") format: )"_f % source :
             "Invalid table format: ";
 
     std::string tableName;
     int fieldCount;
-    std::vector<std::string> fields;
+    std::vector<Table::KeyType> fields;
 
     std::string line;
     std::stringstream sstream;
@@ -28,8 +28,7 @@ Table::Ptr loadTableFromStream(std::istream &infile, std::string source) {
                 errString + "Failed to parse table metadata."
         );
     }
-
-
+    
     if (!(std::getline(infile, line)))
         throw LoadFromStreamException(
                 errString + "Failed to load field names."
@@ -58,7 +57,7 @@ Table::Ptr loadTableFromStream(std::istream &infile, std::string source) {
 
     int count = 2;
     while (std::getline(infile, line)) {
-        if (line == "") break; // Read to an empty line
+        if (line.empty()) break; // Read to an empty line
         count++;
         sstream.str("");
         sstream.clear();
@@ -91,7 +90,7 @@ std::ostream &operator<<(std::ostream &os, const Table &table) {
         buffer << std::setw(width) << field;
     }
     buffer << "\n";
-    int numFields = table.fields.size();
+    auto numFields = table.fields.size();
     for (const auto &datum : table.data) {
         buffer << std::setw(width) << datum.key;
         for (int i = 0; i < numFields; ++i) {

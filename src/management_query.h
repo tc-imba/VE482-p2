@@ -3,15 +3,6 @@
 
 #include "query/query.h"
 
-class LoadTableQuery : public Query {
-    static constexpr const char* qname = "LOAD";
-    const std::string fileName;
-public:
-    LoadTableQuery(std::string file) : fileName(file) {}
-    QueryResult::Ptr execute() override;
-    std::string      toString() override;
-};
-
 class DropTableQuery : public Query {
     static constexpr const char* qname = "DROP";
     const std::string tableName;

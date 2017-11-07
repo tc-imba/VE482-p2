@@ -11,7 +11,6 @@
 #include <iomanip>
 #include <exception>
 
-
 template<class FieldIDContainer>
 Table::Table(const std::string &name, const FieldIDContainer &_fields)
         : tableName(name),
@@ -22,8 +21,14 @@ Table::Table(const std::string &name, const FieldIDContainer &_fields)
             throw MultipleKey(
                     "Error creating table \"" + name + "\": Multiple KEY field."
             );
-        fieldMap.insert({{field}, {i++}});
+        fieldMap.insert({{field},
+                         {i++}});
     }
+}
+
+template<class FieldIDContainer>
+void Table::init(const FieldIDContainer &fields) {
+
 }
 
 /*template<class AssocContainer>

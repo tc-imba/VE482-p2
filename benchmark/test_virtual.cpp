@@ -1,26 +1,27 @@
-//
-// Created by 38569 on 2017/11/1.
-//
-
-#include <queue>
-#include <list>
+#include <thread>
+#include <vector>
 #include <iostream>
+#include <atomic>
 
-using namespace std;
+std::atomic_flag lock = ATOMIC_FLAG_INIT;
 
-int main() {
-    queue<pair<int, int> > q;
-    list<pair<int, int> > l;
-    for (int i = 0; i < 10000000; i++) {
-        q.emplace(rand(), rand());
+void f(int n)
+{
+    for (int cnt = 0; cnt < 100; ++cnt) {
+        while (lock.test_and_set(std::memory_order_acquire))  // acquire lock
+            ; // spin
+        std::cout << "Output from thread " << n << '\n';
+        lock.clear(std::memory_order_release);               // release lock
     }
-    auto c = clock();
-    while (!q.empty()) {
-        l.push_back(move(q.front()));
-        q.pop();
+}
+
+int main()
+{
+    std::vector<std::thread> v;
+    for (int n = 0; n < 10; ++n) {
+        v.emplace_back(f, n);
     }
-    cout << clock() - c << endl;
-    /*for (auto &i : l) {
-        cout << i << endl;
-    }*/
+    for (auto& t : v) {
+        t.join();
+    }
 }

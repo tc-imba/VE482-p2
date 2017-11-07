@@ -4,7 +4,6 @@
 
 #include <iostream>
 
-constexpr const char *LoadTableQuery::qname;
 constexpr const char *DropTableQuery::qname;
 constexpr const char *DumpTableQuery::qname;
 constexpr const char* TruncateTableQuery::qname;
@@ -12,28 +11,7 @@ constexpr const char* CopytableTableQuery::qname;
 constexpr const char *ListTableQuery::qname;
 constexpr const char *PrintTableQuery::qname;
 
-std::string LoadTableQuery::toString() {
-    return "QUERY = Load TABLE, FILE = \"" + this->fileName + "\"";
-}
 
-QueryResult::Ptr LoadTableQuery::execute() {
-    std::ifstream infile(this->fileName);
-    if (!infile.is_open()) {
-        return std::make_unique<ErrorMsgResult>(
-                qname, "Cannot open file '?'"_f % this->fileName
-        );
-    }
-    Table::Ptr table = nullptr;
-    try {
-        table = loadTableFromStream(infile, this->fileName);
-        Database &db = Database::getInstance();
-        db.registerTable(std::move(table));
-    } catch (const std::exception &e) {
-        return std::make_unique<ErrorMsgResult>(qname, e.what());
-    }
-//    std::cerr << "info: Loaded table " << this->fileName << std::endl;
-    return std::make_unique<SuccessMsgResult>(qname);
-}
 
 std::string DropTableQuery::toString() {
     return "QUERY = Drop TABLE, Table = \"" + this->tableName + "\"";
