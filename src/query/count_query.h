@@ -27,7 +27,7 @@ private:
         return (CountQuery *) query.get();
     }
 public:
-    CountTask(const Table::KeyType , const std::shared_ptr<ComplexQuery> &query,
+    CountTask(const std::shared_ptr<ComplexQuery> &query,
                Table &table, Table::Iterator begin, Table::Iterator end) :
             Task(query, table, begin, end) {};
     void execute() override;
