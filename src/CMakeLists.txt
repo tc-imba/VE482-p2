@@ -18,7 +18,7 @@ set(SOURCE_FILES
         management_query.cpp management_query.h
         #data_query.cpp data_query.h
         arithmetics_query.cpp arithmetics_query.h
-        formatter.h uexception.h query/query_base.h query/task.h query/task.cpp)
+        formatter.h uexception.h query/query_base.h query/task.h query/task.cpp query/sum_query.h query/sum_query.cpp)
 
 add_executable(lemondb main.cpp ${SOURCE_FILES})
 target_link_libraries(lemondb pthread)

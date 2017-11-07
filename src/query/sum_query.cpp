@@ -2,27 +2,31 @@
 // Created by linzhi on 2017/11/7.
 //
 
-#include "swap_query.h"
-
+#include "sum_query.h"
 #include "../db/db.h"
 #include "../db/db_table.h"
 #include "../formatter.h"
 
-constexpr const char *SwapQuery::qname;
+constexpr const char *SumQuery::qname;
 
-QueryResult::Ptr SwapQuery::execute() {
+QueryResult::Ptr SumQuery::execute() {
     using namespace std;
-    if (this->operands.size() != 2 || this->operands[0] == "KEY" || this->operands[1] == "KEY")
+    if (this->operands.empty())
         return make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
                 "Invalid number of operands (? operands)."_f % operands.size()
         );
+    for (auto operand : this->operands) {
+        if (operand == "KEY") return make_unique<ErrorMsgResult>(
+                    qname, this->targetTable.c_str(),
+                    "Cannot sum KEY!"
+            );
+    }
     Database &db = Database::getInstance();
-    Table::SizeType counter = 0;
     try {
         auto &table = db[this->targetTable];
-        addIterationTask<SwapTask>(db, table);
-        return make_unique<RecordCountResult>(counter);
+        addIterationTask<SumTask>(db, table);
+        return make_unique<SuccessMsgResult>(qname);
     } catch (const TableNameNotFound &e) {
         return make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
@@ -47,11 +51,11 @@ QueryResult::Ptr SwapQuery::execute() {
     }
 }
 
-std::string SwapQuery::toString() {
-    return "QUERY = SWAP " + this->targetTable + "\"";
+std::string SumQuery::toString() {
+    return "QUERY = SUM " + this->targetTable + "\"";
 }
 
-QueryResult::Ptr SwapQuery::combine() {
+QueryResult::Ptr SumQuery::combine() {
     using namespace std;
     if (taskComplete < tasks.size()) {
         return make_unique<ErrorMsgResult>(
@@ -59,21 +63,25 @@ QueryResult::Ptr SwapQuery::combine() {
                 "Not completed yet."s
         );
     }
-    Table::SizeType counter = 0;
-    for (auto &task:tasks) {
-        counter += task->getCounter();
+    std::vector<int> totalFieldSums(std::move(this->getTask(0)->getFieldSums()));
+    for (int i = 1; i < tasks.size(); ++i) {
+        SumTask *thisTask = this->getTask(i);
+        for (int j = 0; j < operands.size(); ++j) {
+            totalFieldSums[j] += thisTask->getFieldSums()[j];
+        }
     }
-    return make_unique<RecordCountResult>(counter);
+    return make_unique<RecordCountResult>(totalFieldSums);
 }
 
-void SwapTask::execute() {
+void SumTask::execute() {
     try {
+        int numFields = this->getQuery()->getOperands().size();
+        fieldSums.insert(fieldSums.end(), numFields, 0);
         for (auto it = begin; it != end; ++it) {
             if (query->evalCondition(query->getCondition(), *it)) {
-                int temp = (*it)[this->getQuery()->firstField()];
-                (*it)[this->getQuery()->firstField()] = (*it)[this->getQuery()->secondField()];
-                (*it)[this->getQuery()->secondField()] = temp;
-                counter++;
+                for (int i = 0; i < numFields; ++i) {
+                    fieldSums[i] += (*it)[this->getQuery()->getOperands()[i]];
+                }
             }
         }
         Task::execute();
