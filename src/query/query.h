@@ -76,10 +76,7 @@ public:
     virtual QueryResult::Ptr combine() {
         return nullptr;
     };
-
-    friend class UpdateTask;
-    virtual Table::ValueType getFieldValue() {return 0;};
-
+    
     template<class TaskType>
     void addIterationTask(Database &db, Table &table) {
         auto begin = table.begin();

@@ -13,6 +13,8 @@ public:
     std::string toString() override;
     QueryResult::Ptr combine() override;
     Table::ValueType getFieldValue() { return fieldValue; } 
+    std::string getFieldName() {return operands[0];}
+    std::string getKey() {return operands[1];}
 };
 
 class UpdateTask : public Task {

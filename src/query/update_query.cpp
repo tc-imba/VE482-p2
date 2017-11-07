@@ -16,10 +16,6 @@ QueryResult::Ptr UpdateQuery::execute() {
     Table::SizeType counter = 0;
     try {
         auto &table = db[this->targetTable];
-        if (condition.empty()) {
-            counter = table.clear();
-            return make_unique<RecordCountResult>(counter);
-        }
         addIterationTask<UpdateTask>(db, table);
         return make_unique<RecordCountResult>(counter);
     } catch (const TableNameNotFound &e) {
@@ -72,14 +68,15 @@ void UpdateTask::execute() {
     try {
         for (auto object : table) {
             if (query->evalCondition(query->getCondition(), object)) {
-                if (query->operands[0]=="KEY")
+                std::string fieldName = this->getQuery()->getFieldName();
+                if (fieldName == "KEY")
                 {
-                    object.setKey(query->operands[1]);
+                    object.setKey(this->getQuery()->getKey());
                 }
                 else 
                 {
-                    Table::ValueType newValue = query->getFieldValue();
-                    int index = table.getFieldIndex(query->operands[0]);
+                    Table::ValueType newValue = this->getQuery()->getFieldValue();
+                    int index = table.getFieldIndex(fieldName);
                     object[index]=newValue;
                 }
                 counter++;
