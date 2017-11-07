@@ -386,7 +386,7 @@ public:
         dataNew.push_back(Datum((*it).key() + "_copy", (*it).it->datum));
         dataNewMutex.unlock();
     }
-    
+
     /**
      * insert dataNew to the end of data
      * then dataNew is cleared for future query

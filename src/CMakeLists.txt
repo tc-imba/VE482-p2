@@ -9,8 +9,9 @@ set(SOURCE_FILES
         query/delete_query.cpp query/delete_query.h
         query/select_query.cpp query/select_query.h
         query/count_query.cpp query/count_query.h
-        query/insert_query.cpp query/insert_query.h
+        #query/insert_query.cpp query/insert_query.h
         query/duplicate_query.cpp query/duplicate_query.h
+        query/swap_query.cpp query/swap_query.h
         query_builders.cpp query_builders.h
         query_results.cpp query_results.h
         task_results.h
@@ -21,5 +22,5 @@ set(SOURCE_FILES
 
 add_executable(lemondb main.cpp ${SOURCE_FILES})
 target_link_libraries(lemondb pthread)
-add_executable(table_test test/main_test_table.cpp ${SOURCE_FILES})
+#add_executable(table_test test/main_test_table.cpp ${SOURCE_FILES})
 
