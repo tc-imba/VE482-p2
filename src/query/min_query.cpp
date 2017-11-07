@@ -1,24 +1,24 @@
-#include "insert_query.h"
+#include "min_query.h"
 #include "../db/db.h"
 #include "../db/db_table.h"
 #include "../formatter.h"
 
-constexpr const char *InsertQuery::qname;
+constexpr const char *MinQuery::qname;
 
-QueryResult::Ptr InsertQuery::execute() {
+QueryResult::Ptr MinQuery::execute() {
 	
     using namespace std;
     if (this->operands.empty())
         return make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
-                "No operand (? operands)."_f % operands.size()
+                "Invalid number of operands (? operands)."_f % operands.size()
         );
     Database &db = Database::getInstance();
     Table::SizeType counter = 0;
     try {
 		auto &table = db[this->targetTable];
-		addIterationTask<InsertTask>(db, table);
-		return make_unique<RecordCountResult>(counter);
+		addIterationTask<MinTask>(db, table);
+		return make_unique<SuccessMsgResult>(qname);
 	}
 	catch (const TableNameNotFound &e) {
         return make_unique<ErrorMsgResult>(
@@ -44,11 +44,11 @@ QueryResult::Ptr InsertQuery::execute() {
     }
 }
 
-std::string InsertQuery::toString() {
-    return "QUERY = INSERT " + this->targetTable + "\"";
+std::string MinQuery::toString() {
+    return "QUERY = MIN " + this->targetTable + "\"";
 }
 
-QueryResult::Ptr InsertQuery::combine() {
+QueryResult::Ptr MinQuery::combine() {
     using namespace std;
     if (taskComplete < tasks.size()) {
         return make_unique<ErrorMsgResult>(
@@ -56,26 +56,39 @@ QueryResult::Ptr InsertQuery::combine() {
                 "Not completed yet."s
         );
     }
-    Database &db = Database::getInstance();
-    auto &table = db[this->targetTable];
-    Table::SizeType counter = 0;
-    for (auto &task:tasks) {
-        counter += task->getCounter();
-    }
-    return make_unique<RecordCountResult>(counter);
+	std::vector<int> totalFieldMin(std::move(this->getTask(0)->getFieldMin()));
+	for (int i = 1; i < tasks.size(); ++i) {
+		MinTask *thisTask = this->getTask(i);
+		for (int j = 0; j < operands.size(); ++j) {
+			if (totalFieldMin[j] > thisTask->getFieldMin()[j]) totalFieldMin[j]= thisTask->getFieldMin()[j];
+		}
+	}
+	return make_unique<RecordCountResult>(totalFieldMin);
 }
 
-void InsertTask::execute() {
+void MinTask::execute() {
     try {
-
-		Table::KeyType key = this->getQuery()->getOperands().front();
-		std::vector<Table::ValueType> data;
-		auto it = ++this->getQuery()->getOperands().begin();
-		for (; it != this->getQuery()->getOperands().end();++it)
+		int numFields = this->getQuery()->getOperands().size();
+		Min.insert(Min.end(), numFields, INFINITY);
+		if (query->getCondition().empty())
 		{
-			data.push_back(strtol(it->c_str(), NULL, 10));
+			for (auto it = begin; it != end; ++it) {
+				for (int i = 0; i < numFields; ++i) {
+					int number = (*it)[(this->getQuery()->getOperands()[i])];
+					if( number < Min[i]) Min[i]=number;
+				}	
+			}
 		}
-		table.insertByIndex(key, data);
+		else {
+			for (auto it = begin; it != end; ++it) {
+				if (query->evalCondition(query->getCondition(), *it)) {
+					for (int i = 0; i < numFields; ++i) {
+						int number = (*it)[(this->getQuery()->getOperands()[i])];
+						if (number < Min[i]) Min[i] = number;
+					}
+				}
+			}
+		}
         Task::execute();
     } catch (const IllFormedQueryCondition &e) {
         return;

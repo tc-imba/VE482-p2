@@ -1,7 +1,3 @@
-//
-// Created by admin on 2017/11/2.
-//
-
 #include "count_query.h"
 #include "../db/db.h"
 #include "../db/db_table.h"
@@ -21,13 +17,9 @@ QueryResult::Ptr CountQuery::execute() {
     Table::SizeType counter = 0;
     try {
         auto &table = db[this->targetTable];
-        if (condition.empty()) {
-            counter = table.clear();
-            return make_unique<RecordCountResult>(counter);
-        }
-        addIterationTask<CountTask>(db, table);
-        return make_unique<RecordCountResult>(counter);
-    } catch (const TableNameNotFound &e) {
+		addIterationTask<CountTask>(db, table);
+		return make_unique<SuccessMsgResult>(qname);
+        } catch (const TableNameNotFound &e) {
         return make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
                 "No such table."s

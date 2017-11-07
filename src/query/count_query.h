@@ -1,9 +1,5 @@
-//
-// Created by admin on 2017/11/2.
-//
-
-#ifndef LEMONDB_DELETE_QUERY_H
-#define LEMONDB_DELETE_QUERY_H
+#ifndef LEMONDB_COUNT_QUERY_H
+#define LEMONDB_COUNT_QUERY_H
 
 #include "query.h"
 #include "task.h"
@@ -33,4 +29,4 @@ public:
     void execute() override;
 };
 
-#endif //LEMONDB_DELETE_QUERY_H
+#endif //LEMONDB_COUNT_QUERY_H

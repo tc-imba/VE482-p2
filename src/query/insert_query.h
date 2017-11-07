@@ -1,7 +1,3 @@
-//
-// Created by admin on 2017/11/2.
-//
-
 #ifndef LEMONDB_INSERT_QUERY_H
 #define LEMONDB_INSERT_QUERY_H
 
@@ -35,4 +31,4 @@ public:
     void execute() override;
 };
 
-#endif //LEMONDB_DELETE_QUERY_H
+#endif //LEMONDB_INSERT_QUERY_H

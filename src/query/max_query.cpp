@@ -1,24 +1,24 @@
-#include "insert_query.h"
+#include "max_query.h"
 #include "../db/db.h"
 #include "../db/db_table.h"
 #include "../formatter.h"
 
-constexpr const char *InsertQuery::qname;
+constexpr const char *MaxQuery::qname;
 
-QueryResult::Ptr InsertQuery::execute() {
+QueryResult::Ptr MaxQuery::execute() {
 	
     using namespace std;
     if (this->operands.empty())
         return make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
-                "No operand (? operands)."_f % operands.size()
+                "Invalid number of operands (? operands)."_f % operands.size()
         );
     Database &db = Database::getInstance();
     Table::SizeType counter = 0;
     try {
 		auto &table = db[this->targetTable];
-		addIterationTask<InsertTask>(db, table);
-		return make_unique<RecordCountResult>(counter);
+		addIterationTask<MaxTask>(db, table);
+		return make_unique<SuccessMsgResult>(qname);
 	}
 	catch (const TableNameNotFound &e) {
         return make_unique<ErrorMsgResult>(
@@ -44,11 +44,11 @@ QueryResult::Ptr InsertQuery::execute() {
     }
 }
 
-std::string InsertQuery::toString() {
-    return "QUERY = INSERT " + this->targetTable + "\"";
+std::string MaxQuery::toString() {
+    return "QUERY = MAX " + this->targetTable + "\"";
 }
 
-QueryResult::Ptr InsertQuery::combine() {
+QueryResult::Ptr MaxQuery::combine() {
     using namespace std;
     if (taskComplete < tasks.size()) {
         return make_unique<ErrorMsgResult>(
@@ -56,26 +56,39 @@ QueryResult::Ptr InsertQuery::combine() {
                 "Not completed yet."s
         );
     }
-    Database &db = Database::getInstance();
-    auto &table = db[this->targetTable];
-    Table::SizeType counter = 0;
-    for (auto &task:tasks) {
-        counter += task->getCounter();
-    }
-    return make_unique<RecordCountResult>(counter);
+	std::vector<int> totalFieldMax(std::move(this->getTask(0)->getFieldMax()));
+	for (int i = 1; i < tasks.size(); ++i) {
+		MaxTask *thisTask = this->getTask(i);
+		for (int j = 0; j < operands.size(); ++j) {
+			if (totalFieldMax[j] < thisTask->getFieldMax()[j]) totalFieldMax[j]= thisTask->getFieldMax()[j];
+		}
+	}
+	return make_unique<RecordCountResult>(totalFieldMax);
 }
 
-void InsertTask::execute() {
+void MaxTask::execute() {
     try {
-
-		Table::KeyType key = this->getQuery()->getOperands().front();
-		std::vector<Table::ValueType> data;
-		auto it = ++this->getQuery()->getOperands().begin();
-		for (; it != this->getQuery()->getOperands().end();++it)
+		int numFields = this->getQuery()->getOperands().size();
+		Max.insert(Max.end(), numFields, INFINITY);
+		if (query->getCondition().empty())
 		{
-			data.push_back(strtol(it->c_str(), NULL, 10));
+			for (auto it = begin; it != end; ++it) {
+				for (int i = 0; i < numFields; ++i) {
+					int number = (*it)[(this->getQuery()->getOperands()[i])];
+					if( number > Max[i]) Max[i]=number;
+				}	
+			}
 		}
-		table.insertByIndex(key, data);
+		else {
+			for (auto it = begin; it != end; ++it) {
+				if (query->evalCondition(query->getCondition(), *it)) {
+					for (int i = 0; i < numFields; ++i) {
+						int number = (*it)[(this->getQuery()->getOperands()[i])];
+						if (number > Max[i]) Max[i] = number;
+					}
+				}
+			}
+		}
         Task::execute();
     } catch (const IllFormedQueryCondition &e) {
         return;
