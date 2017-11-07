@@ -1,0 +1,7 @@
+﻿  insert_query .cpp
+c:\users\lenovo\my work space\2017 fa\ve482\ve482-p2\src\query\../db/db_table.h(316): warning C4101: “e”: 未引用的局部变量
+query\insert_query .cpp(30): warning C4101: “e”: 未引用的局部变量
+query\insert_query .cpp(60): warning C4018: “<”: 有符号/无符号不匹配
+query\insert_query .cpp(95): warning C4101: “e”: 未引用的局部变量
+c:\users\lenovo\my work space\2017 fa\ve482\ve482-p2\src\query\query.h(93): error C2661: “InsertTask::InsertTask”: 没有重载函数接受 4 个参数
+  query\insert_query .cpp(28): note: 参见对正在编译的函数 模板 实例化“void ComplexQuery::addIterationTask<InsertTask>(Database &,Table &)”的引用

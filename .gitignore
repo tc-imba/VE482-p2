@@ -56,3 +56,11 @@ dkms.conf
 .idea
 cmake-build-debug
 build
+/src/p2.sln
+/src/p2.VC.db
+/src/p2.VC.VC.opendb
+/src/p2.vcxproj
+/src/p2.vcxproj.filters
+/.gitattributes
+/src/Debug/p2.tlog
+/src/.vs/p2/v14
