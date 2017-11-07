@@ -2,7 +2,9 @@
 #include "management_query.h"
 #include "data_query.h"
 #include "query/delete_query.h"
-
+#include "query/select_query.h"
+#include "query/count_query.h"
+#include "query/delete_query.h"
 #include <iostream>
 #include <iomanip>
 

@@ -1,7 +1,76 @@
-﻿  insert_query .cpp
+﻿  query_builders.cpp
+c:\users\lenovo\my work space\2017 fa\ve482\ve482-p2\src\query\../db/db_table.h(316): warning C4101: “e”: 未引用的局部变量
+c:\users\lenovo\my work space\2017 fa\ve482\ve482-p2\src\query/select_query.h(11): error C2011: “SelectQuery”:“class”类型重定义
+  c:\users\lenovo\my work space\2017 fa\ve482\ve482-p2\src\data_query.h(32): note: 参见“SelectQuery”的声明
+  select_query.cpp
+c:\users\lenovo\my work space\2017 fa\ve482\ve482-p2\src\query\../db/db_table.h(316): warning C4101: “e”: 未引用的局部变量
+query\select_query.cpp(24): warning C4018: “<”: 有符号/无符号不匹配
+query\select_query.cpp(29): warning C4101: “e”: 未引用的局部变量
+query\select_query.cpp(59): warning C4018: “<”: 有符号/无符号不匹配
+query\select_query.cpp(65): warning C4018: “<”: 有符号/无符号不匹配
+query\select_query.cpp(87): warning C4101: “e”: 未引用的局部变量
+c:\users\lenovo\my work space\2017 fa\ve482\ve482-p2\src\db\db_table.h(181): warning C4101: “e”: 未引用的局部变量
+  c:\users\lenovo\my work space\2017 fa\ve482\ve482-p2\src\db\db_table.h(180): note: 编译类 模板 成员函数“Table::ValueType &Table::ObjectImpl<Table::DataIterator,Table::ValueType>::operator [](const Table::FieldID &) const”时
+  query\select_query.cpp(80): note: 参见对正在编译的函数 模板 实例化“Table::ValueType &Table::ObjectImpl<Table::DataIterator,Table::ValueType>::operator [](const Table::FieldID &) const”的引用
+  c:\users\lenovo\my work space\2017 fa\ve482\ve482-p2\src\db\db_table.h(296): note: 参见对正在编译的类 模板 实例化“Table::ObjectImpl<Table::DataIterator,Table::ValueType>”的引用
+  insert_query .cpp
 c:\users\lenovo\my work space\2017 fa\ve482\ve482-p2\src\query\../db/db_table.h(316): warning C4101: “e”: 未引用的局部变量
 query\insert_query .cpp(30): warning C4101: “e”: 未引用的局部变量
 query\insert_query .cpp(60): warning C4018: “<”: 有符号/无符号不匹配
-query\insert_query .cpp(95): warning C4101: “e”: 未引用的局部变量
+query\insert_query .cpp(87): warning C4101: “e”: 未引用的局部变量
 c:\users\lenovo\my work space\2017 fa\ve482\ve482-p2\src\query\query.h(93): error C2661: “InsertTask::InsertTask”: 没有重载函数接受 4 个参数
   query\insert_query .cpp(28): note: 参见对正在编译的函数 模板 实例化“void ComplexQuery::addIterationTask<InsertTask>(Database &,Table &)”的引用
+  count_query.cpp
+c:\users\lenovo\my work space\2017 fa\ve482\ve482-p2\src\query\../db/db_table.h(316): warning C4101: “e”: 未引用的局部变量
+query\count_query.cpp(30): warning C4101: “e”: 未引用的局部变量
+query\count_query.cpp(60): warning C4018: “<”: 有符号/无符号不匹配
+query\count_query.cpp(74): error C3867: “CountQuery::addnumber”: 非标准语法；请使用 "&" 来创建指向成员的指针
+query\count_query.cpp(80): error C3867: “CountQuery::addnumber”: 非标准语法；请使用 "&" 来创建指向成员的指针
+  正在生成代码...
+  正在编译...
+  query_results.cpp
+  query_parser.cpp
+c:\users\lenovo\my work space\2017 fa\ve482\ve482-p2\src\query\../db/db_table.h(316): warning C4101: “e”: 未引用的局部变量
+  task.cpp
+c:\users\lenovo\my work space\2017 fa\ve482\ve482-p2\src\query\../db/db_table.h(316): warning C4101: “e”: 未引用的局部变量
+  query.cpp
+c:\users\lenovo\my work space\2017 fa\ve482\ve482-p2\src\query\../db/db_table.h(316): warning C4101: “e”: 未引用的局部变量
+query\query.cpp(28): warning C4101: “e”: 未引用的局部变量
+c:\users\lenovo\my work space\2017 fa\ve482\ve482-p2\src\db\db_table.h(181): warning C4101: “e”: 未引用的局部变量
+  c:\users\lenovo\my work space\2017 fa\ve482\ve482-p2\src\db\db_table.h(180): note: 编译类 模板 成员函数“Table::ValueType &Table::ObjectImpl<Table::DataIterator,Table::ValueType>::operator [](const Table::FieldID &) const”时
+  query\query.cpp(24): note: 参见对正在编译的函数 模板 实例化“Table::ValueType &Table::ObjectImpl<Table::DataIterator,Table::ValueType>::operator [](const Table::FieldID &) const”的引用
+  c:\users\lenovo\my work space\2017 fa\ve482\ve482-p2\src\db\db_table.h(296): note: 参见对正在编译的类 模板 实例化“Table::ObjectImpl<Table::DataIterator,Table::ValueType>”的引用
+  delete_query.cpp
+c:\users\lenovo\my work space\2017 fa\ve482\ve482-p2\src\query\../db/db_table.h(316): warning C4101: “e”: 未引用的局部变量
+query\delete_query.cpp(29): warning C4101: “e”: 未引用的局部变量
+query\delete_query.cpp(59): warning C4018: “<”: 有符号/无符号不匹配
+query\delete_query.cpp(86): warning C4101: “e”: 未引用的局部变量
+  management_query.cpp
+c:\users\lenovo\my work space\2017 fa\ve482\ve482-p2\src\query\../db/db_table.h(316): warning C4101: “e”: 未引用的局部变量
+management_query.cpp(72): warning C4101: “e”: 未引用的局部变量
+management_query.cpp(105): warning C4101: “e”: 未引用的局部变量
+management_query.cpp(125): warning C4101: “e”: 未引用的局部变量
+management_query.cpp(149): warning C4101: “e”: 未引用的局部变量
+  main.cpp
+c:\users\lenovo\my work space\2017 fa\ve482\ve482-p2\src\db/db_table.h(316): warning C4101: “e”: 未引用的局部变量
+main.cpp(47): warning C4101: “e”: 未引用的局部变量
+  db_table.cpp
+c:\users\lenovo\my work space\2017 fa\ve482\ve482-p2\src\db\db_table.h(316): warning C4101: “e”: 未引用的局部变量
+  db.cpp
+c:\users\lenovo\my work space\2017 fa\ve482\ve482-p2\src\db\db_table.h(316): warning C4101: “e”: 未引用的局部变量
+db\db.cpp(8): warning C4477: “fprintf”: 格式字符串“%lu”需要类型“unsigned long”的参数，但可变参数 1 拥有了类型“std::thread::id”
+  data_query.cpp
+c:\users\lenovo\my work space\2017 fa\ve482\ve482-p2\src\db\db_table.h(316): warning C4101: “e”: 未引用的局部变量
+data_query.cpp(30): warning C4101: “e”: 未引用的局部变量
+data_query.cpp(81): warning C4101: “e”: 未引用的局部变量
+data_query.cpp(86): warning C4101: “e”: 未引用的局部变量
+data_query.cpp(124): warning C4101: “e”: 未引用的局部变量
+data_query.cpp(154): warning C4101: “e”: 未引用的局部变量
+c:\users\lenovo\my work space\2017 fa\ve482\ve482-p2\src\db\db_table.h(185): warning C4101: “e”: 未引用的局部变量
+  c:\users\lenovo\my work space\2017 fa\ve482\ve482-p2\src\db\db_table.h(184): note: 编译类 模板 成员函数“Table::ValueType &Table::ObjectImpl<Table::DataIterator,Table::ValueType>::operator [](const Table::FieldIndex &) const”时
+  data_query.cpp(25): note: 参见对正在编译的函数 模板 实例化“Table::ValueType &Table::ObjectImpl<Table::DataIterator,Table::ValueType>::operator [](const Table::FieldIndex &) const”的引用
+  c:\users\lenovo\my work space\2017 fa\ve482\ve482-p2\src\db\db_table.h(296): note: 参见对正在编译的类 模板 实例化“Table::ObjectImpl<Table::DataIterator,Table::ValueType>”的引用
+  arithmetics_query.cpp
+c:\users\lenovo\my work space\2017 fa\ve482\ve482-p2\src\query\../db/db_table.h(316): warning C4101: “e”: 未引用的局部变量
+  正在生成代码...
+c:\users\lenovo\my work space\2017 fa\ve482\ve482-p2\src\data_query.cpp(130): warning C4715: “SelectQuery::execute”: 不是所有的控件路径都返回值

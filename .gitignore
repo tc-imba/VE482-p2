@@ -64,3 +64,4 @@ build
 /.gitattributes
 /src/Debug/p2.tlog
 /src/.vs/p2/v14
+/src/Debug/p2.Build.CppClean.log

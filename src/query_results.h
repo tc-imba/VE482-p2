@@ -60,6 +60,9 @@ class SuccessMsgResult : public SuceededQueryResult {
     std::string msg;
 public:
 
+	SuccessMsgResult(const int number) {
+		this->msg = R"(Answer = "?".)"_f % number;
+	}
     SuccessMsgResult(const char *qname) {
         this->msg = R"(Query "?" success.)"_f % qname;
     }

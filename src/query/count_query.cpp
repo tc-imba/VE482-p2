@@ -2,20 +2,20 @@
 // Created by admin on 2017/11/2.
 //
 
-#include "insert_query.h"
+#include "count_query.h"
 #include "../db/db.h"
 #include "../db/db_table.h"
 #include "../formatter.h"
 
-constexpr const char *InsertQuery::qname;
+constexpr const char *CountQuery::qname;
 
-QueryResult::Ptr InsertQuery::execute() {
+QueryResult::Ptr CountQuery::execute() {
 	
     using namespace std;
-    if (this->operands.empty())
+    if (!this->operands.empty())
         return make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
-                "No operand (? operands)."_f % operands.size()
+                "Invalid number of operands (? operands)."_f % operands.size()
         );
     Database &db = Database::getInstance();
     Table::SizeType counter = 0;
@@ -25,7 +25,7 @@ QueryResult::Ptr InsertQuery::execute() {
             counter = table.clear();
             return make_unique<RecordCountResult>(counter);
         }
-        addIterationTask<InsertTask>(db, table);
+        addIterationTask<CountTask>(db, table);
         return make_unique<RecordCountResult>(counter);
     } catch (const TableNameNotFound &e) {
         return make_unique<ErrorMsgResult>(
@@ -51,11 +51,11 @@ QueryResult::Ptr InsertQuery::execute() {
     }
 }
 
-std::string InsertQuery::toString() {
-    return "QUERY = INSERT " + this->targetTable + "\"";
+std::string CountQuery::toString() {
+    return "QUERY = COUNT " + this->targetTable + "\"";
 }
 
-QueryResult::Ptr InsertQuery::combine() {
+QueryResult::Ptr CountQuery::combine() {
     using namespace std;
     if (taskComplete < tasks.size()) {
         return make_unique<ErrorMsgResult>(
@@ -63,26 +63,24 @@ QueryResult::Ptr InsertQuery::combine() {
                 "Not completed yet."s
         );
     }
-    Database &db = Database::getInstance();
-    auto &table = db[this->targetTable];
-    Table::SizeType counter = 0;
-    for (auto &task:tasks) {
-        counter += task->getCounter();
-    }
-    return make_unique<RecordCountResult>(counter);
+	return make_unique<SuccessMsgResult>(number);
 }
 
-void InsertTask::execute() {
+void CountTask::execute() {
     try {
-
-		Table::KeyType key = this->getQuery()->getOperands().front();
-		std::vector<Table::ValueType> data;
-		auto it = ++this->getQuery()->getOperands().begin();
-		for (; it != this->getQuery()->getOperands().end();++it)
+		if (query->getCondition().empty())
 		{
-			data.push_back(strtol(it->c_str(), NULL, 10));
+			for (auto it = begin; it != end; ++it) {
+				this->getQuery()->addnumber();
+			}
 		}
-		table.insertByIndex(key, data);
+		else {
+			for (auto it = begin; it != end; ++it) {
+				if (query->evalCondition(query->getCondition(), *it)) {
+					this->getQuery()->addnumber();
+				}
+			}
+		}
         Task::execute();
     } catch (const IllFormedQueryCondition &e) {
         return;
