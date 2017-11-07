@@ -94,7 +94,8 @@ public:
             db.addTask(std::move(task));
         }
     }
-};
 
+};
+ 
 
 #endif //LEMONDB_QUERY_H

@@ -16,7 +16,7 @@ QueryResult::Ptr SubQuery::execute() {
     Table::SizeType counter = 0;
     try {
         auto &table = db[this->targetTable];
-        subIterationTask<SubTask>(db, table);
+        addIterationTask<SubTask>(db, table);
         return make_unique<RecordCountResult>(counter);
     } catch (const TableNameNotFound &e) {
         return make_unique<ErrorMsgResult>(
@@ -68,8 +68,8 @@ void SubTask::execute() {
     try {
         int numFields = this->getQuery()->getOperands().size();
         int init;
-        for (auto object : table) {
-            if (query->evalCondition(query->getCondition(), object)) {
+        for (auto it = begin; it != end; ++it) {
+            if (query->evalCondition(query->getCondition(), *it)) {
                 init=(*it)[this->getQuery()->getOperands()[0]];
                 for (int i = 1; i < numFields - 1; ++i) {
                     init = init - (*it)[this->getQuery()->getOperands()[i]];

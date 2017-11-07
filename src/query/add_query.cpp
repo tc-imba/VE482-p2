@@ -68,8 +68,8 @@ void AddTask::execute() {
     try {
         int numFields = this->getQuery()->getOperands().size();
         int sum;
-        for (auto object : table) {
-            if (query->evalCondition(query->getCondition(), object)) {
+        for (auto it = begin; it != end; ++it) {
+            if (query->evalCondition(query->getCondition(), *it)) {
                 sum=0;
                 for (int i = 0; i < numFields - 1; ++i) {
                     sum = sum + (*it)[this->getQuery()->getOperands()[i]];
