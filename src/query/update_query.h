@@ -7,6 +7,8 @@
 class UpdateQuery : public ComplexQuery {
     static constexpr const char *qname = "UPDATE";
     Table::ValueType fieldValue = (operands[0]=="KEY")? 0 :std::stoi(operands[1]);
+private:
+    bool writer = true;
 public:
     using ComplexQuery::ComplexQuery;
     QueryResult::Ptr execute() override;

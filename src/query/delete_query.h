@@ -10,6 +10,8 @@
 
 class DeleteQuery : public ComplexQuery {
     static constexpr const char *qname = "DELETE";
+private:
+    bool writer = true;
 public:
     using ComplexQuery::ComplexQuery;
     QueryResult::Ptr execute() override;

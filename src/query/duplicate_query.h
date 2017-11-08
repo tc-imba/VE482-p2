@@ -13,6 +13,8 @@
 
 class DuplicateQuery : public ComplexQuery {
     static constexpr const char *qname = "DUPLICATE";
+private:
+    bool writer = true;
 public:
     using ComplexQuery::ComplexQuery;
     QueryResult::Ptr execute() override;

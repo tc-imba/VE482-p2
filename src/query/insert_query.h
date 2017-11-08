@@ -7,6 +7,8 @@
 
 class InsertQuery : public ComplexQuery {
     static constexpr const char *qname = "INSERT";
+private:
+    bool writer = true;
 public:
     using ComplexQuery::ComplexQuery;
 	//Table::KeyType key = operands[0];

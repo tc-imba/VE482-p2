@@ -6,6 +6,8 @@
 
 class SubQuery : public ComplexQuery {
     static constexpr const char *qname = "SUB";
+private:
+    bool writer = true;
 public:
     using ComplexQuery::ComplexQuery;
     QueryResult::Ptr execute() override;

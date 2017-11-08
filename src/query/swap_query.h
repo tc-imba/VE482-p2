@@ -9,6 +9,8 @@
 
 class SwapQuery : public ComplexQuery {
     static constexpr const char *qname = "SWAP";
+private:
+    bool writer = true;
 public:
     using ComplexQuery::ComplexQuery;
     QueryResult::Ptr execute() override;

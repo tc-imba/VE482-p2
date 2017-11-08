@@ -6,6 +6,8 @@
 
 class AddQuery : public ComplexQuery {
     static constexpr const char *qname = "ADD";
+private:
+    bool writer = true;
 public:
     using ComplexQuery::ComplexQuery;
     QueryResult::Ptr execute() override;
