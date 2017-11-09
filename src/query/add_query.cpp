@@ -65,6 +65,7 @@ QueryResult::Ptr AddQuery::combine() {
 
 
 void AddTask::execute() {
+    auto query = getQuery();
     try {
         int numFields = this->getQuery()->getOperands().size();
         int sum;

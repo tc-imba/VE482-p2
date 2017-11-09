@@ -59,6 +59,7 @@ QueryResult::Ptr CountQuery::combine() {
 }
 
 void CountTask::execute() {
+    auto query = getQuery();
     try {
 		if (query->getCondition().empty())
 		{

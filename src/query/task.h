@@ -22,19 +22,19 @@ protected:
     template<class T>
     class GetPtr {
     private:
-        T *query;
+        Task *task;
     public:
-        explicit GetPtr(const Query::Ptr &query) : query(dynamic_cast<T *>(query.get())) {};
-        T *operator()() { return query; }
+        explicit GetPtr(Task *task) : task(task) {};
+        T *operator()() { return dynamic_cast<T *>(task->query.get()); }
     };
-    //GetPtr<Query> getQuery{query};
 
 public:
     typedef std::shared_ptr<Task> Ptr;
 
     //Task() = delete;
 
-    explicit Task(std::shared_ptr<Query> query) : query(std::move(query)) {};
+    explicit Task(std::shared_ptr<Query> query, Table *table = nullptr) :
+            query(std::move(query)), table(table) {};
 
     Task(std::shared_ptr<Query> query,
          Table *table, Table::Iterator begin, Table::Iterator end) :

@@ -73,6 +73,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:adc114c831a4569d60c6334a943f48516"><td class="memItemLeft" align="right" valign="top"><a id="adc114c831a4569d60c6334a943f48516"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>registerTable</b> (Table::Ptr &amp;&amp;table)</td></tr>
 <tr class="separator:adc114c831a4569d60c6334a943f48516"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1405a11517ac20b0036514120782cee5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_table.html">Table</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database.html#a1405a11517ac20b0036514120782cee5">ensureTable</a> (const std::string &amp;tableName)</td></tr>
+<tr class="separator:a1405a11517ac20b0036514120782cee5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a95a3310cac23f486f309bcc69fa034a4"><td class="memItemLeft" align="right" valign="top"><a id="a95a3310cac23f486f309bcc69fa034a4"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>dropTable</b> (std::string tableName)</td></tr>
 <tr class="separator:a95a3310cac23f486f309bcc69fa034a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -97,6 +99,10 @@ const <a class="el" href="class_table.html">Table</a> &amp;&#160;</td><td class=
 <tr class="memitem:a00d16c8b373c9bb4bad59550648c5393"><td class="memItemLeft" align="right" valign="top"><a id="a00d16c8b373c9bb4bad59550648c5393"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Database</b> (<a class="el" href="class_database.html">Database</a> &amp;&amp;)=delete</td></tr>
 <tr class="separator:a00d16c8b373c9bb4bad59550648c5393"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a537758fac6907e4d0f5e136a5c894a3d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database.html#a537758fac6907e4d0f5e136a5c894a3d">addQuery</a> (Query::Ptr &amp;&amp;query)</td></tr>
+<tr class="separator:a537758fac6907e4d0f5e136a5c894a3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3aa523e6e4b3ef12bc4b18aa7c2e3e5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_database.html#ad3aa523e6e4b3ef12bc4b18aa7c2e3e5">addTask</a> (Task::Ptr &amp;&amp;task)</td></tr>
+<tr class="separator:ad3aa523e6e4b3ef12bc4b18aa7c2e3e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -104,9 +110,83 @@ Static Public Member Functions</h2></td></tr>
 static <a class="el" href="class_database.html">Database</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getInstance</b> ()</td></tr>
 <tr class="separator:a317c583698e8c788b146144de307df7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a537758fac6907e4d0f5e136a5c894a3d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a537758fac6907e4d0f5e136a5c894a3d">&#9670;&nbsp;</a></span>addQuery()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Database::addQuery </td>
+          <td>(</td>
+          <td class="paramtype">Query::Ptr &amp;&amp;&#160;</td>
+          <td class="paramname"><em>query</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Add a parsed query after reading it dispatch the query according to its target table </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">query</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad3aa523e6e4b3ef12bc4b18aa7c2e3e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3aa523e6e4b3ef12bc4b18aa7c2e3e5">&#9670;&nbsp;</a></span>addTask()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Database::addTask </td>
+          <td>(</td>
+          <td class="paramtype">Task::Ptr &amp;&amp;&#160;</td>
+          <td class="paramname"><em>task</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Add a generated task after a query has been executed by a table idle working threads are waiting for the task </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">task</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a1405a11517ac20b0036514120782cee5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1405a11517ac20b0036514120782cee5">&#9670;&nbsp;</a></span>ensureTable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_table.html">Table</a> &amp; Database::ensureTable </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>tableName</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>get the table if it already exists create a table if tableName not found use tablesMutex, call it when needed if tableName must exist, use operator[] </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tableName</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/<a class="el" href="db_8h_source.html">db.h</a></li>
-<li>src/db.cpp</li>
+<li>src/db/<a class="el" href="db_8h_source.html">db.h</a></li>
+<li>src/db/db.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

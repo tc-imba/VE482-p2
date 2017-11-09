@@ -15,21 +15,14 @@ public:
     std::string toString() override;
     QueryResult::Ptr combine() override;
     std::vector<std::string> getOperands() { return operands; }
-    SumTask *getTask(int index) {
-        return (SumTask*) tasks[index].get();
-    }
 };
 
 class SumTask : public Task {
-private:
-    SumQuery *getQuery() {
-        return (SumQuery *) query.get();
-    }
     std::vector<int> fieldSums;
+protected:
+    LEMONDB_QUERY_PTR(SumQuery);
 public:
-    SumTask(const std::shared_ptr<ComplexQuery> &query,
-               Table &table, Table::Iterator begin, Table::Iterator end) :
-            Task(query, table, begin, end) {};
+    using Task::Task;
     void execute() override;
     std::vector<int> getFieldSums() { return fieldSums; }
 };

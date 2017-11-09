@@ -3,7 +3,7 @@
 
 #include <string>
 #include <memory>
-#include <atomic>
+#include <mutex>
 #include "query_base.h"
 #include "../uexception.h"
 #include "../db/db_table.h"
@@ -40,6 +40,7 @@ protected:
     std::vector<std::string> operands;
     std::vector<QueryCondition> condition;
     std::vector<std::shared_ptr<Task> > tasks;
+    std::mutex tasksMutex;
 public:
     typedef std::shared_ptr<ComplexQuery> Ptr;
 
@@ -54,12 +55,13 @@ public:
     const std::vector<QueryCondition> &getCondition() {
         return condition;
     }
-    
+
     template<class TaskType>
     void addIterationTask(Database &db, Table &table) {
         auto begin = table.begin();
         decltype(begin) end;
         auto size = table.size();
+        tasksMutex.lock();
         while (size > 0) {
             if (size >= 100000) {
                 size -= 100000;
@@ -69,11 +71,22 @@ public:
                 end = table.end();
             }
             auto task = std::shared_ptr<Task>(new TaskType(Query::Ptr(this), &table, begin, end));
+            tasks.emplace_back(task);
             db.addTask(std::move(task));
         }
+        tasksMutex.unlock();
+    }
+
+    template<class TaskType>
+    void addUniqueTask(Database &db, Table &table) {
+        auto task = std::shared_ptr<Task>(new TaskType(Query::Ptr(this), &table));
+        //tasksMutex.lock();
+        tasks.emplace_back(task);
+        db.addTask(std::move(task));
+        //tasksMutex.unlock();
     }
 
 };
- 
+
 
 #endif //LEMONDB_QUERY_H

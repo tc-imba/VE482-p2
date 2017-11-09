@@ -9,9 +9,8 @@
 
 class SwapQuery : public ComplexQuery {
     static constexpr const char *qname = "SWAP";
-private:
-    bool writer = true;
 public:
+    LEMONDB_QUERY_WRITER(true);
     using ComplexQuery::ComplexQuery;
     QueryResult::Ptr execute() override;
     std::string toString() override;
@@ -22,14 +21,10 @@ public:
 };
 
 class SwapTask : public Task {
-private:
-    SwapQuery *getQuery() {
-        return (SwapQuery *) query.get();
-    }
+protected:
+    LEMONDB_QUERY_PTR(SwapQuery);
 public:
-    SwapTask(const std::shared_ptr<ComplexQuery> &query,
-               Table &table, Table::Iterator begin, Table::Iterator end) :
-            Task(query, table, begin, end) {};
+    using Task::Task;
     void execute() override;
 };
 

@@ -67,6 +67,7 @@ QueryResult::Ptr SwapQuery::combine() {
 }
 
 void SwapTask::execute() {
+    auto query = getQuery();
     try {
         for (auto it = begin; it != end; ++it) {
             if (query->evalCondition(query->getCondition(), *it)) {

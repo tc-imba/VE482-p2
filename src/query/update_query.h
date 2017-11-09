@@ -7,9 +7,8 @@
 class UpdateQuery : public ComplexQuery {
     static constexpr const char *qname = "UPDATE";
     Table::ValueType fieldValue = (operands[0]=="KEY")? 0 :std::stoi(operands[1]);
-private:
-    bool writer = true;
 public:
+    LEMONDB_QUERY_WRITER(true);
     using ComplexQuery::ComplexQuery;
     QueryResult::Ptr execute() override;
     std::string toString() override;
@@ -20,10 +19,8 @@ public:
 };
 
 class UpdateTask : public Task {
-private:
-    UpdateQuery *getQuery() {
-        return (UpdateQuery *) query.get();
-    }
+protected:
+    LEMONDB_QUERY_PTR(UpdateQuery);
 public:
     friend class ComplexQuery;
     using Task::Task;

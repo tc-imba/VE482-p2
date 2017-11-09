@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['begin',['begin',['../class_table.html#a9df56e33923bbff648f98367d723ddb5',1,'Table::begin()'],['../class_table.html#a8b9f35b26e064b9104afcdc804e05883',1,'Table::begin() const']]]
+  ['addquery',['addQuery',['../class_database.html#a537758fac6907e4d0f5e136a5c894a3d',1,'Database']]],
+  ['addtask',['addTask',['../class_database.html#ad3aa523e6e4b3ef12bc4b18aa7c2e3e5',1,'Database']]]
 ];

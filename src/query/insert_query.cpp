@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "insert_query.h"
 #include "../db/db.h"
 #include "../db/db_table.h"
@@ -6,7 +7,7 @@
 constexpr const char *InsertQuery::qname;
 
 QueryResult::Ptr InsertQuery::execute() {
-	
+
     using namespace std;
     if (this->operands.empty())
         return make_unique<ErrorMsgResult>(
@@ -16,11 +17,11 @@ QueryResult::Ptr InsertQuery::execute() {
     Database &db = Database::getInstance();
     Table::SizeType counter = 0;
     try {
-		auto &table = db[this->targetTable];
-		addIterationTask<InsertTask>(db, table);
-		return make_unique<RecordCountResult>(counter);
-	}
-	catch (const TableNameNotFound &e) {
+        auto &table = db[this->targetTable];
+        addUniqueTask<InsertTask>(db, table);
+        return make_unique<RecordCountResult>(counter);
+    }
+    catch (const TableNameNotFound &e) {
         return make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
                 "No such table."s
@@ -66,16 +67,15 @@ QueryResult::Ptr InsertQuery::combine() {
 }
 
 void InsertTask::execute() {
+    auto query = getQuery();
     try {
-
-		Table::KeyType key = this->getQuery()->getOperands().front();
-		std::vector<Table::ValueType> data;
-		auto it = ++this->getQuery()->getOperands().begin();
-		for (; it != this->getQuery()->getOperands().end();++it)
-		{
-			data.push_back(strtol(it->c_str(), NULL, 10));
-		}
-		table.insertByIndex(key, data);
+        auto &operands = query->getOperands();
+        Table::KeyType &key = operands.front();
+        std::vector<Table::ValueType> data;
+        std::for_each(++operands.begin(), operands.end(), [&data](const std::string &item) {
+            data.emplace_back(strtol(item.c_str(), NULL, 10));
+        });
+        table->insertByIndex(key, data);
         Task::execute();
     } catch (const IllFormedQueryCondition &e) {
         return;

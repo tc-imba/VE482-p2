@@ -71,12 +71,13 @@ QueryResult::Ptr SelectQuery::combine() {
 }
 
 void SelectTask::execute() {
+    auto query = getQuery();
     try {
         int index = this->getQuery()->whichTask(this);
         for (auto it = begin; it != end; ++it) {
             if (query->evalCondition(query->getCondition(), *it)) {
                 std::vector<int> tuple;
-                for (auto operand : this->getQuery()->getOperands()) {
+                for (auto &operand : query->getOperands()) {
                     tuple.push_back((*it)[operand]);
                 }
                 this->getQuery()->pushToResultArray(index, it->key(), std::move(tuple));

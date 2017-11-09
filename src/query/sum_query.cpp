@@ -63,17 +63,19 @@ QueryResult::Ptr SumQuery::combine() {
                 "Not completed yet."s
         );
     }
-    std::vector<int> totalFieldSums(std::move(this->getTask(0)->getFieldSums()));
+    size_t counter = 0;
+    /*std::vector<int> totalFieldSums(std::move(this->getTask(0)->getFieldSums()));
     for (int i = 1; i < tasks.size(); ++i) {
         SumTask *thisTask = this->getTask(i);
         for (int j = 0; j < operands.size(); ++j) {
             totalFieldSums[j] += thisTask->getFieldSums()[j];
         }
-    }
-    return make_unique<RecordCountResult>(totalFieldSums);
+    }*/
+    return make_unique<RecordCountResult>(counter);
 }
 
 void SumTask::execute() {
+    auto query = getQuery();
     try {
         int numFields = this->getQuery()->getOperands().size();
         fieldSums.insert(fieldSums.end(), numFields, 0);

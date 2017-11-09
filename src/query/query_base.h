@@ -11,6 +11,7 @@
 #include "../query_results.h"
 
 #define LEMONDB_QUERY_WRITER(flag) bool isWriter() override { return flag; }
+#define LEMONDB_QUERY_PTR(T) T* getQuery() override { return dynamic_cast<T*>(query.get()); }
 
 class Query {
 protected:

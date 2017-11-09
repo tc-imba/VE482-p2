@@ -6,9 +6,8 @@
 
 class SubQuery : public ComplexQuery {
     static constexpr const char *qname = "SUB";
-private:
-    bool writer = true;
 public:
+    LEMONDB_QUERY_WRITER(true);
     using ComplexQuery::ComplexQuery;
     QueryResult::Ptr execute() override;
     std::string toString() override;
@@ -17,14 +16,10 @@ public:
 };
 
 class SubTask : public Task {
-private:
-    SubQuery *getQuery() {
-        return (SubQuery *) query.get();
-    }
+protected:
+    LEMONDB_QUERY_PTR(SubQuery);
 public:
-    SubTask(const std::shared_ptr<ComplexQuery> &query,
-               Table &table, Table::Iterator begin, Table::Iterator end) :
-            Task(query, table, begin, end) {};
+    using Task::Task;
     void execute() override;
 };
 

@@ -6,22 +6,20 @@
 
 class CountQuery : public ComplexQuery {
     static constexpr const char *qname = "COUNT";
-private:
-	int number;
+    int number;
 public:
+    LEMONDB_QUERY_WRITER(false);
     using ComplexQuery::ComplexQuery;
-	std::vector<std::string> &getOperands() { return operands; }
+    std::vector<std::string> &getOperands() { return operands; }
     QueryResult::Ptr execute() override;
     std::string toString() override;
     QueryResult::Ptr combine() override;
-	void addnumber() { number++; }
+    void addnumber() { number++; }
 };
 
 class CountTask : public Task {
-private:
-    CountQuery *getQuery() {
-        return (CountQuery *) query.get();
-    }
+protected:
+    LEMONDB_QUERY_PTR(CountQuery);
 public:
     using Task::Task;
     void execute() override;

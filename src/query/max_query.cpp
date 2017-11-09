@@ -56,20 +56,22 @@ QueryResult::Ptr MaxQuery::combine() {
                 "Not completed yet."s
         );
     }
-	std::vector<int> totalFieldMax(std::move(this->getTask(0)->getFieldMax()));
+	size_t counter = 0;
+	/*std::vector<int> totalFieldMax(std::move(this->getTask(0)->getFieldMax()));
 	for (int i = 1; i < tasks.size(); ++i) {
 		MaxTask *thisTask = this->getTask(i);
 		for (int j = 0; j < operands.size(); ++j) {
 			if (totalFieldMax[j] < thisTask->getFieldMax()[j]) totalFieldMax[j]= thisTask->getFieldMax()[j];
 		}
-	}
-	return make_unique<RecordCountResult>(totalFieldMax);
+	}*/
+	return make_unique<RecordCountResult>(counter);
 }
 
 void MaxTask::execute() {
+	auto query = getQuery();
     try {
 		int numFields = this->getQuery()->getOperands().size();
-		Max.insert(Max.end(), numFields, INFINITY);
+		//Max.insert(Max.end(), numFields, INFINITY);
 		if (query->getCondition().empty())
 		{
 			for (auto it = begin; it != end; ++it) {

@@ -7,26 +7,23 @@
 class MaxQuery : public ComplexQuery {
     static constexpr const char *qname = "MAX";
 public:
+    LEMONDB_QUERY_WRITER(false);
     using ComplexQuery::ComplexQuery;
 	std::vector<std::string> &getOperands() { return operands; }
     QueryResult::Ptr execute() override;
     std::string toString() override;
     QueryResult::Ptr combine() override;
-	MaxTask *getTask(int index) {
+/*	MaxTask *getTask(int index) {
 		return (MaxTask*)tasks[index].get();
-	}
+	}*/
 };
 
 class MaxTask : public Task {
-private:
-    MaxQuery *getQuery() {
-        return (MaxQuery *) query.get();
-    }
 	std::vector<int> Max;
+protected:
+	LEMONDB_QUERY_PTR(MaxQuery);
 public:
-    MaxTask(const std::shared_ptr<ComplexQuery> &query,
-               Table &table, Table::Iterator begin, Table::Iterator end) :
-            Task(query, table, begin, end) {};
+    using Task::Task;
     void execute() override;
 	std::vector<int> getFieldMax() { return Max; }
 };

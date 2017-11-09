@@ -75,17 +75,25 @@ Inheritance diagram for ConditionedQuery:</div>
 <area href="class_query.html" alt="Query" shape="rect" coords="0,0,115,24"/>
 <area href="class_complex_query.html" alt="ComplexQuery" shape="rect" coords="0,112,115,136"/>
 <area href="class_add_query.html" alt="AddQuery" shape="rect" coords="125,168,240,192"/>
-<area href="class_count_query.html" alt="CountQuery" shape="rect" coords="125,224,240,248"/>
-<area href="class_delete_query.html" alt="DeleteQuery" shape="rect" coords="125,280,240,304"/>
-<area href="class_duplicate_query.html" alt="DuplicateQuery" shape="rect" coords="125,336,240,360"/>
-<area href="class_insert_query.html" alt="InsertQuery" shape="rect" coords="125,392,240,416"/>
-<area href="class_max_query.html" alt="MaxQuery" shape="rect" coords="125,448,240,472"/>
-<area href="class_min_query.html" alt="MinQuery" shape="rect" coords="125,504,240,528"/>
-<area href="class_select_query.html" alt="SelectQuery" shape="rect" coords="125,560,240,584"/>
-<area href="class_sub_query.html" alt="SubQuery" shape="rect" coords="125,616,240,640"/>
-<area href="class_sum_query.html" alt="SumQuery" shape="rect" coords="125,672,240,696"/>
-<area href="class_swap_query.html" alt="SwapQuery" shape="rect" coords="125,728,240,752"/>
-<area href="class_update_query.html" alt="UpdateQuery" shape="rect" coords="125,784,240,808"/>
+<area href="class_add_query.html" alt="AddQuery" shape="rect" coords="125,224,240,248"/>
+<area href="class_count_query.html" alt="CountQuery" shape="rect" coords="125,280,240,304"/>
+<area href="class_count_query.html" alt="CountQuery" shape="rect" coords="125,336,240,360"/>
+<area href="class_delete_query.html" alt="DeleteQuery" shape="rect" coords="125,392,240,416"/>
+<area href="class_duplicate_query.html" alt="DuplicateQuery" shape="rect" coords="125,448,240,472"/>
+<area href="class_duplicate_query.html" alt="DuplicateQuery" shape="rect" coords="125,504,240,528"/>
+<area href="class_insert_query.html" alt="InsertQuery" shape="rect" coords="125,560,240,584"/>
+<area href="class_max_query.html" alt="MaxQuery" shape="rect" coords="125,616,240,640"/>
+<area href="class_max_query.html" alt="MaxQuery" shape="rect" coords="125,672,240,696"/>
+<area href="class_min_query.html" alt="MinQuery" shape="rect" coords="125,728,240,752"/>
+<area href="class_min_query.html" alt="MinQuery" shape="rect" coords="125,784,240,808"/>
+<area href="class_select_query.html" alt="SelectQuery" shape="rect" coords="125,840,240,864"/>
+<area href="class_sub_query.html" alt="SubQuery" shape="rect" coords="125,896,240,920"/>
+<area href="class_sub_query.html" alt="SubQuery" shape="rect" coords="125,952,240,976"/>
+<area href="class_sum_query.html" alt="SumQuery" shape="rect" coords="125,1008,240,1032"/>
+<area href="class_sum_query.html" alt="SumQuery" shape="rect" coords="125,1064,240,1088"/>
+<area href="class_swap_query.html" alt="SwapQuery" shape="rect" coords="125,1120,240,1144"/>
+<area href="class_swap_query.html" alt="SwapQuery" shape="rect" coords="125,1176,240,1200"/>
+<area href="class_update_query.html" alt="UpdateQuery" shape="rect" coords="125,1232,240,1256"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -101,6 +109,17 @@ virtual QueryResult::Ptr&#160;</td><td class="memItemRight" valign="bottom"><b>e
 <tr class="memitem:afaa6bbe4624620f71e71e259d3f22e31 inherit pub_methods_class_query"><td class="memItemLeft" align="right" valign="top"><a id="afaa6bbe4624620f71e71e259d3f22e31"></a>
 virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> ()=0</td></tr>
 <tr class="separator:afaa6bbe4624620f71e71e259d3f22e31 inherit pub_methods_class_query"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe155a5d150777548767feb8f41348bd inherit pub_methods_class_query"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_query.html#abe155a5d150777548767feb8f41348bd">complete</a> ()</td></tr>
+<tr class="separator:abe155a5d150777548767feb8f41348bd inherit pub_methods_class_query"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a073b5b30f3a37f092bbce14a4ae8c557 inherit pub_methods_class_query"><td class="memItemLeft" align="right" valign="top"><a id="a073b5b30f3a37f092bbce14a4ae8c557"></a>
+virtual QueryResult::Ptr&#160;</td><td class="memItemRight" valign="bottom"><b>combine</b> ()</td></tr>
+<tr class="separator:a073b5b30f3a37f092bbce14a4ae8c557 inherit pub_methods_class_query"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4cc3a0f8d7b0472b4cf7a26f677b9bf0 inherit pub_methods_class_query"><td class="memItemLeft" align="right" valign="top"><a id="a4cc3a0f8d7b0472b4cf7a26f677b9bf0"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>isWriter</b> ()=0</td></tr>
+<tr class="separator:a4cc3a0f8d7b0472b4cf7a26f677b9bf0 inherit pub_methods_class_query"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1627ac6e59d31bc9b5b0e1a58315e8b7 inherit pub_methods_class_query"><td class="memItemLeft" align="right" valign="top"><a id="a1627ac6e59d31bc9b5b0e1a58315e8b7"></a>
+const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getTableName</b> ()</td></tr>
+<tr class="separator:a1627ac6e59d31bc9b5b0e1a58315e8b7 inherit pub_methods_class_query"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -108,6 +127,13 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:acb23c3aa126722d3e66e5be4d1cd4496 inherit pub_types_class_query"><td class="memItemLeft" align="right" valign="top"><a id="acb23c3aa126722d3e66e5be4d1cd4496"></a>
 typedef std::shared_ptr&lt; <a class="el" href="class_query.html">Query</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Ptr</b></td></tr>
 <tr class="separator:acb23c3aa126722d3e66e5be4d1cd4496 inherit pub_types_class_query"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_attribs_class_query"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_class_query')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="class_query.html">Query</a></td></tr>
+<tr class="memitem:aae74f84fc7251575f00cdf4ad77681bd inherit pub_attribs_class_query"><td class="memItemLeft" align="right" valign="top">std::atomic_int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_query.html#aae74f84fc7251575f00cdf4ad77681bd">taskComplete</a> {0}</td></tr>
+<tr class="separator:aae74f84fc7251575f00cdf4ad77681bd inherit pub_attribs_class_query"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_class_query"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_query')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_query.html">Query</a></td></tr>
+<tr class="memitem:ae4aa2f36a804413761d4e131ea407a0b inherit pro_attribs_class_query"><td class="memItemLeft" align="right" valign="top"><a id="ae4aa2f36a804413761d4e131ea407a0b"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>targetTable</b></td></tr>
+<tr class="separator:ae4aa2f36a804413761d4e131ea407a0b inherit pro_attribs_class_query"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/query/<a class="el" href="query_8h_source.html">query.h</a></li>

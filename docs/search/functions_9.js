@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['main',['main',['../main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;main.cpp'],['../main__test__table_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'main():&#160;main_test_table.cpp']]],
-  ['multiplekey',['MultipleKey',['../struct_multiple_key.html#a383ebd6e3381b47e46cee51b99ae5cc7',1,'MultipleKey']]]
+  ['setname',['setName',['../class_table.html#aaee2603a21e2ad0de4e073ada88e4b8d',1,'Table']]],
+  ['size',['size',['../class_table.html#aec548eba07f9b3aebcde324c19e19fde',1,'Table']]],
+  ['swapdata',['swapData',['../class_table.html#ae064a04cc7772a51f163f81f0187446e',1,'Table']]]
 ];

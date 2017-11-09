@@ -5,17 +5,13 @@
 #ifndef LEMONDB_DUPLICATE_QUERY_H
 #define LEMONDB_DUPLICATE_QUERY_H
 
-#ifndef LEMONDB_DUPLICATE_QUERY_H
-#define LEMONDB_DUPLICATE_QUERY_H
-
 #include "query.h"
 #include "task.h"
 
 class DuplicateQuery : public ComplexQuery {
     static constexpr const char *qname = "DUPLICATE";
-private:
-    bool writer = true;
 public:
+    LEMONDB_QUERY_WRITER(true);
     using ComplexQuery::ComplexQuery;
     QueryResult::Ptr execute() override;
     std::string toString() override;
@@ -23,14 +19,10 @@ public:
 };
 
 class DuplicateTask : public Task {
-private:
-    DuplicateQuery *getQuery() {
-        return (DuplicateQuery *) query.get();
-    }
+protected:
+    LEMONDB_QUERY_PTR(DuplicateQuery);
 public:
-    DuplicateTask(const std::shared_ptr<ComplexQuery> &query,
-               Table &table, Table::Iterator begin, Table::Iterator end) :
-            Task(query, table, begin, end) {};
+    using Task::Task;
     void execute() override;
 };
 

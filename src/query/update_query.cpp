@@ -65,6 +65,7 @@ QueryResult::Ptr UpdateQuery::combine() {
 
 
 void UpdateTask::execute() {
+    auto query = getQuery();
     try {
         for (auto object : *table) {
             if (query->evalCondition(query->getCondition(), object)) {
@@ -76,7 +77,7 @@ void UpdateTask::execute() {
                 else 
                 {
                     Table::ValueType newValue = this->getQuery()->getFieldValue();
-                    int index = table.getFieldIndex(fieldName);
+                    int index = table->getFieldIndex(fieldName);
                     object[index]=newValue;
                 }
                 counter++;

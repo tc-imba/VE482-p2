@@ -56,20 +56,22 @@ QueryResult::Ptr MinQuery::combine() {
                 "Not completed yet."s
         );
     }
-	std::vector<int> totalFieldMin(std::move(this->getTask(0)->getFieldMin()));
+	size_t counter = 0;
+	/*std::vector<int> totalFieldMin(std::move(this->getTask(0)->getFieldMin()));
 	for (int i = 1; i < tasks.size(); ++i) {
 		MinTask *thisTask = this->getTask(i);
 		for (int j = 0; j < operands.size(); ++j) {
 			if (totalFieldMin[j] > thisTask->getFieldMin()[j]) totalFieldMin[j]= thisTask->getFieldMin()[j];
 		}
-	}
-	return make_unique<RecordCountResult>(totalFieldMin);
+	}*/
+	return make_unique<RecordCountResult>(counter);
 }
 
 void MinTask::execute() {
+	auto query = getQuery();
     try {
 		int numFields = this->getQuery()->getOperands().size();
-		Min.insert(Min.end(), numFields, INFINITY);
+		//Min.insert(Min.end(), numFields, INFINITY);
 		if (query->getCondition().empty())
 		{
 			for (auto it = begin; it != end; ++it) {

@@ -5,5 +5,6 @@ var searchData=
   ['conditionedquery',['ConditionedQuery',['../class_conditioned_query.html',1,'']]],
   ['conflictingkey',['ConflictingKey',['../struct_conflicting_key.html',1,'']]],
   ['copytabletablequery',['CopytableTableQuery',['../class_copytable_table_query.html',1,'']]],
-  ['countquery',['CountQuery',['../class_count_query.html',1,'']]]
+  ['countquery',['CountQuery',['../class_count_query.html',1,'']]],
+  ['counttask',['CountTask',['../class_count_task.html',1,'']]]
 ];

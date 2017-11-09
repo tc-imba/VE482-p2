@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['blankdatum',['blankDatum',['../class_table.html#a5f49825bd6b391c5ca9a0d04b9ddebe9',1,'Table']]]
+  ['taskcomplete',['taskComplete',['../class_query.html#aae74f84fc7251575f00cdf4ad77681bd',1,'Query']]]
 ];

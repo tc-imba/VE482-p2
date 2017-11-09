@@ -62,6 +62,8 @@ $(function() {
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="class_query-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Query Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -99,9 +101,74 @@ virtual QueryResult::Ptr&#160;</td><td class="memItemRight" valign="bottom"><b>e
 <tr class="memitem:afaa6bbe4624620f71e71e259d3f22e31"><td class="memItemLeft" align="right" valign="top"><a id="afaa6bbe4624620f71e71e259d3f22e31"></a>
 virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> ()=0</td></tr>
 <tr class="separator:afaa6bbe4624620f71e71e259d3f22e31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe155a5d150777548767feb8f41348bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_query.html#abe155a5d150777548767feb8f41348bd">complete</a> ()</td></tr>
+<tr class="separator:abe155a5d150777548767feb8f41348bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a073b5b30f3a37f092bbce14a4ae8c557"><td class="memItemLeft" align="right" valign="top"><a id="a073b5b30f3a37f092bbce14a4ae8c557"></a>
+virtual QueryResult::Ptr&#160;</td><td class="memItemRight" valign="bottom"><b>combine</b> ()</td></tr>
+<tr class="separator:a073b5b30f3a37f092bbce14a4ae8c557"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4cc3a0f8d7b0472b4cf7a26f677b9bf0"><td class="memItemLeft" align="right" valign="top"><a id="a4cc3a0f8d7b0472b4cf7a26f677b9bf0"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>isWriter</b> ()=0</td></tr>
+<tr class="separator:a4cc3a0f8d7b0472b4cf7a26f677b9bf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1627ac6e59d31bc9b5b0e1a58315e8b7"><td class="memItemLeft" align="right" valign="top"><a id="a1627ac6e59d31bc9b5b0e1a58315e8b7"></a>
+const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getTableName</b> ()</td></tr>
+<tr class="separator:a1627ac6e59d31bc9b5b0e1a58315e8b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:aae74f84fc7251575f00cdf4ad77681bd"><td class="memItemLeft" align="right" valign="top">std::atomic_int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_query.html#aae74f84fc7251575f00cdf4ad77681bd">taskComplete</a> {0}</td></tr>
+<tr class="separator:aae74f84fc7251575f00cdf4ad77681bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:ae4aa2f36a804413761d4e131ea407a0b"><td class="memItemLeft" align="right" valign="top"><a id="ae4aa2f36a804413761d4e131ea407a0b"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>targetTable</b></td></tr>
+<tr class="separator:ae4aa2f36a804413761d4e131ea407a0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="abe155a5d150777548767feb8f41348bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe155a5d150777548767feb8f41348bd">&#9670;&nbsp;</a></span>complete()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Query::complete </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>add the complete query to the result vector here should add a unique id for each query should add a function to print results in correct order</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="aae74f84fc7251575f00cdf4ad77681bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae74f84fc7251575f00cdf4ad77681bd">&#9670;&nbsp;</a></span>taskComplete</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::atomic_int Query::taskComplete {0}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Count the completed tasks atomic is used because only ++ and &lt; is applied spin lock will be faster than mutex </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>src/query/<a class="el" href="query_8h_source.html">query.h</a></li>
+<li>src/query/<a class="el" href="query__base_8h_source.html">query_base.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

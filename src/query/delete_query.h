@@ -21,8 +21,7 @@ public:
 
 class DeleteTask : public Task {
 protected:
-    //GetPtr<DeleteQuery> getQuery{query};
-    DeleteQuery* getQuery() override { return dynamic_cast<DeleteQuery*>(query.get()); }
+    LEMONDB_QUERY_PTR(DeleteQuery);
 public:
     using Task::Task;
     void execute() override;

@@ -69,10 +69,11 @@ QueryResult::Ptr DuplicateQuery::combine() {
 }
 
 void DuplicateTask::execute() {
+    auto query = getQuery();
     try {
         for (auto it = begin; it != end; ++it) {
             if (query->evalCondition(query->getCondition(), *it)) {
-                table.duplicate(it);
+                table->duplicate(it);
                 counter++;
             }
         }

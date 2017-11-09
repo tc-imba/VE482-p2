@@ -65,6 +65,7 @@ QueryResult::Ptr SubQuery::combine() {
 
 
 void SubTask::execute() {
+    auto query = getQuery();
     try {
         int numFields = this->getQuery()->getOperands().size();
         int init;

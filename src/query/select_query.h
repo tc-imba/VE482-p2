@@ -11,10 +11,10 @@
 
 class SelectQuery : public ComplexQuery {
     static constexpr const char *qname = "SELECT";
-private:
     std::vector<Table::resultArray> taskResults;
     std::unordered_map<Task*, int> taskToIndex;
 public:
+    LEMONDB_QUERY_WRITER(false);
     using ComplexQuery::ComplexQuery;
     QueryResult::Ptr execute() override;
     std::string toString() override;
@@ -32,10 +32,8 @@ public:
 };
 
 class SelectTask : public Task {
-private:
-    SelectQuery *getQuery() {
-        return (SelectQuery *) query.get();
-    }
+protected:
+    LEMONDB_QUERY_PTR(SelectQuery);
 public:
     using Task::Task;
     void execute() override ;

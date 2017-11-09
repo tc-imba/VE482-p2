@@ -20,9 +20,7 @@ public:
 
 class LoadTableTask : public Task {
 protected:
-    GetPtr<LoadTableQuery> getQuery{query};
-    //int test = 0;
-    //LoadTableQuery* getQuery() override { return dynamic_cast<LoadTableQuery*>(query.get()); }
+    LEMONDB_QUERY_PTR(LoadTableQuery);
 public:
     using Task::Task;
     void execute() override;
