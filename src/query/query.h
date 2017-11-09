@@ -90,7 +90,7 @@ public:
                 size = 0;
                 end = table.end();
             }
-            auto task = std::shared_ptr<Task>(new TaskType(std::shared_ptr<ComplexQuery>(this), table, begin, end));
+            auto task = std::shared_ptr<Task>(new TaskType(std::shared_ptr<ComplexQuery>(this), &table, begin, end));
             db.addTask(std::move(task));
         }
     }

@@ -1,10 +1,12 @@
 #include <algorithm>
 #include "db_table.h"
+#include "db.h"
 #include "../uexception.h"
 #include "../formatter.h"
 
 
-Table::Ptr loadTableFromStream(std::istream &infile, std::string source) {
+Table& loadTableFromStream(std::istream &infile, std::string source) {
+    auto &db = Database::getInstance();
     std::string errString =
             !source.empty() ?
             R"(Invalid table (from "?") format: )"_f % source :
@@ -53,7 +55,9 @@ Table::Ptr loadTableFromStream(std::istream &infile, std::string source) {
         );
 
     fields.erase(fields.begin()); // Remove leading key
-    Table::Ptr table = std::make_unique<Table>(tableName, fields);
+    //Table::Ptr table = std::make_unique<Table>(tableName, fields);
+    auto &table = db.ensureTable(tableName);
+    table.init(fields);
 
     int count = 2;
     while (std::getline(infile, line)) {
@@ -76,7 +80,7 @@ Table::Ptr loadTableFromStream(std::istream &infile, std::string source) {
                 );
             tuple.push_back(value);
         }
-        (*table).insertByIndex(key, tuple);
+        table.insertByIndex(key, tuple);
     }
     return table;
 }

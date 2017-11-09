@@ -11,20 +11,32 @@
 
 class Task {
 protected:
-    std::shared_ptr<ComplexQuery> query;
-    Table &table;
+    std::shared_ptr<Query> query;
+    Table *table = nullptr;
     /** Count affected rows in this task */
     Table::SizeType counter = 0;
     Table::Iterator begin, end;
     QueryResult::Ptr errorResult = nullptr;
+    virtual Query *getQuery() { return query.get(); }
+
+    template<class T>
+    class GetPtr {
+    private:
+        Query* query;
+    public:
+        GetPtr(const Query::Ptr &query) : query(dynamic_cast<T*>(query.get())) {};
+        T *operator()() { return query; }
+    };
 public:
     typedef std::shared_ptr<Task> Ptr;
 
     Task() = delete;
 
-    Task(const std::shared_ptr<ComplexQuery> &query,
-         Table &table, Table::Iterator begin, Table::Iterator end) :
-            query(query), table(table) {};
+    explicit Task(std::shared_ptr<Query> query) : query(std::move(query)) {};
+
+    Task(std::shared_ptr<Query> query,
+         Table *table, Table::Iterator begin, Table::Iterator end) :
+            query(std::move(query)), table(table), begin(begin), end(end) {};
 
     virtual ~Task() = default;
 

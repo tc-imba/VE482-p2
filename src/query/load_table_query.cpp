@@ -11,31 +11,28 @@ std::string LoadTableQuery::toString() {
 }
 
 QueryResult::Ptr LoadTableQuery::execute() {
-    std::ifstream infile(this->fileName);
-    if (!infile.is_open()) {
-        return std::make_unique<ErrorMsgResult>(
-                qname, "Cannot open file '?'"_f % this->fileName
-        );
-    }
-    Table::Ptr table = nullptr;
     try {
-        table = loadTableFromStream(infile, this->fileName);
-        Database &db = Database::getInstance();
-        db.registerTable(std::move(table));
+        auto &db = Database::getInstance();
+        auto task = std::shared_ptr<Task>(new LoadTableTask(std::shared_ptr<Query>(this)));
+        db.addTask(std::move(task));
     } catch (const std::exception &e) {
         return std::make_unique<ErrorMsgResult>(qname, e.what());
     }
-//    std::cerr << "info: Loaded table " << this->fileName << std::endl;
     return std::make_unique<SuccessMsgResult>(qname);
 }
 
 void LoadTableTask::execute() {
+    auto query = getQuery();
     try {
-
-        Database &db = Database::getInstance();
-
+        std::ifstream infile(query->fileName);
+        if (!infile.is_open()) {
+            errorResult = std::make_unique<ErrorMsgResult>(query->qname, "Cannot open file '?'"_f % query->fileName);
+            return;
+        }
+        auto &table = loadTableFromStream(infile, query->fileName);
+        infile.close();
     } catch (const std::exception &e) {
+        errorResult = std::make_unique<ErrorMsgResult>(query->qname, e.what());
         return;
-        //return std::make_unique<ErrorMsgResult>(qname, e.what());
     }
 }

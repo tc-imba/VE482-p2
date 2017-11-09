@@ -15,12 +15,14 @@ public:
     explicit LoadTableQuery(std::string file) : fileName(std::move(file)) {}
     QueryResult::Ptr execute() override;
     std::string toString() override;
+    friend class LoadTableTask;
 };
 
 class LoadTableTask : public Task {
+protected:
+    LoadTableQuery *getQuery() override { return dynamic_cast<LoadTableQuery*>(query.get()); }
 public:
-    LoadTableTask(const std::shared_ptr<ComplexQuery> &query, Table &table) :
-            Task(query, table, table.begin(), table.end()) {};
+    explicit LoadTableTask(const std::shared_ptr<Query> &query) : Task(query) {};
     void execute() override;
 };
 

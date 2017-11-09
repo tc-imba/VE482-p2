@@ -28,7 +28,15 @@ Table::Table(const std::string &name, const FieldIDContainer &_fields)
 
 template<class FieldIDContainer>
 void Table::init(const FieldIDContainer &fields) {
-
+    size_t i = 0;
+    for (const auto &field : fields) {
+        if (field == "KEY")
+            throw MultipleKey(
+                    "Error creating table \"" + tableName + "\": Multiple KEY field."
+            );
+        fieldMap.emplace(field, i++);
+    }
+    initialized = true;
 }
 
 /*template<class AssocContainer>

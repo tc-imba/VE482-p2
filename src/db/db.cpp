@@ -31,6 +31,17 @@ void Database::registerTable(Table::Ptr &&table) {
     this->tables[name] = std::move(table);
 }
 
+Table& Database::ensureTable(const std::string &tableName) {
+    tablesMutex.lock();
+    auto it = this->tables.find(tableName);
+    if (it == this->tables.end()) {
+        // table doesn't exist, add the table
+        it = tables.emplace(std::make_pair(tableName, std::make_unique<Table>())).first;
+    }
+    tablesMutex.unlock();
+    return *(it->second);
+}
+
 Table &Database::operator[](std::string tableName) {
     auto it = this->tables.find(tableName);
     if (it == this->tables.end())
@@ -80,14 +91,8 @@ void Database::addQuery(Query::Ptr &&query) {
         // no-target query
         return;
     }
-    tablesMutex.lock();
-    auto it = this->tables.find(query->getTableName());
-    if (it == this->tables.end()) {
-        // table doesn't exist, add the table
-        it = tables.emplace(std::make_pair(tableName, std::make_unique<Table>())).first;
-    }
-    (*it->second).addQuery(query);
-    tablesMutex.unlock();
+    auto &table = ensureTable(tableName);
+    table.addQuery(query);
 }
 
 void Database::addTask(Task::Ptr &&task) {

@@ -66,7 +66,7 @@ QueryResult::Ptr UpdateQuery::combine() {
 
 void UpdateTask::execute() {
     try {
-        for (auto object : table) {
+        for (auto object : *table) {
             if (query->evalCondition(query->getCondition(), object)) {
                 std::string fieldName = this->getQuery()->getFieldName();
                 if (fieldName == "KEY")

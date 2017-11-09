@@ -15,8 +15,25 @@ void f(int n)
     }
 }
 
+class Base {
+protected:
+    bool writer = false;
+};
+
+class Dervied : public Base {
+protected:
+    using Base::writer;
+public:
+    Dervied() {
+        writer = true;
+    };
+    void print() {std::cout << std::boolalpha << Base::writer << std::endl; }
+};
+
 int main()
 {
+    Dervied a;
+    a.print();
     std::vector<std::thread> v;
     for (int n = 0; n < 10; ++n) {
         v.emplace_back(f, n);

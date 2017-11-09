@@ -497,7 +497,7 @@ public:
     void refreshQuery();
 };
 
-Table::Ptr loadTableFromStream(std::istream &is, std::string source = "");
+Table& loadTableFromStream(std::istream &is, std::string source = "");
 
 #include "db_table_impl.hpp"
 

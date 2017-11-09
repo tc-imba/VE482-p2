@@ -73,6 +73,7 @@ QueryResult::Ptr DeleteQuery::combine() {
 }
 
 void DeleteTask::execute() {
+    auto query = getQuery();
     try {
         for (auto it = begin; it != end; ++it) {
             if (query->evalCondition(query->getCondition(), *it)) {

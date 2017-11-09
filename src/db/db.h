@@ -17,7 +17,7 @@ class Database {
 private:
     static std::unique_ptr<Database> instance;
 
-    std::unordered_map<std::string, std::unique_ptr<Table>> tables;
+    std::unordered_map<std::string, Table::Ptr> tables;
     std::mutex tablesMutex;
 
     std::queue<Task::Ptr> tasks;
@@ -33,6 +33,15 @@ private:
 
 public:
     void registerTable(Table::Ptr &&table);
+    /**
+     * get the table if it already exists
+     * create a table if tableName not found
+     * use tablesMutex, call it when needed
+     * if tableName must exist, use operator[]
+     * @param tableName
+     * @return
+     */
+    Table &ensureTable(const std::string &tableName);
     void dropTable(std::string tableName);
     void printAllTable();
 
