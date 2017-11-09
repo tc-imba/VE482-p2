@@ -20,9 +20,11 @@ public:
 
 class LoadTableTask : public Task {
 protected:
-    LoadTableQuery *getQuery() override { return dynamic_cast<LoadTableQuery*>(query.get()); }
+    GetPtr<LoadTableQuery> getQuery{query};
+    //int test = 0;
+    //LoadTableQuery* getQuery() override { return dynamic_cast<LoadTableQuery*>(query.get()); }
 public:
-    explicit LoadTableTask(const std::shared_ptr<Query> &query) : Task(query) {};
+    using Task::Task;
     void execute() override;
 };
 

@@ -6,9 +6,8 @@
 
 class AddQuery : public ComplexQuery {
     static constexpr const char *qname = "ADD";
-private:
-    bool writer = true;
 public:
+    LEMONDB_QUERY_WRITER(true);
     using ComplexQuery::ComplexQuery;
     QueryResult::Ptr execute() override;
     std::string toString() override;

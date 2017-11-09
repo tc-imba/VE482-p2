@@ -6,5 +6,5 @@
 #include "query.h"
 
 void Task::execute() {
-    query->complete();
+    getQuery()->complete();
 }

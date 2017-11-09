@@ -16,12 +16,13 @@ public:
     QueryResult::Ptr execute() override;
     std::string toString() override;
     QueryResult::Ptr combine() override;
+    friend class DeleteTask;
 };
 
 class DeleteTask : public Task {
 protected:
-    //LEMONDB_QUERY_CAST(DeleteQuery);
-    GetPtr<DeleteQuery> getQuery = query;
+    //GetPtr<DeleteQuery> getQuery{query};
+    DeleteQuery* getQuery() override { return dynamic_cast<DeleteQuery*>(query.get()); }
 public:
     using Task::Task;
     void execute() override;

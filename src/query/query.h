@@ -40,42 +40,20 @@ protected:
     std::vector<std::string> operands;
     std::vector<QueryCondition> condition;
     std::vector<std::shared_ptr<Task> > tasks;
-    /**
-     * Count the completed tasks
-     * atomic is used because only ++ and < is applied
-     * spin lock will be faster than mutex
-     */
-    std::atomic_int taskComplete;
 public:
     typedef std::shared_ptr<ComplexQuery> Ptr;
 
-    ComplexQuery(const std::string &targetTable,
-                 const std::vector<std::string> &operands,
-                 const std::vector<QueryCondition> &condition)
-            : operands(operands), condition(condition), taskComplete(0) {
-        this->targetTable = targetTable;
+    ComplexQuery(std::string targetTable,
+                 std::vector<std::string> operands,
+                 std::vector<QueryCondition> condition)
+            : operands(std::move(operands)),
+              condition(std::move(condition)) {
+        this->targetTable = std::move(targetTable);
     }
 
     const std::vector<QueryCondition> &getCondition() {
         return condition;
     }
-
-    void complete() {
-        /**
-         * @TODO add the complete query to the result vector here
-         * should add a unique id for each query
-         * should add a function to print results in correct order
-         */
-        ++taskComplete;
-        auto result = combine();
-        if (result != nullptr) {
-
-        }
-    }
-
-    virtual QueryResult::Ptr combine() {
-        return nullptr;
-    };
     
     template<class TaskType>
     void addIterationTask(Database &db, Table &table) {
@@ -90,7 +68,7 @@ public:
                 size = 0;
                 end = table.end();
             }
-            auto task = std::shared_ptr<Task>(new TaskType(std::shared_ptr<ComplexQuery>(this), &table, begin, end));
+            auto task = std::shared_ptr<Task>(new TaskType(Query::Ptr(this), &table, begin, end));
             db.addTask(std::move(task));
         }
     }

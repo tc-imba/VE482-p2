@@ -22,15 +22,17 @@ protected:
     template<class T>
     class GetPtr {
     private:
-        Query* query;
+        T *query;
     public:
-        GetPtr(const Query::Ptr &query) : query(dynamic_cast<T*>(query.get())) {};
+        explicit GetPtr(const Query::Ptr &query) : query(dynamic_cast<T *>(query.get())) {};
         T *operator()() { return query; }
     };
+    //GetPtr<Query> getQuery{query};
+
 public:
     typedef std::shared_ptr<Task> Ptr;
 
-    Task() = delete;
+    //Task() = delete;
 
     explicit Task(std::shared_ptr<Query> query) : query(std::move(query)) {};
 

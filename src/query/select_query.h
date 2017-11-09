@@ -2,9 +2,10 @@
 // Created by linzhi on 11/6/17.
 //
 
-#ifndef LEMONDB_SELECT_QUERY_H_H
-#define LEMONDB_SELECT_QUERY_H_H
+#ifndef LEMONDB_SELECT_QUERY_H
+#define LEMONDB_SELECT_QUERY_H
 
+#include <algorithm>
 #include "query.h"
 #include "task.h"
 
@@ -36,10 +37,8 @@ private:
         return (SelectQuery *) query.get();
     }
 public:
-    SelectTask(const std::shared_ptr<ComplexQuery> &query,
-               Table &table, Table::Iterator begin, Table::Iterator end) :
-            Task(query, table, begin, end) {};
+    using Task::Task;
     void execute() override ;
 };
 
-#endif //LEMONDB_SELECT_QUERY_H_H
+#endif //LEMONDB_SELECT_QUERY_H

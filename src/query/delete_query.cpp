@@ -3,16 +3,13 @@
 //
 
 #include "delete_query.h"
-#include "../db/db.h"
-#include "../db/db_table.h"
-#include "../formatter.h"
 
 constexpr const char *DeleteQuery::qname;
 
 QueryResult::Ptr DeleteQuery::execute() {
     using namespace std;
     if (!this->operands.empty())
-        return make_unique<ErrorMsgResult>(
+        return std::make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
                 "Invalid number of operands (? operands)."_f % operands.size()
         );
@@ -22,12 +19,12 @@ QueryResult::Ptr DeleteQuery::execute() {
         auto &table = db[this->targetTable];
         if (condition.empty()) {
             counter = table.clear();
-            return make_unique<RecordCountResult>(counter);
+            return std::make_unique<RecordCountResult>(counter);
         }
         addIterationTask<DeleteTask>(db, table);
-        return make_unique<RecordCountResult>(counter);
+        return std::make_unique<RecordCountResult>(counter);
     } catch (const TableNameNotFound &e) {
-        return make_unique<ErrorMsgResult>(
+        return std::make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
                 "No such table."s
         );
@@ -36,16 +33,16 @@ QueryResult::Ptr DeleteQuery::execute() {
                 qname, this->targetTable.c_str(),
                 e.what()
         );
-    } catch (const invalid_argument &e) {
+    } catch (const std::invalid_argument &e) {
         // Cannot convert operand to string
         return std::make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
                 "Unknown error '?'"_f % e.what()
         );
-    } catch (const exception &e) {
+    } catch (const std::exception &e) {
         return std::make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
-                "Unkonwn error '?'."_f % e.what()
+                "Unknown error '?'."_f % e.what()
         );
     }
 }
@@ -57,7 +54,7 @@ std::string DeleteQuery::toString() {
 QueryResult::Ptr DeleteQuery::combine() {
     using namespace std;
     if (taskComplete < tasks.size()) {
-        return make_unique<ErrorMsgResult>(
+        return std::make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
                 "Not completed yet."s
         );
@@ -69,7 +66,7 @@ QueryResult::Ptr DeleteQuery::combine() {
         counter += task->getCounter();
     }
     table.swapData();
-    return make_unique<RecordCountResult>(counter);
+    return std::make_unique<RecordCountResult>(counter);
 }
 
 void DeleteTask::execute() {
@@ -77,20 +74,18 @@ void DeleteTask::execute() {
     try {
         for (auto it = begin; it != end; ++it) {
             if (query->evalCondition(query->getCondition(), *it)) {
-                table.erase(it);
+                table->erase(it);
                 counter++;
             } else {
-                table.move(it);
+                table->move(it);
             }
         }
         Task::execute();
     } catch (const IllFormedQueryCondition &e) {
+        errorResult = std::make_unique<ErrorMsgResult>(
+                query->qname, table->name().c_str(), e.what()
+        );
         return;
-        // @TODO manage query exceptions later
-        /*return std::make_unique<ErrorMsgResult>(
-                query->qname, table.name(),
-                e.what()
-        );*/
     }
 }
 
