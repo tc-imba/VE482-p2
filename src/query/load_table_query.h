@@ -12,6 +12,7 @@ class LoadTableQuery : public Query {
     static constexpr const char *qname = "LOAD";
     const std::string fileName;
 public:
+    LEMONDB_QUERY_WRITER(true)
     explicit LoadTableQuery(std::string file) : fileName(std::move(file)) {}
     QueryResult::Ptr execute() override;
     std::string toString() override;

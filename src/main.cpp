@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 
 #include "db/db_table.h"
 #include "query_parser.h"
@@ -18,12 +19,21 @@ std::string extractQueryString() {
         if (ch == ';') return buf;
         if (ch == EOF) throw std::ios_base::failure("End of input");
         buf.push_back(ch);
-    } while(1);
+    } while (1);
 }
 
 
-int main() {
-    Database &db =Database::getInstance();
+int main(int argc, char *argv[]) {
+#ifdef DEBUG
+    std::ifstream fin;
+    if (argc > 1) {
+        fin.open(argv[1]);
+        if (fin.is_open()) {
+            cin.rdbuf(fin.rdbuf());
+        }
+    }
+#endif
+    Database &db = Database::getInstance();
     QueryParser p;
     //p.registerQueryBuilder(std::make_unique<FakeQueryBuilder>());
     p.registerQueryBuilder(std::make_unique<QueryBuilder(Debug)>());
@@ -35,19 +45,20 @@ int main() {
             // REPL: Read-Evaluate-Print-Loop
             std::string queryStr = extractQueryString();
             Query::Ptr query = p.parseQuery(queryStr);
-            //db.addQuery(std::move(query));
-            QueryResult::Ptr result = query->execute();
-            cout << endl;
+            db.addQuery(std::move(query));
+
+            //QueryResult::Ptr result = query->execute();
+            /*cout << endl;
             if (result->success()) {
                 cout << result->toString() << endl;
             } else {
                 std::flush(cout);
                 cerr << "QUERY FAILED:\n\t" << result->toString() << endl;
-            }
-        } catch (const std::ios_base::failure& e) {
+            }*/
+        } catch (const std::ios_base::failure &e) {
             // End of input
             break;
-        } catch (const std::exception& e) {
+        } catch (const std::exception &e) {
             cerr << e.what() << endl;
         }
     }

@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.8)
 
 add_subdirectory(query)
+add_definitions(-DDEBUG)
 
 set(SOURCE_FILES
         db/db.cpp db/db.h
@@ -11,7 +12,7 @@ set(SOURCE_FILES
         task_results.h
         management_query.cpp management_query.h
         #data_query.cpp data_query.h
-        arithmetics_query.cpp arithmetics_query.h
+        #arithmetics_query.cpp arithmetics_query.h
         formatter.h uexception.h
         )
 add_executable(lemondb main.cpp ${SOURCE_FILES})

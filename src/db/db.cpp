@@ -12,8 +12,7 @@ void Database::threadWork(Database *db) {
             db->tasksMutex.unlock();
             if (db->readyExit) return;
             std::this_thread::yield();
-        } else
-        {
+        } else {
             auto task = db->tasks.front();
             db->tasks.pop();
             db->tasksMutex.unlock();
@@ -31,7 +30,7 @@ void Database::registerTable(Table::Ptr &&table) {
     this->tables[name] = std::move(table);
 }
 
-Table& Database::ensureTable(const std::string &tableName) {
+Table &Database::ensureTable(const std::string &tableName) {
     tablesMutex.lock();
     auto it = this->tables.find(tableName);
     if (it == this->tables.end()) {
@@ -89,6 +88,7 @@ void Database::addQuery(Query::Ptr &&query) {
     const auto &tableName = query->getTableName();
     if (tableName.empty()) {
         // no-target query
+        std::cerr << query->toString() << std::endl;
         return;
     }
     auto &table = ensureTable(tableName);
