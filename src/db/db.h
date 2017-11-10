@@ -20,11 +20,14 @@ private:
     std::unordered_map<std::string, Table::Ptr> tables;
     std::mutex tablesMutex;
 
-    std::queue<Task::Ptr> tasks;
+    std::queue<Task *> tasks;
     std::mutex tasksMutex;
 
     std::vector<std::pair<Query::Ptr, QueryResult::Ptr> > results;
     std::mutex resultsMutex;
+    size_t resultNow = 0;
+    //std::vector<std::pair<Query::Ptr, QueryResult::Ptr> >::iterator resultNow = results.begin();
+    std::mutex outputMutex;
 
     std::vector<std::thread> threads;
     static const int threadNum = 8;
@@ -79,9 +82,14 @@ public:
      * idle working threads are waiting for the task
      * @param task
      */
-    void addTask(Task::Ptr &&task);
+    void addTask(Task *task);
 
-    void addResult(Query::Ptr query);
+    void addResult(Query *query, QueryResult::Ptr &&result);
+
+    /**
+     * try to output the query result in order
+     */
+    void completeQuery();
 
     bool isBusy() const {
         return !readyExit;

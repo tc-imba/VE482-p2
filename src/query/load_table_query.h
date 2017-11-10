@@ -16,6 +16,7 @@ public:
     explicit LoadTableQuery(std::string file) : fileName(std::move(file)) {}
     QueryResult::Ptr execute() override;
     std::string toString() override;
+    QueryResult::Ptr combine() override;
     friend class LoadTableTask;
 };
 

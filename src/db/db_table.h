@@ -480,7 +480,7 @@ private:
      * only push_back, pop_front and splice with forward iterator should be used
      * std::queue is not used because it doesn't support iterator
      */
-    std::list<Query::Ptr> queryQueue;
+    std::list<Query*> queryQueue;
     /**
      * (protected by @see queryQueueMutex)
      * The value of queryQueueCounter have different meanings
@@ -492,7 +492,7 @@ private:
     /** queryQueue and queryQueueCounter must be locked for multi-thread */
     std::mutex queryQueueMutex;
 public:
-    void addQuery(Query::Ptr &query);
+    void addQuery(Query *query);
 
     void refreshQuery();
 };

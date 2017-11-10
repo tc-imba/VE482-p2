@@ -29,9 +29,17 @@ public:
 
 class TaskQuery : public Query {
 protected:
-    std::vector<std::shared_ptr<Task> > tasks;
+    std::vector<std::unique_ptr<Task> > tasks;
     std::mutex tasksMutex;
+    /**
+     * Count the completed tasks
+     * atomic is used because only ++ and < is applied
+     * spin lock will be faster than mutex
+     */
+    std::atomic_int taskComplete{0};
 public:
+    void complete();
+
     template<class TaskType>
     void addIterationTask(Database &db, Table &table) {
         auto begin = table.begin();
@@ -46,18 +54,18 @@ public:
                 size = 0;
                 end = table.end();
             }
-            auto task = std::shared_ptr<Task>(new TaskType(Query::Ptr(this), &table, begin, end));
-            tasks.emplace_back(task);
-            db.addTask(std::move(task));
+            auto task = std::unique_ptr<Task>(new TaskType(this, &table, begin, end));
+            db.addTask(task.get());
+            tasks.emplace_back(std::move(task));
         }
         tasksMutex.unlock();
     }
 
     template<class TaskType>
     void addUniqueTask(Database &db, Table *table = nullptr) {
-        auto task = std::shared_ptr<Task>(new TaskType(Query::Ptr(this), table));
-        tasks.emplace_back(task);
-        db.addTask(std::move(task));
+        auto task = std::unique_ptr<Task>(new TaskType(this, table));
+        db.addTask(task.get());
+        tasks.emplace_back(std::move(task));
     }
 };
 
@@ -70,7 +78,7 @@ public:
     bool evalCondition(const std::vector<QueryCondition> &conditions,
                        const Table::Object &object);
 
-    typedef std::shared_ptr<ComplexQuery> Ptr;
+    typedef std::unique_ptr<ComplexQuery> Ptr;
 
     ComplexQuery(std::string targetTable,
                  std::vector<std::string> operands,

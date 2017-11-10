@@ -5,6 +5,21 @@
 #include <iostream>
 #include <cassert>
 
+void TaskQuery::complete()  {
+    /**
+     * @TODO add the complete query to the result vector here
+     * should add a unique id for each query - ok
+     * should add a function to print results in correct order
+     */
+    ++taskComplete;
+    auto result = combine();
+    if (result != nullptr) {
+        auto &db = Database::getInstance();
+        db.addResult(this, std::move(result));
+        db.completeQuery();
+    }
+}
+
 bool ComplexQuery::evalCondition(const std::vector<QueryCondition> &conditions,
                                      const Table::Object &object) {
     static const std::unordered_map<std::string, int> opmap {

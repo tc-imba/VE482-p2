@@ -32,19 +32,19 @@ Query::Ptr ManageTableQueryBuilder::tryExtractQuery
         (TokenizedQueryString &query) {
     if (query.token.size() == 2) {
         if (query.token.front() == "LOAD")
-            return std::make_shared<LoadTableQuery>(query.token[1]);
+            return std::make_unique<LoadTableQuery>(query.token[1]);
         if (query.token.front() == "DROP")
-            return std::make_shared<DropTableQuery>(query.token[1]);
+            return std::make_unique<DropTableQuery>(query.token[1]);
         if (query.token.front() == "TRUNCATE")
-            return std::make_shared<TruncateTableQuery>(query.token[1]);
+            return std::make_unique<TruncateTableQuery>(query.token[1]);
     }
     if (query.token.size() == 3) {
         if (query.token.front() == "DUMP")
-            return std::make_shared<DumpTableQuery>(
+            return std::make_unique<DumpTableQuery>(
                     query.token[1], query.token[2]
             );
         if (query.token.front() == "COPYTABLE")
-            return std::make_shared<CopytableTableQuery>(query.token[1], query.token[2]);
+            return std::make_unique<CopytableTableQuery>(query.token[1], query.token[2]);
     }
     return this->nextBuilder->tryExtractQuery(query);
 }
@@ -52,7 +52,7 @@ Query::Ptr ManageTableQueryBuilder::tryExtractQuery
 Query::Ptr DebugQueryBuilder::tryExtractQuery(TokenizedQueryString &query) {
     if (query.token.size() == 1) {
         if (query.token.front() == "LIST")
-            return std::make_shared<ListTableQuery>();
+            return std::make_unique<ListTableQuery>();
         if (query.token.front() == "QUIT")
             // We are being lazy here ...
             // Might cause problem ...
@@ -60,7 +60,7 @@ Query::Ptr DebugQueryBuilder::tryExtractQuery(TokenizedQueryString &query) {
     }
     if (query.token.size() == 2) {
         if (query.token.front() == "SHOWTABLE")
-            return std::make_shared<PrintTableQuery>(query.token[1]);
+            return std::make_unique<PrintTableQuery>(query.token[1]);
     }
     return BasicQueryBuilder::tryExtractQuery(query);
 }
@@ -133,16 +133,16 @@ Query::Ptr ComplexQueryBuilder::tryExtractQuery(TokenizedQueryString &query) {
     }
     std::string operation = query.token.front();
     if(operation == "INSERT")
-        return std::make_shared<InsertQuery>(
+        return std::make_unique<InsertQuery>(
                     this->targetTable, this->operandToken, this->conditionToken);
     if(operation == "UPDATE")
-        return std::make_shared<UpdateQuery>(
+        return std::make_unique<UpdateQuery>(
                 this->targetTable, this->operandToken, this->conditionToken);
    if(operation == "SELECT")
-       return std::make_shared<SelectQuery>(
+       return std::make_unique<SelectQuery>(
                this->targetTable, this->operandToken, this->conditionToken);
     if(operation == "DELETE")
-        return std::make_shared<DeleteQuery>(
+        return std::make_unique<DeleteQuery>(
                 this->targetTable, this->operandToken, this->conditionToken);
     std::cout << "Complicated query found!" << std::endl;
     std::cout << "Operation = " << query.token.front() << std::endl;

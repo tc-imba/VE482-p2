@@ -14,9 +14,14 @@ QueryResult::Ptr LoadTableQuery::execute() {
     try {
         auto &db = Database::getInstance();
         addUniqueTask<LoadTableTask>(db);
+        addUniqueTask<LoadTableTask>(db);
     } catch (const std::exception &e) {
         return std::make_unique<ErrorMsgResult>(qname, e.what());
     }
+    return std::make_unique<SuccessMsgResult>(qname);
+}
+
+QueryResult::Ptr LoadTableQuery::combine() {
     return std::make_unique<SuccessMsgResult>(qname);
 }
 

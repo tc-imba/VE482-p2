@@ -105,7 +105,7 @@ std::ostream &operator<<(std::ostream &os, const Table &table) {
     return os << buffer.str();
 }
 
-void Table::addQuery(Query::Ptr &query) {
+void Table::addQuery(Query *query) {
     queryQueueMutex.lock();
     if (queryQueueCounter < 0) {
         // writing, push back the query
@@ -152,7 +152,7 @@ void Table::refreshQuery() {
         // if reading, execute all read query before next write query
         decltype(queryQueue) list;
         // STL may be a bit faster ?
-        auto it = std::find_if(queryQueue.begin(), queryQueue.end(), [](const Query::Ptr &ptr) {
+        auto it = std::find_if(queryQueue.begin(), queryQueue.end(), [](const Query *ptr) {
             return !ptr->isWriter();
         });
         //auto it = queryQueue.begin();

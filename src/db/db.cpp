@@ -85,33 +85,48 @@ void Database::printAllTable() {
 
 
 void Database::addQuery(Query::Ptr &&query) {
-    const auto &tableName = query->getTableName();
+    auto q = query.get();
     resultsMutex.lock();
     query->initId((int) results.size());
-    results.emplace_back(query, nullptr);
+    results.emplace_back(std::move(query), nullptr);
     resultsMutex.unlock();
+    const auto &tableName = q->getTableName();
     if (tableName.empty()) {
         // no-target query
-        query->execute();
-        std::cerr << query->toString() << std::endl;
+        q->execute();
+        std::cerr << q->toString() << std::endl;
         return;
     }
     try {
         auto &table = ensureTable(tableName);
-        table.addQuery(query);
+        table.addQuery(q);
     } catch (std::exception &e) {
         std::cerr << "Uncaught error: " << e.what() << std::endl;
     }
 
 }
 
-void Database::addTask(Task::Ptr &&task) {
+void Database::addTask(Task *task) {
     tasksMutex.lock();
     tasks.push(task);
     tasksMutex.unlock();
 }
 
-void Database::addResult(Query::Ptr query) {
-
+void Database::addResult(Query *query, QueryResult::Ptr &&result) {
+    resultsMutex.lock();
+    auto id = query->getId();
+    if (id >= 0) {
+        auto &pair = results.at((size_t) id);
+        pair.second = std::move(result);
+    }
+    resultsMutex.unlock();
 }
 
+void Database::completeQuery() {
+    outputMutex.lock();
+    for (auto it = results.begin() + resultNow; it != results.end() && it->second != nullptr; ++it) {
+        std::cout << it->second->toString() << std::endl;
+        ++resultNow;
+    }
+    outputMutex.unlock();
+}

@@ -5,6 +5,10 @@
 #include "task.h"
 #include "query.h"
 
+TaskQuery *Task::getQuery() {
+    return dynamic_cast<TaskQuery *>(query);
+}
+
 void Task::execute() {
     getQuery()->complete();
 }

@@ -2,43 +2,15 @@
 #include <vector>
 #include <iostream>
 #include <atomic>
+#include <memory>
 
-std::atomic_flag lock = ATOMIC_FLAG_INIT;
+using namespace std;
 
-void f(int n)
-{
-    for (int cnt = 0; cnt < 100; ++cnt) {
-        while (lock.test_and_set(std::memory_order_acquire))  // acquire lock
-            ; // spin
-        std::cout << "Output from thread " << n << '\n';
-        lock.clear(std::memory_order_release);               // release lock
-    }
-}
+int main() {
 
-class Base {
-protected:
-    bool writer = false;
-};
+    auto ptr = make_shared<int>(1);
+    cout << ptr.use_count() << endl;
+    auto ptr2 = shared_ptr<int>(ptr.get());
+    cout << ptr2.use_count() << endl;
 
-class Dervied : public Base {
-protected:
-    using Base::writer;
-public:
-    Dervied() {
-        writer = true;
-    };
-    void print() {std::cout << std::boolalpha << Base::writer << std::endl; }
-};
-
-int main()
-{
-    Dervied a;
-    a.print();
-    std::vector<std::thread> v;
-    for (int n = 0; n < 10; ++n) {
-        v.emplace_back(f, n);
-    }
-    for (auto& t : v) {
-        t.join();
-    }
 }
