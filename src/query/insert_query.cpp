@@ -18,7 +18,7 @@ QueryResult::Ptr InsertQuery::execute() {
     Table::SizeType counter = 0;
     try {
         auto &table = db[this->targetTable];
-        addUniqueTask<InsertTask>(db, table);
+        addUniqueTask<InsertTask>(db, &table);
         return make_unique<RecordCountResult>(counter);
     }
     catch (const TableNameNotFound &e) {

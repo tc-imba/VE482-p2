@@ -62,5 +62,8 @@ int main(int argc, char *argv[]) {
             cerr << e.what() << endl;
         }
     }
+    while (db.isBusy()) {
+        std::this_thread::yield();
+    }
     return 0;
 }

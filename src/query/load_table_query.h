@@ -8,7 +8,7 @@
 #include "query.h"
 #include "task.h"
 
-class LoadTableQuery : public Query {
+class LoadTableQuery : public TaskQuery {
     static constexpr const char *qname = "LOAD";
     const std::string fileName;
 public:

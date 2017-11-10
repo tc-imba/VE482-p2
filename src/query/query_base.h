@@ -47,6 +47,7 @@ public:
     virtual ~Query() = default;
     virtual bool isWriter() = 0;
     const std::string &getTableName() { return targetTable; }
+
 };
 
 class Task;

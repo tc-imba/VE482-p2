@@ -28,34 +28,11 @@ public:
     }
 };
 
-
-class ConditionedQuery : public Query {
-public:
-    bool evalCondition(const std::vector<QueryCondition> &conditions,
-                       const Table::Object &object);
-};
-
-class ComplexQuery : public ConditionedQuery {
+class TaskQuery : public Query {
 protected:
-    std::vector<std::string> operands;
-    std::vector<QueryCondition> condition;
     std::vector<std::shared_ptr<Task> > tasks;
     std::mutex tasksMutex;
 public:
-    typedef std::shared_ptr<ComplexQuery> Ptr;
-
-    ComplexQuery(std::string targetTable,
-                 std::vector<std::string> operands,
-                 std::vector<QueryCondition> condition)
-            : operands(std::move(operands)),
-              condition(std::move(condition)) {
-        this->targetTable = std::move(targetTable);
-    }
-
-    const std::vector<QueryCondition> &getCondition() {
-        return condition;
-    }
-
     template<class TaskType>
     void addIterationTask(Database &db, Table &table) {
         auto begin = table.begin();
@@ -78,14 +55,35 @@ public:
     }
 
     template<class TaskType>
-    void addUniqueTask(Database &db, Table &table) {
-        auto task = std::shared_ptr<Task>(new TaskType(Query::Ptr(this), &table));
-        //tasksMutex.lock();
+    void addUniqueTask(Database &db, Table *table = nullptr) {
+        auto task = std::shared_ptr<Task>(new TaskType(Query::Ptr(this), table));
         tasks.emplace_back(task);
         db.addTask(std::move(task));
-        //tasksMutex.unlock();
+    }
+};
+
+class ComplexQuery : public TaskQuery {
+protected:
+    std::vector<std::string> operands;
+    std::vector<QueryCondition> condition;
+
+public:
+    bool evalCondition(const std::vector<QueryCondition> &conditions,
+                       const Table::Object &object);
+
+    typedef std::shared_ptr<ComplexQuery> Ptr;
+
+    ComplexQuery(std::string targetTable,
+                 std::vector<std::string> operands,
+                 std::vector<QueryCondition> condition)
+            : operands(std::move(operands)),
+              condition(std::move(condition)) {
+        this->targetTable = std::move(targetTable);
     }
 
+    const std::vector<QueryCondition> &getCondition() {
+        return condition;
+    }
 };
 
 

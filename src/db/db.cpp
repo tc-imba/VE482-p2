@@ -13,7 +13,7 @@ void Database::threadWork(Database *db) {
             if (db->readyExit) return;
             std::this_thread::yield();
         } else {
-            auto task = db->tasks.front();
+            auto task = std::move(db->tasks.front());
             db->tasks.pop();
             db->tasksMutex.unlock();
             task->execute();
@@ -88,11 +88,17 @@ void Database::addQuery(Query::Ptr &&query) {
     const auto &tableName = query->getTableName();
     if (tableName.empty()) {
         // no-target query
+        query->execute();
         std::cerr << query->toString() << std::endl;
         return;
     }
-    auto &table = ensureTable(tableName);
-    table.addQuery(query);
+    try {
+        auto &table = ensureTable(tableName);
+        table.addQuery(query);
+    } catch (std::exception &e) {
+        std::cerr << "Uncaught error: " << e.what() << std::endl;
+    }
+
 }
 
 void Database::addTask(Task::Ptr &&task) {

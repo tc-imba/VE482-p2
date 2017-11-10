@@ -5,7 +5,7 @@
 #include <iostream>
 #include <cassert>
 
-bool ConditionedQuery::evalCondition(const std::vector<QueryCondition> &conditions,
+bool ComplexQuery::evalCondition(const std::vector<QueryCondition> &conditions,
                                      const Table::Object &object) {
     static const std::unordered_map<std::string, int> opmap {
             {">", '>'}, {"<", '<'}, {"=", '='},

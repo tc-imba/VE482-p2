@@ -13,8 +13,7 @@ std::string LoadTableQuery::toString() {
 QueryResult::Ptr LoadTableQuery::execute() {
     try {
         auto &db = Database::getInstance();
-        auto task = std::shared_ptr<Task>(new LoadTableTask(Query::Ptr(this)));
-        db.addTask(std::move(task));
+        addUniqueTask<LoadTableTask>(db);
     } catch (const std::exception &e) {
         return std::make_unique<ErrorMsgResult>(qname, e.what());
     }

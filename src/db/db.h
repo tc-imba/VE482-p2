@@ -77,6 +77,10 @@ public:
      * @param task
      */
     void addTask(Task::Ptr &&task);
+
+    bool isBusy() const {
+        return true;
+    }
 };
 
 #endif //SRC_DB_H
