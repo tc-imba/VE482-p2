@@ -8,7 +8,6 @@
 #include "../uexception.h"
 #include "../db/db_table.h"
 #include "../query_results.h"
-#include "../task_results.h"
 #include "../db/db.h"
 
 struct QueryCondition {

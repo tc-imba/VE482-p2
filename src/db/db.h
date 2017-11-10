@@ -11,7 +11,7 @@
 #include <queue>
 #include <mutex>
 #include <thread>
-//#include <atomic>
+#include <atomic>
 
 class Database {
 private:
@@ -22,6 +22,9 @@ private:
 
     std::queue<Task::Ptr> tasks;
     std::mutex tasksMutex;
+
+    std::vector<std::pair<Query::Ptr, QueryResult::Ptr> > results;
+    std::mutex resultsMutex;
 
     std::vector<std::thread> threads;
     static const int threadNum = 8;
@@ -78,8 +81,10 @@ public:
      */
     void addTask(Task::Ptr &&task);
 
+    void addResult(Query::Ptr query);
+
     bool isBusy() const {
-        return true;
+        return !readyExit;
     }
 };
 

@@ -86,6 +86,10 @@ void Database::printAllTable() {
 
 void Database::addQuery(Query::Ptr &&query) {
     const auto &tableName = query->getTableName();
+    resultsMutex.lock();
+    query->initId((int) results.size());
+    results.emplace_back(query, nullptr);
+    resultsMutex.unlock();
     if (tableName.empty()) {
         // no-target query
         query->execute();
@@ -106,3 +110,8 @@ void Database::addTask(Task::Ptr &&task) {
     tasks.push(task);
     tasksMutex.unlock();
 }
+
+void Database::addResult(Query::Ptr query) {
+
+}
+

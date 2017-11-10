@@ -30,6 +30,7 @@ void LoadTableTask::execute() {
         }
         auto &table = loadTableFromStream(infile, query->fileName);
         infile.close();
+        Task::execute();
     } catch (const std::exception &e) {
         errorResult = std::make_unique<ErrorMsgResult>(query->qname, e.what());
         return;

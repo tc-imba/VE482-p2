@@ -9,10 +9,7 @@ set(SOURCE_FILES
         query_parser.cpp query_parser.h
         query_builders.cpp query_builders.h
         query_results.cpp query_results.h
-        task_results.h
         management_query.cpp management_query.h
-        #data_query.cpp data_query.h
-        #arithmetics_query.cpp arithmetics_query.h
         formatter.h uexception.h
         )
 add_executable(lemondb main.cpp ${SOURCE_FILES})

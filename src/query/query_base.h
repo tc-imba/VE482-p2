@@ -16,6 +16,7 @@
 class Query {
 protected:
     std::string targetTable;
+    int id = -1;
 public:
     typedef std::shared_ptr<Query> Ptr;
     virtual QueryResult::Ptr execute() = 0;
@@ -30,7 +31,7 @@ public:
     void complete() {
         /**
          * @TODO add the complete query to the result vector here
-         * should add a unique id for each query
+         * should add a unique id for each query - ok
          * should add a function to print results in correct order
          */
         ++taskComplete;
@@ -46,8 +47,23 @@ public:
 
     virtual ~Query() = default;
     virtual bool isWriter() = 0;
+
     const std::string &getTableName() { return targetTable; }
 
+    /**
+     * get the unique id of this query
+     * @return
+     */
+    int getId() const { return id; }
+
+    /**
+     * will only work when first init the query id
+     * @param id
+     * @return
+     */
+    int initId(int id) {
+        if (this->id < 0 && id >= 0) this->id = id;
+    }
 };
 
 class Task;
