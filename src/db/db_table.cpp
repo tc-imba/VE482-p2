@@ -4,8 +4,101 @@
 #include "../uexception.h"
 #include "../formatter.h"
 
+void Table::initFromStream(std::istream &infile, std::string source) {
+    auto &db = Database::getInstance();
+    std::string errString =
+            !source.empty() ?
+            R"(Invalid table (from "?") format: )"_f % source :
+            "Invalid table format: ";
 
-Table& loadTableFromStream(std::istream &infile, std::string source) {
+    std::string tableName;
+    int fieldCount;
+    //std::vector<Table::KeyType> fields;
+    fields.clear();
+
+    std::string line;
+    std::stringstream sstream;
+    if (!std::getline(infile, line))
+        throw LoadFromStreamException(
+                errString + "Failed to read table metadata line."
+        );
+
+    sstream.str(line);
+    sstream >> tableName >> fieldCount;
+    if (!sstream) {
+        throw LoadFromStreamException(
+                errString + "Failed to parse table metadata."
+        );
+    }
+
+    if (!(std::getline(infile, line)))
+        throw LoadFromStreamException(
+                errString + "Failed to load field names."
+        );
+
+    sstream.str("");
+    sstream.str(line);
+    sstream.clear();
+    for (int i = 0; i < fieldCount; ++i) {
+        std::string field;
+        if (!(sstream >> field))
+            throw LoadFromStreamException(
+                    errString + "Failed to load field names."
+            );
+        else
+            fields.push_back(field);
+    }
+
+    if (fields.front() != "KEY")
+        throw LoadFromStreamException(
+                errString + "Missing or invalid KEY field."
+        );
+
+    fields.erase(fields.begin()); // Remove leading key
+    //Table::Ptr table = std::make_unique<Table>(tableName, fields);
+    //auto &table = db.ensureTable(tableName);
+
+    fieldMap.clear();
+    size_t i = 0;
+    for (const auto &field : fields) {
+        if (field == "KEY")
+            throw MultipleKey(
+                    "Error creating table \"" + tableName + "\": Multiple KEY field."
+            );
+        fieldMap.emplace(field, i++);
+    }
+
+    //table.init(fields);
+
+    int count = 2;
+    while (std::getline(infile, line)) {
+        if (line.empty()) break; // Read to an empty line
+        count++;
+        sstream.str("");
+        sstream.clear();
+        sstream.str(line);
+        std::string key;
+        if (!(sstream >> key))
+            throw LoadFromStreamException(
+                    errString + "Missing or invalid KEY field."
+            );
+        std::vector<int> tuple;
+        for (int i = 1; i < fieldCount; ++i) {
+            int value;
+            if (!(sstream >> value))
+                throw LoadFromStreamException(
+                        errString + "Invalid row on LINE " + std::to_string(count)
+                );
+            tuple.push_back(value);
+        }
+        insertByIndex(key, tuple);
+    }
+
+    initialized = true;
+}
+
+
+Table &loadTableFromStream(std::istream &infile, std::string source) {
     auto &db = Database::getInstance();
     std::string errString =
             !source.empty() ?
@@ -30,7 +123,7 @@ Table& loadTableFromStream(std::istream &infile, std::string source) {
                 errString + "Failed to parse table metadata."
         );
     }
-    
+
     if (!(std::getline(infile, line)))
         throw LoadFromStreamException(
                 errString + "Failed to load field names."
@@ -57,7 +150,6 @@ Table& loadTableFromStream(std::istream &infile, std::string source) {
     fields.erase(fields.begin()); // Remove leading key
     //Table::Ptr table = std::make_unique<Table>(tableName, fields);
     auto &table = db.ensureTable(tableName);
-    table.init(fields);
 
     int count = 2;
     while (std::getline(infile, line)) {
@@ -82,6 +174,9 @@ Table& loadTableFromStream(std::istream &infile, std::string source) {
         }
         table.insertByIndex(key, tuple);
     }
+
+    table.init(fields);
+
     return table;
 }
 
@@ -107,7 +202,7 @@ std::ostream &operator<<(std::ostream &os, const Table &table) {
 
 void Table::addQuery(Query *query) {
     queryQueueMutex.lock();
-    if (queryQueueCounter < 0) {
+    if (queryQueueCounter < 0 || !initialized) {
         // writing, push back the query
         queryQueue.push_back(query);
         queryQueueMutex.unlock();
@@ -135,13 +230,17 @@ void Table::addQuery(Query *query) {
 
 void Table::refreshQuery() {
     queryQueueMutex.lock();
+    if (!initialized) {
+        queryQueueMutex.unlock();
+        return;
+    }
     if (queryQueueCounter <= 0) {
         // writing or idle (should not happen), reset the counter
         queryQueueCounter = 0;
     } else {
         --queryQueueCounter;
     }
-    if (queryQueueCounter == 0 && queryQueue.front()->isWriter()) {
+    if (queryQueueCounter == 0 && !queryQueue.empty() && queryQueue.front()->isWriter()) {
         // if idle with a write query, execute it
         queryQueueCounter = -1;
         auto query = queryQueue.front();
@@ -152,8 +251,8 @@ void Table::refreshQuery() {
         // if reading, execute all read query before next write query
         decltype(queryQueue) list;
         // STL may be a bit faster ?
-        auto it = std::find_if(queryQueue.begin(), queryQueue.end(), [](const Query *ptr) {
-            return !ptr->isWriter();
+        auto it = std::find_if(queryQueue.begin(), queryQueue.end(), [](const Query *query) {
+            return !query->isWriter();
         });
         //auto it = queryQueue.begin();
         //for (; it != queryQueue.end() && !(*it)->isWriter(); ++it) {}

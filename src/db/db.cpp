@@ -35,7 +35,7 @@ Table &Database::ensureTable(const std::string &tableName) {
     auto it = this->tables.find(tableName);
     if (it == this->tables.end()) {
         // table doesn't exist, add the table
-        it = tables.emplace(std::make_pair(tableName, std::make_unique<Table>())).first;
+        it = tables.emplace(std::make_pair(tableName, std::make_unique<Table>(tableName))).first;
     }
     tablesMutex.unlock();
     return *(it->second);
@@ -103,7 +103,6 @@ void Database::addQuery(Query::Ptr &&query) {
     } catch (std::exception &e) {
         std::cerr << "Uncaught error: " << e.what() << std::endl;
     }
-
 }
 
 void Database::addTask(Task *task) {
@@ -126,6 +125,8 @@ void Database::completeQuery() {
     outputMutex.lock();
     for (auto it = results.begin() + resultNow; it != results.end() && it->second != nullptr; ++it) {
         std::cout << it->second->toString() << std::endl;
+        // Delete the query after output
+        it->first.reset();
         ++resultNow;
     }
     outputMutex.unlock();

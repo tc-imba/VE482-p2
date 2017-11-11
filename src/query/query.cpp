@@ -5,7 +5,7 @@
 #include <iostream>
 #include <cassert>
 
-void TaskQuery::complete()  {
+void TaskQuery::complete() {
     /**
      * @TODO add the complete query to the result vector here
      * should add a unique id for each query - ok
@@ -15,19 +15,26 @@ void TaskQuery::complete()  {
     auto result = combine();
     if (result != nullptr) {
         auto &db = Database::getInstance();
+        if (!targetTable.empty()) {
+            auto &table = db[targetTable];
+            table.refreshQuery();
+        }
         db.addResult(this, std::move(result));
         db.completeQuery();
     }
 }
 
 bool ComplexQuery::evalCondition(const std::vector<QueryCondition> &conditions,
-                                     const Table::Object &object) {
-    static const std::unordered_map<std::string, int> opmap {
-            {">", '>'}, {"<", '<'}, {"=", '='},
-            {">=", 'g'}, {"<=", 'l'},
+                                 const Table::Object &object) {
+    static const std::unordered_map<std::string, int> opmap{
+            {">",  '>'},
+            {"<",  '<'},
+            {"=",  '='},
+            {">=", 'g'},
+            {"<=", 'l'},
     };
     bool ret = true;
-    for (const auto& cond : conditions) {
+    for (const auto &cond : conditions) {
         if (cond.field == "KEY") {
             if (cond.op != "=")
                 throw IllFormedQueryCondition(
@@ -46,13 +53,23 @@ bool ComplexQuery::evalCondition(const std::vector<QueryCondition> &conditions,
                 );
             }
             switch (op) {
-                case '>' : ret = ret && (lhs > rhs); break;
-                case '<' : ret = ret && (lhs < rhs); break;
-                case '=' : ret = ret && (lhs == rhs); break;
-                case 'g' : ret = ret && (lhs >= rhs); break;
-                case 'l' : ret = ret && (lhs <= rhs); break;
-                default:
-                    assert(0); // should never be here
+            case '>' :
+                ret = ret && (lhs > rhs);
+                break;
+            case '<' :
+                ret = ret && (lhs < rhs);
+                break;
+            case '=' :
+                ret = ret && (lhs == rhs);
+                break;
+            case 'g' :
+                ret = ret && (lhs >= rhs);
+                break;
+            case 'l' :
+                ret = ret && (lhs <= rhs);
+                break;
+            default:
+                assert(0); // should never be here
             }
         }
     }

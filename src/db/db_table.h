@@ -11,6 +11,7 @@
 #include <ostream>
 #include <unordered_set>
 #include <mutex>
+#include <atomic>
 
 #include "../uexception.h"
 #include "../formatter.h"
@@ -81,7 +82,7 @@ private:
     typedef std::vector<Datum>::const_iterator ConstDataIterator;
 
     /** Whether the table can be used now */
-    bool initialized = false;
+    std::atomic_bool initialized{false};
 
     /** The fields, ordered as defined in fieldMap */
     std::vector<FieldID> fields;
@@ -300,7 +301,9 @@ private:
     }
 
 public:
-    Table() = default;
+    Table() = delete;
+
+    Table(const std::string &name) : tableName(name) {}
 
     // Accept any container that contains string.
     template<class FieldIDContainer>
@@ -308,6 +311,13 @@ public:
 
     template<class FieldIDContainer>
     void init(const FieldIDContainer &fields);
+
+    /**
+     * init the table from the input file
+     * @param infile
+     * @param source
+     */
+    void initFromStream(std::istream &infile, std::string source = "");
 
     Table(std::string name, const Table &origin) :
             fields(origin.fields), tableName(std::move(name)),
