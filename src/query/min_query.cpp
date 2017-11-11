@@ -2,11 +2,12 @@
 #include "../db/db.h"
 #include "../db/db_table.h"
 #include "../formatter.h"
+#include <climits>
 
+LEMONDB_TASK_PTR_IMPL(MinQuery, MinTask);
 constexpr const char *MinQuery::qname;
 
 QueryResult::Ptr MinQuery::execute() {
-	
     using namespace std;
     if (this->operands.empty())
         return make_unique<ErrorMsgResult>(
@@ -14,9 +15,19 @@ QueryResult::Ptr MinQuery::execute() {
                 "Invalid number of operands (? operands)."_f % operands.size()
         );
     Database &db = Database::getInstance();
-    Table::SizeType counter = 0;
+//    Table::SizeType counter = 0;
     try {
 		auto &table = db[this->targetTable];
+        for (const auto &operand : this->operands) {
+            if (operand == "KEY") {
+                return make_unique<ErrorMsgResult>(
+                        qname, this->targetTable.c_str(),
+                        "Cannot compare KEY!"
+                );
+            } else {
+                fieldsId.emplace_back(table.getFieldIndex(operand));
+            }
+        }
 		addIterationTask<MinTask>(db, table);
 		return make_unique<SuccessMsgResult>(qname);
 	}
@@ -56,41 +67,34 @@ QueryResult::Ptr MinQuery::combine() {
                 "Not completed yet."s
         );
     }
-	size_t counter = 0;
-	/*std::vector<int> totalFieldMin(std::move(this->getTask(0)->getFieldMin()));
-	for (int i = 1; i < tasks.size(); ++i) {
-		MinTask *thisTask = this->getTask(i);
-		for (int j = 0; j < operands.size(); ++j) {
-			if (totalFieldMin[j] > thisTask->getFieldMin()[j]) totalFieldMin[j]= thisTask->getFieldMin()[j];
-		}
-	}*/
-	return make_unique<RecordCountResult>(counter);
+    auto it = tasks.begin();
+    std::vector<Table::ValueType> fieldsMin(std::move(getTask(it)->fieldsMin));
+    for (++it; it != tasks.end(); ++it) {
+        auto numFields = fieldsId.size();
+        for (int i = 0; i < numFields; ++i) {
+            Table::ValueType tmp = this->getTask(it)->fieldsMin[i];
+            if (tmp < fieldsMin[i]) {
+                fieldsMin[i] = tmp;
+            }
+//            fieldsMin[i] = tmp < fieldsMin[i] ? tmp : fieldsMin[i];
+        }
+    }
+    return make_unique<AnswerResult>(std::move(fieldsMin));
 }
 
 void MinTask::execute() {
 	auto query = getQuery();
     try {
-		int numFields = this->getQuery()->getOperands().size();
-		//Min.insert(Min.end(), numFields, INFINITY);
-		if (query->getCondition().empty())
-		{
-			for (auto it = begin; it != end; ++it) {
-				for (int i = 0; i < numFields; ++i) {
-					int number = (*it)[(this->getQuery()->getOperands()[i])];
-					if( number < Min[i]) Min[i]=number;
-				}	
-			}
-		}
-		else {
-			for (auto it = begin; it != end; ++it) {
-				if (query->evalCondition(query->getCondition(), *it)) {
-					for (int i = 0; i < numFields; ++i) {
-						int number = (*it)[(this->getQuery()->getOperands()[i])];
-						if (number < Min[i]) Min[i] = number;
-					}
-				}
-			}
-		}
+        auto numFields = query->fieldsId.size();
+        fieldsMin.insert(fieldsMin.end(), numFields, INT_MAX);
+        for (auto it = begin; it != end; ++it) {
+            if (query->evalCondition(query->getCondition(), *it)) {
+                for (int i = 0; i < numFields; ++i) {
+                    Table::ValueType tmp = (*it)[query->fieldsId[i]];
+                    if (tmp < fieldsMin[i]) fieldsMin[i] = tmp;
+                }
+            }
+        }
         Task::execute();
     } catch (const IllFormedQueryCondition &e) {
         return;

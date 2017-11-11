@@ -145,6 +145,12 @@ Query::Ptr ComplexQueryBuilder::tryExtractQuery(TokenizedQueryString &query) {
     if (operation == "SUM")
         return std::make_unique<SumQuery>(
                 this->targetTable, this->operandToken, this->conditionToken);
+    if (operation == "MIN")
+        return std::make_unique<MinQuery>(
+                this->targetTable, this->operandToken, this->conditionToken);
+    if (operation == "MAX")
+        return std::make_unique<MaxQuery>(
+                this->targetTable, this->operandToken, this->conditionToken);
     std::cout << "Complicated query found!" << std::endl;
     std::cout << "Operation = " << query.token.front() << std::endl;
     std::cout << "    Operands : ";
