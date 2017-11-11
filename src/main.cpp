@@ -57,13 +57,15 @@ int main(int argc, char *argv[]) {
             }*/
         } catch (const std::ios_base::failure &e) {
             // End of input
+            db.endQuery();
             break;
         } catch (const std::exception &e) {
             cerr << e.what() << endl;
         }
     }
-    while (db.isBusy()) {
+    db.joinThreads();
+    /*while (db.isBusy()) {
         std::this_thread::yield();
-    }
+    }*/
     return 0;
 }

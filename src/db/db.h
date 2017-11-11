@@ -33,6 +33,7 @@ private:
     static const int threadNum = 8;
 
     bool readyExit = false;
+    bool endInput = false;
 
     Database() = default;
     static void threadWork(Database *db);
@@ -91,8 +92,18 @@ public:
      */
     void completeQuery();
 
+    void endQuery() {
+        endInput = true;
+    }
+
     bool isBusy() const {
         return !readyExit;
+    }
+
+    void joinThreads() {
+        for(auto &thread : threads) {
+            thread.join();
+        }
     }
 };
 

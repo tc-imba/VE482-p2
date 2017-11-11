@@ -10,7 +10,11 @@ void Database::threadWork(Database *db) {
         db->tasksMutex.lock();
         if (db->tasks.empty()) {
             db->tasksMutex.unlock();
-            if (db->readyExit) return;
+            if (db->readyExit) {
+                fprintf(stderr, "Terminate thread %lu\n", std::this_thread::get_id());
+                //std::terminate();
+                return;
+            }
             std::this_thread::yield();
         } else {
             auto task = std::move(db->tasks.front());
@@ -133,6 +137,9 @@ void Database::completeQuery() {
         // Delete the query after output
         it->first.reset();
         ++resultNow;
+    }
+    if (endInput && resultNow == results.size()) {
+        readyExit = true;
     }
     outputMutex.unlock();
 }
