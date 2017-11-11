@@ -10,11 +10,13 @@
 class SumQuery : public ComplexQuery {
     static constexpr const char *qname = "SUM";
 public:
+    LEMONDB_QUERY_WRITER(true);
     using ComplexQuery::ComplexQuery;
     QueryResult::Ptr execute() override;
     std::string toString() override;
     QueryResult::Ptr combine() override;
     std::vector<std::string> getOperands() { return operands; }
+    friend class SumTask;
 };
 
 class SumTask : public Task {
