@@ -96,8 +96,8 @@ public:
         endInput = true;
     }
 
-    bool isBusy() const {
-        return !readyExit;
+    bool isEnd() const {
+        return endInput;
     }
 
     void joinThreads() {

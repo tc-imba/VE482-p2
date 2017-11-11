@@ -39,14 +39,13 @@ int main(int argc, char *argv[]) {
     p.registerQueryBuilder(std::make_unique<QueryBuilder(Debug)>());
     p.registerQueryBuilder(std::make_unique<QueryBuilder(ManageTable)>());
     p.registerQueryBuilder(std::make_unique<QueryBuilder(Complex)>());
-    while (cin) {
+    while (cin && !db.isEnd()) {
         try {
             // A very standard REPL
             // REPL: Read-Evaluate-Print-Loop
             std::string queryStr = extractQueryString();
             Query::Ptr query = p.parseQuery(queryStr);
             db.addQuery(std::move(query));
-
             //QueryResult::Ptr result = query->execute();
             /*cout << endl;
             if (result->success()) {

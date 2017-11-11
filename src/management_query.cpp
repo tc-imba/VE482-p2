@@ -4,6 +4,7 @@
 
 #include <iostream>
 
+constexpr const char *QuitQuery::qname;
 constexpr const char *DropTableQuery::qname;
 constexpr const char *DumpTableQuery::qname;
 constexpr const char* TruncateTableQuery::qname;
@@ -11,7 +12,15 @@ constexpr const char* CopytableTableQuery::qname;
 constexpr const char *ListTableQuery::qname;
 constexpr const char *PrintTableQuery::qname;
 
+std::string QuitQuery::toString() {
+    return "QUERY = Quit";
+}
 
+QueryResult::Ptr QuitQuery::execute() {
+    auto &db = Database::getInstance();
+    db.endQuery();
+    db.addResult(this, std::make_unique<SuccessMsgResult>(qname));
+}
 
 std::string DropTableQuery::toString() {
     return "QUERY = Drop TABLE, Table = \"" + this->tableName + "\"";
