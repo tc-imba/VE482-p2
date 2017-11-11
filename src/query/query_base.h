@@ -11,7 +11,13 @@
 #include "../query_results.h"
 
 #define LEMONDB_QUERY_WRITER(flag) bool isWriter() const override { return flag; }
-#define LEMONDB_QUERY_PTR(T) T* getQuery() override { return dynamic_cast<T*>(query); }
+#define LEMONDB_QUERY_PTR(T) T* getQuery() const override { return dynamic_cast<T*>(query); }
+#define LEMONDB_TASK_PTR_DEF(T) \
+    T* getTask(size_t index) const; \
+    T* getTask(const std::vector<std::unique_ptr<Task> >::iterator &it) const;
+#define LEMONDB_TASK_PTR_IMPL(Q, T) \
+    T* Q::getTask(size_t index) const { return dynamic_cast<T*>(TaskQuery::getTask(index)); } \
+    T* Q::getTask(const std::vector<std::unique_ptr<Task> >::iterator &it) const { return dynamic_cast<T*>(TaskQuery::getTask(it)); }
 
 class Query {
 protected:

@@ -8,23 +8,23 @@
 using namespace std;
 
 int main() {
-    Table tab("Test", vector<Table::FieldID>{"A", "B", "C", "D"});
+    Table tab("Test", vector<Table::FieldNameType>{"A", "B", "C", "D"});
     std::cout << tab << std::endl;
     std::cout << (tab.begin() == tab.end()) << endl;
-    tab.insert("alpha",  map<Table::FieldID, Table::ValueType> {
+    tab.insert("alpha",  map<Table::FieldNameType, Table::ValueType> {
             {"A", 10}, {"D", 2000},{"B", 20},
     });
-    tab.insert("beta",  map<Table::FieldID, Table::ValueType> {
+    tab.insert("beta",  map<Table::FieldNameType, Table::ValueType> {
             {"A", 10}, {"D", 2000},{"B", 20},
     });
-    tab.insert("gamma",  map<Table::FieldID, Table::ValueType> {
+    tab.insert("gamma",  map<Table::FieldNameType, Table::ValueType> {
             {"A", 10}, {"C", 2000},{"B", 20},
     });
-    tab.insert("delta",  map<Table::FieldID, Table::ValueType> {
+    tab.insert("delta",  map<Table::FieldNameType, Table::ValueType> {
             {"A", 10}, {"D", 2000},{"B", 20},
     });
     try {
-        tab.insert("delta", map<Table::FieldID, Table::ValueType> {
+        tab.insert("delta", map<Table::FieldNameType, Table::ValueType> {
                 {"A", 10},
                 {"D", 2000},
                 {"B", 20},
@@ -50,16 +50,16 @@ int main() {
         std::cout << tab << std::endl;
     }
 
-    tab.insert("alpha",  map<Table::FieldID, Table::ValueType> {
+    tab.insert("alpha",  map<Table::FieldNameType, Table::ValueType> {
             {"A", 10}, {"D", 2000},{"B", 20},
     });
-    tab.insert("beta",  map<Table::FieldID, Table::ValueType> {
+    tab.insert("beta",  map<Table::FieldNameType, Table::ValueType> {
             {"A", 10}, {"D", 2000},{"B", 20},
     });
-    tab.insert("gamma",  map<Table::FieldID, Table::ValueType> {
+    tab.insert("gamma",  map<Table::FieldNameType, Table::ValueType> {
             {"A", 10}, {"C", 2000},{"B", 20},
     });
-    tab.insert("delta",  map<Table::FieldID, Table::ValueType> {
+    tab.insert("delta",  map<Table::FieldNameType, Table::ValueType> {
             {"A", 10}, {"D", 2000},{"B", 20},
     });
     tab.insertByIndex("zeta",  vector<Table::ValueType> {1, 2, 3,});

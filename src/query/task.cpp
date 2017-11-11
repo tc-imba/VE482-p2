@@ -5,7 +5,7 @@
 #include "task.h"
 #include "query.h"
 
-TaskQuery *Task::getQuery() {
+TaskQuery *Task::getQuery() const {
     return dynamic_cast<TaskQuery *>(query);
 }
 

@@ -38,6 +38,9 @@ protected:
      */
     std::atomic_int taskComplete{0};
 public:
+    Task *getTask(size_t index) const { return tasks[index].get(); }
+    Task *getTask(const std::vector<std::unique_ptr<Task> >::iterator &it) const { return it->get(); }
+
     void complete();
 
     template<class TaskType>
@@ -78,6 +81,7 @@ public:
     bool evalCondition(const std::vector<QueryCondition> &conditions,
                        const Table::Object &object);
 
+
     typedef std::unique_ptr<ComplexQuery> Ptr;
 
     ComplexQuery(std::string targetTable,
@@ -88,9 +92,8 @@ public:
         this->targetTable = std::move(targetTable);
     }
 
-    const std::vector<QueryCondition> &getCondition() {
-        return condition;
-    }
+    const std::vector<std::string> &getOperands() const { return operands; }
+    const std::vector<QueryCondition> &getCondition() { return condition; }
 };
 
 

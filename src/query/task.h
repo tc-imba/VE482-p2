@@ -17,7 +17,7 @@ protected:
     Table::SizeType counter = 0;
     Table::Iterator begin, end;
     QueryResult::Ptr errorResult = nullptr;
-    virtual TaskQuery *getQuery();
+    virtual TaskQuery *getQuery() const;
 public:
     typedef std::unique_ptr<Task> Ptr;
 

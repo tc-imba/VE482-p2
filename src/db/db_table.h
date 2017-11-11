@@ -45,7 +45,7 @@ class Table;
 class Table {
 public:
     typedef std::string KeyType;
-    typedef std::string FieldID;
+    typedef std::string FieldNameType;
     typedef size_t FieldIndex;
     typedef int ValueType;
     typedef size_t SizeType;
@@ -85,9 +85,9 @@ private:
     std::atomic_bool initialized{false};
 
     /** The fields, ordered as defined in fieldMap */
-    std::vector<FieldID> fields;
+    std::vector<FieldNameType> fields;
     /** Map field name into index */
-    std::unordered_map<FieldID, SizeType> fieldMap;
+    std::unordered_map<FieldNameType, SizeType> fieldMap;
     /** Defined by tripack, seems to be used to speed up processing */
     //const Datum blankDatum;
 
@@ -117,7 +117,7 @@ public:
     public:
 
         void push_back (const KeyType &key, std::vector<ValueType> &&datum) {
-            results.push_back(Datum(key, datum));
+            results.emplace_back(Datum(key, datum));
         }
 
         static bool comp (const Datum &a, const Datum &b) {
@@ -180,7 +180,7 @@ public:
         // accessing by field name. Clients should perfer
         // accessing by index if the same field is accessed frequently
         // (the implement is improved so that index is actually faster now)
-        VType &operator[](const FieldID &field) const {
+        VType &operator[](const FieldNameType &field) const {
             _DBTABLE_ACCESS_WITH_NAME_EXCEPTION(field);
         }
 
@@ -188,7 +188,7 @@ public:
             _DBTABLE_ACCESS_WITH_INDEX_EXCEPTION(index);
         }
 
-        VType &get(const FieldID &field) const {
+        VType &get(const FieldNameType &field) const {
             _DBTABLE_ACCESS_WITH_NAME_EXCEPTION(field);
         }
 
@@ -325,7 +325,7 @@ public:
 
     bool isInited() const { return initialized; }
 
-    FieldIndex getFieldIndex(const FieldID &field) const {
+    FieldIndex getFieldIndex(const FieldNameType &field) const {
         try {
             return this->fieldMap.at(field);
         } catch (const std::out_of_range &e) {
@@ -438,7 +438,7 @@ public:
      * Return the fields in the table
      * @return
      */
-    const std::vector<FieldID> &field() const { return this->fields; }
+    const std::vector<FieldNameType> &field() const { return this->fields; }
 
     /**
      * Clear all content in the table

@@ -61,9 +61,9 @@ class SuccessMsgResult : public SuceededQueryResult {
     std::string msg;
 public:
 
-	SuccessMsgResult(const int number) {
-		this->msg = R"(Answer = "?".)"_f % number;
-	}
+    SuccessMsgResult(const int number) {
+        this->msg = R"(Answer = "?".)"_f % number;
+    }
 
     SuccessMsgResult(std::vector<int> results) {
         std::stringstream ss;
@@ -98,10 +98,20 @@ public:
 class RecordCountResult : public SuceededQueryResult {
     const int affectedRows;
 public:
-    RecordCountResult(int count) : affectedRows(count) {}
+    explicit RecordCountResult(int count) : affectedRows(count) {}
 
     std::string toString() override {
         return "Affected ? rows."_f % affectedRows;
+    }
+};
+
+class AnswerResult : public SuceededQueryResult {
+    const std::vector<int> answer;
+public:
+    explicit AnswerResult(std::vector<int> &&answer) : answer(answer) {}
+
+    std::string toString() override {
+        return "ANSWER = ( ?)"_f % answer;
     }
 };
 
@@ -114,4 +124,5 @@ public:
         return "Affected ? rows."_f % 1;
     }
 };
+
 #endif //SRC_QUERY_RESULTS_H

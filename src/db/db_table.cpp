@@ -256,7 +256,7 @@ void Table::refreshQuery() {
         //std::cerr << queryQueue.size() << std::endl;
         // STL may be a bit faster ?
         auto it = std::find_if(queryQueue.begin(), queryQueue.end(), [](const Query *query) {
-            return !query->isWriter();
+            return query->isWriter();
         });
         //auto it = queryQueue.begin();
         //for (; it != queryQueue.end() && !(*it)->isWriter(); ++it) {}

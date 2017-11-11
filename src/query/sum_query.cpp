@@ -2,11 +2,13 @@
 // Created by linzhi on 2017/11/7.
 //
 
+#include <algorithm>
 #include "sum_query.h"
 #include "../db/db.h"
 #include "../db/db_table.h"
 #include "../formatter.h"
 
+LEMONDB_TASK_PTR_IMPL(SumQuery, SumTask);
 constexpr const char *SumQuery::qname;
 
 QueryResult::Ptr SumQuery::execute() {
@@ -16,15 +18,20 @@ QueryResult::Ptr SumQuery::execute() {
                 qname, this->targetTable.c_str(),
                 "Invalid number of operands (? operands)."_f % operands.size()
         );
-    for (auto operand : this->operands) {
-        if (operand == "KEY") return make_unique<ErrorMsgResult>(
-                    qname, this->targetTable.c_str(),
-                    "Cannot sum KEY!"
-            );
-    }
+
     Database &db = Database::getInstance();
     try {
         auto &table = db[this->targetTable];
+        for (const auto &operand : this->operands) {
+            if (operand == "KEY") {
+                return make_unique<ErrorMsgResult>(
+                        qname, this->targetTable.c_str(),
+                        "Cannot sum KEY!"
+                );
+            } else {
+                fieldsId.emplace_back(table.getFieldIndex(operand));
+            }
+        }
         addIterationTask<SumTask>(db, table);
         return make_unique<SuccessMsgResult>(qname);
     } catch (const TableNameNotFound &e) {
@@ -63,26 +70,26 @@ QueryResult::Ptr SumQuery::combine() {
                 "Not completed yet."s
         );
     }
-    size_t counter = 0;
-    /*std::vector<int> totalFieldSums(std::move(this->getTask(0)->getFieldSums()));
-    for (int i = 1; i < tasks.size(); ++i) {
-        SumTask *thisTask = this->getTask(i);
-        for (int j = 0; j < operands.size(); ++j) {
-            totalFieldSums[j] += thisTask->getFieldSums()[j];
+    auto it = tasks.begin();
+    std::vector<Table::ValueType> fieldsSum(std::move(getTask(it)->fieldsSum));
+    for (++it; it != tasks.end(); ++it) {
+        auto numFields = fieldsId.size();
+        for (int i = 0; i < numFields; ++i) {
+            fieldsSum[i] += this->getTask(it)->fieldsSum[i];
         }
-    }*/
-    return make_unique<RecordCountResult>(counter);
+    }
+    return make_unique<AnswerResult>(std::move(fieldsSum));
 }
 
 void SumTask::execute() {
     auto query = getQuery();
     try {
-        int numFields = this->getQuery()->getOperands().size();
-        fieldSums.insert(fieldSums.end(), numFields, 0);
+        auto numFields = query->fieldsId.size();
+        fieldsSum.insert(fieldsSum.end(), numFields, 0);
         for (auto it = begin; it != end; ++it) {
             if (query->evalCondition(query->getCondition(), *it)) {
                 for (int i = 0; i < numFields; ++i) {
-                    fieldSums[i] += (*it)[this->getQuery()->getOperands()[i]];
+                    fieldsSum[i] += (*it)[query->fieldsId[i]];
                 }
             }
         }
