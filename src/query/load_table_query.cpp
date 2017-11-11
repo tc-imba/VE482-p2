@@ -3,6 +3,7 @@
 //
 
 #include "load_table_query.h"
+#include <iostream>
 
 constexpr const char *LoadTableQuery::qname;
 
@@ -14,7 +15,6 @@ QueryResult::Ptr LoadTableQuery::execute() {
     try {
         auto &db = Database::getInstance();
         addUniqueTask<LoadTableTask>(db);
-        addUniqueTask<LoadTableTask>(db);
     } catch (const std::exception &e) {
         return std::make_unique<ErrorMsgResult>(qname, e.what());
     }
@@ -22,6 +22,7 @@ QueryResult::Ptr LoadTableQuery::execute() {
 }
 
 QueryResult::Ptr LoadTableQuery::combine() {
+    std::cerr << "Complete " << toString() << std::endl;
     return std::make_unique<SuccessMsgResult>(qname);
 }
 

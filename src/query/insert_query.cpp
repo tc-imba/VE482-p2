@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <iostream>
 #include "insert_query.h"
 #include "../db/db.h"
 #include "../db/db_table.h"
@@ -50,20 +51,8 @@ std::string InsertQuery::toString() {
 }
 
 QueryResult::Ptr InsertQuery::combine() {
-    using namespace std;
-    if (taskComplete < tasks.size()) {
-        return make_unique<ErrorMsgResult>(
-                qname, this->targetTable.c_str(),
-                "Not completed yet."s
-        );
-    }
-    Database &db = Database::getInstance();
-    auto &table = db[this->targetTable];
-    Table::SizeType counter = 0;
-    for (auto &task:tasks) {
-        counter += task->getCounter();
-    }
-    return make_unique<RecordCountResult>(counter);
+    std::cerr << "Complete " << toString() << std::endl;
+    return std::make_unique<SuccessMsgResult>(qname);
 }
 
 void InsertTask::execute() {
