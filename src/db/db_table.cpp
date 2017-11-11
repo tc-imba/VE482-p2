@@ -204,6 +204,7 @@ void Table::addQuery(Query *query) {
     queryQueueMutex.lock();
     if (queryQueueCounter < 0 || !initialized) {
         // writing, push back the query
+        //fprintf(stderr, "Enqueue %d\n", query->getId());
         queryQueue.push_back(query);
         queryQueueMutex.unlock();
         return;
@@ -211,11 +212,12 @@ void Table::addQuery(Query *query) {
     // idle/reading
     if (query->isWriter()) {
         // add a writer or execute it if idle
-        if (queryQueueCounter == 0) {
+        if (queryQueueCounter == 0 && queryQueue.empty()) {
             queryQueueCounter = -1;
             queryQueueMutex.unlock();
             query->execute();
         } else {
+            //fprintf(stderr, "Enqueue %d\n", query->getId());
             queryQueue.push_back(query);
             queryQueueMutex.unlock();
         }
@@ -228,6 +230,7 @@ void Table::addQuery(Query *query) {
 
 }
 
+#include <iostream>
 void Table::refreshQuery() {
     queryQueueMutex.lock();
     if (!initialized) {
@@ -250,6 +253,7 @@ void Table::refreshQuery() {
     } else {
         // if reading, execute all read query before next write query
         decltype(queryQueue) list;
+        //std::cerr << queryQueue.size() << std::endl;
         // STL may be a bit faster ?
         auto it = std::find_if(queryQueue.begin(), queryQueue.end(), [](const Query *query) {
             return !query->isWriter();

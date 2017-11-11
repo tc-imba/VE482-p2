@@ -94,7 +94,7 @@ void Database::addQuery(Query::Ptr &&query) {
     if (tableName.empty()) {
         // no-target query
         q->execute();
-        std::cerr << q->toString() << std::endl;
+        //std::cerr << q->toString() << std::endl;
         return;
     }
     try {
@@ -124,7 +124,12 @@ void Database::addResult(Query *query, QueryResult::Ptr &&result) {
 void Database::completeQuery() {
     outputMutex.lock();
     for (auto it = results.begin() + resultNow; it != results.end() && it->second != nullptr; ++it) {
-        std::cout << it->second->toString() << std::endl;
+        // SuccessMsgResult should not output
+        if (typeid(*(it->second)) == typeid(SuccessMsgResult)) {
+            std::cerr << it->second->toString() << std::endl;
+        } else {
+            std::cout << it->second->toString() << std::endl;
+        }
         // Delete the query after output
         it->first.reset();
         ++resultNow;

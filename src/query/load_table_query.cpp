@@ -22,7 +22,7 @@ QueryResult::Ptr LoadTableQuery::execute() {
 }
 
 QueryResult::Ptr LoadTableQuery::combine() {
-    std::cerr << "Complete " << toString() << std::endl;
+    //std::cerr << "Complete " << toString() << std::endl;
     return std::make_unique<SuccessMsgResult>(qname);
 }
 

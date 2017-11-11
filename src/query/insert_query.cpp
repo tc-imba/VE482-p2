@@ -51,12 +51,13 @@ std::string InsertQuery::toString() {
 }
 
 QueryResult::Ptr InsertQuery::combine() {
-    std::cerr << "Complete " << toString() << std::endl;
+    //fprintf(stderr, "Complete %d\n", getId());
     return std::make_unique<SuccessMsgResult>(qname);
 }
 
 void InsertTask::execute() {
     auto query = getQuery();
+    //fprintf(stderr, "Start %d\n", query->getId());
     try {
         auto &operands = query->getOperands();
         Table::KeyType &key = operands.front();
