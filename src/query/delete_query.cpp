@@ -13,16 +13,16 @@ QueryResult::Ptr DeleteQuery::execute() {
                 qname, this->targetTable.c_str(),
                 "Invalid number of operands (? operands)."_f % operands.size()
         );
-    Database &db = Database::getInstance();
-    Table::SizeType counter = 0;
+    auto &db = Database::getInstance();
     try {
         auto &table = db[this->targetTable];
         if (condition.empty()) {
-            counter = table.clear();
-            return std::make_unique<RecordCountResult>(counter);
+            auto counter = table.clear();
+            complete(std::make_unique<RecordCountResult>(counter));
+            return make_unique<SuccessMsgResult>(qname);
         }
         addIterationTask<DeleteTask>(db, table);
-        return std::make_unique<RecordCountResult>(counter);
+        return make_unique<SuccessMsgResult>(qname);
     } catch (const TableNameNotFound &e) {
         return std::make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
@@ -62,7 +62,7 @@ QueryResult::Ptr DeleteQuery::combine() {
     Database &db = Database::getInstance();
     auto &table = db[this->targetTable];
     Table::SizeType counter = 0;
-    for (auto &task:tasks) {
+    for (const auto &task:tasks) {
         counter += task->getCounter();
     }
     table.swapData();

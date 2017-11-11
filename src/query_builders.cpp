@@ -142,6 +142,9 @@ Query::Ptr ComplexQueryBuilder::tryExtractQuery(TokenizedQueryString &query) {
     if (operation == "DELETE")
         return std::make_unique<DeleteQuery>(
                 this->targetTable, this->operandToken, this->conditionToken);
+    if (operation == "COUNT")
+        return std::make_unique<CountQuery>(
+                this->targetTable, this->operandToken, this->conditionToken);
     if (operation == "SUM")
         return std::make_unique<SumQuery>(
                 this->targetTable, this->operandToken, this->conditionToken);

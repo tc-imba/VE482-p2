@@ -4,6 +4,7 @@
 
 #ifndef LEMONDB_SUM_QUERY_H
 #define LEMONDB_SUM_QUERY_H
+
 #include "query.h"
 #include "task.h"
 

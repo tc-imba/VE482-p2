@@ -34,9 +34,7 @@ public:
 
     virtual void execute();
 
-    Table::SizeType getCounter() {
-        return counter;
-    };
+    Table::SizeType getCounter() const { return counter; };
 };
 
 #endif //LEMONDB_TASK_H

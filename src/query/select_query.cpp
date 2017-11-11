@@ -8,6 +8,7 @@
 #include "../db/db_table.h"
 #include "../formatter.h"
 
+LEMONDB_TASK_PTR_IMPL(SelectQuery, SelectTask);
 constexpr const char *SelectQuery::qname;
 
 QueryResult::Ptr SelectQuery::execute() {
@@ -20,11 +21,14 @@ QueryResult::Ptr SelectQuery::execute() {
     Database &db = Database::getInstance();
     try {
         auto &table = db[this->targetTable];
+        for (auto it = ++operands.begin(); it != operands.end(); ++it) {
+            fieldsId.emplace_back(table.getFieldIndex(*it));
+        }
         addIterationTask<SelectTask>(db, table);
-        for (int i = 0; i < tasks.size(); ++i) {
+        /*for (int i = 0; i < tasks.size(); ++i) {
             taskResults.emplace_back();
             taskToIndex.insert({tasks[i].get(),i});
-        }
+        }*/
         return make_unique<SuccessMsgResult>("");
     } catch (const TableNameNotFound &e) {
         return make_unique<ErrorMsgResult>(
@@ -62,28 +66,37 @@ QueryResult::Ptr SelectQuery::combine() {
                 "Not completed yet."s
         );
     }
-    for (int i = 1; i < tasks.size(); ++i) {
-        auto it = taskResults[0].insert(taskResults[0].end(), taskResults[i].begin(),taskResults[i].end());
-        std::inplace_merge(taskResults[0].begin(), it, taskResults[0].end(), taskResults[0].comp);
+    auto it = tasks.begin();
+    std::vector<std::pair<std::string, std::vector<Table::ValueType> > > results(std::move(getTask(it)->results));
+    for (++it; it != tasks.end(); ++it) {
+        auto taskResults = getTask(it)->results;
+        auto mid = results.insert(results.end(), taskResults.begin(), taskResults.end());
+        std::inplace_merge(results.begin(), mid, results.end(),
+                           [](const std::pair<std::string, std::vector<Table::ValueType> > &a,
+                              const std::pair<std::string, std::vector<Table::ValueType> > &b) {
+                               return a.first < b.first;
+                           });
     }
-    //TODO: output taskResults[0] somehow
-    return make_unique<SuccessMsgResult>("");
+    return make_unique<SelectResult>(std::move(results));
 }
 
 void SelectTask::execute() {
     auto query = getQuery();
     try {
-        int index = this->getQuery()->whichTask(this);
         for (auto it = begin; it != end; ++it) {
             if (query->evalCondition(query->getCondition(), *it)) {
-                std::vector<int> tuple;
-                for (auto &operand : query->getOperands()) {
-                    tuple.push_back((*it)[operand]);
+                std::vector<Table::ValueType> tuple;
+                for (auto &index:query->fieldsId) {
+                    tuple.emplace_back((*it)[index]);
                 }
-                this->getQuery()->pushToResultArray(index, it->key(), std::move(tuple));
+                results.emplace_back(it->key(), std::move(tuple));
             }
         }
-        this->getQuery()->sortResultArray(index);
+        std::sort(results.begin(), results.end(),
+                  [](const std::pair<std::string, std::vector<Table::ValueType> > &a,
+                     const std::pair<std::string, std::vector<Table::ValueType> > &b) {
+                      return a.first < b.first;
+                  });
         Task::execute();
     } catch (const IllFormedQueryCondition &e) {
         return;

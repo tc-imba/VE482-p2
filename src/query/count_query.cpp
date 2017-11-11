@@ -6,20 +6,24 @@
 constexpr const char *CountQuery::qname;
 
 QueryResult::Ptr CountQuery::execute() {
-	
+
     using namespace std;
     if (!this->operands.empty())
         return make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
                 "Invalid number of operands (? operands)."_f % operands.size()
         );
-    Database &db = Database::getInstance();
-    Table::SizeType counter = 0;
+    auto &db = Database::getInstance();
     try {
         auto &table = db[this->targetTable];
-		addIterationTask<CountTask>(db, table);
-		return make_unique<SuccessMsgResult>(qname);
-        } catch (const TableNameNotFound &e) {
+        if (condition.empty()) {
+            auto counter = table.clear();
+            complete(std::make_unique<AnswerResult>(counter));
+            return make_unique<SuccessMsgResult>(qname);
+        }
+        addIterationTask<CountTask>(db, table);
+        return make_unique<SuccessMsgResult>(qname);
+    } catch (const TableNameNotFound &e) {
         return make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
                 "No such table."s
@@ -55,25 +59,21 @@ QueryResult::Ptr CountQuery::combine() {
                 "Not completed yet."s
         );
     }
-	return make_unique<SuccessMsgResult>(number);
+    Table::SizeType counter = 0;
+    for (auto &task:tasks) {
+        counter += task->getCounter();
+    }
+    return std::make_unique<AnswerResult>(counter);
 }
 
 void CountTask::execute() {
     auto query = getQuery();
     try {
-		if (query->getCondition().empty())
-		{
-			for (auto it = begin; it != end; ++it) {
-				this->getQuery()->addnumber();
-			}
-		}
-		else {
-			for (auto it = begin; it != end; ++it) {
-				if (query->evalCondition(query->getCondition(), *it)) {
-					this->getQuery()->addnumber();
-				}
-			}
-		}
+        for (auto it = begin; it != end; ++it) {
+            if (query->evalCondition(query->getCondition(), *it)) {
+                ++counter;
+            }
+        }
         Task::execute();
     } catch (const IllFormedQueryCondition &e) {
         return;

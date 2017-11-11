@@ -9,34 +9,30 @@
 #include "query.h"
 #include "task.h"
 
+class SelectTask;
+
 class SelectQuery : public ComplexQuery {
     static constexpr const char *qname = "SELECT";
-    std::vector<Table::resultArray> taskResults;
-    std::unordered_map<Task*, int> taskToIndex;
+    std::vector<Table::FieldIndex> fieldsId;
+protected:
+    LEMONDB_TASK_PTR_DEF(SelectTask);
 public:
     LEMONDB_QUERY_WRITER(false);
     using ComplexQuery::ComplexQuery;
     QueryResult::Ptr execute() override;
     std::string toString() override;
     QueryResult::Ptr combine() override;
-
-    int whichTask (Task *ptr) {return taskToIndex[ptr];}
-
-    std::vector<std::string> &getOperands () {return operands;}
-
-    void pushToResultArray (int index, const Table::KeyType &key, std::vector<Table::ValueType> &&tuple) { taskResults[index].push_back(key, std::move(tuple)); }
-
-    void sortResultArray (int index) {
-        std::sort(taskResults[index].begin(), taskResults[index].end(), taskResults[index].comp);
-    }
+    friend class SelectTask;
 };
 
 class SelectTask : public Task {
+    std::vector<std::pair<std::string, std::vector<Table::ValueType> > > results;
 protected:
     LEMONDB_QUERY_PTR(SelectQuery);
 public:
     using Task::Task;
-    void execute() override ;
+    void execute() override;
+    friend class SelectQuery;
 };
 
 #endif //LEMONDB_SELECT_QUERY_H

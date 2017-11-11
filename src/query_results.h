@@ -106,22 +106,32 @@ public:
 };
 
 class AnswerResult : public SuceededQueryResult {
-    const std::vector<int> answer;
+    std::string str;
 public:
-    explicit AnswerResult(std::vector<int> &&answer) : answer(answer) {}
+    explicit AnswerResult(std::vector<int> &&answer) {
+        str = "ANSWER = ( ?)"_f % answer;
+    }
+
+    explicit AnswerResult(int answer) {
+        str = "ANSWER = ?"_f % answer;
+    }
 
     std::string toString() override {
-        return "ANSWER = ( ?)"_f % answer;
+        return str;
     }
 };
 
 class SelectResult : public SuceededQueryResult {
-
+    std::vector<std::pair<std::string, std::vector<int> > > results;
 public:
-    SelectResult();
+    explicit SelectResult(std::vector<std::pair<std::string, std::vector<int> > > &&results) : results(results) {}
 
     std::string toString() override {
-        return "Affected ? rows."_f % 1;
+        std::string str;
+        for (const auto &pair :results) {
+            str += "( ? ?)\n"_f % pair.first % pair.second;
+        }
+        return str;
     }
 };
 

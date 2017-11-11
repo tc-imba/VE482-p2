@@ -12,6 +12,7 @@
 #include <unordered_set>
 #include <mutex>
 #include <atomic>
+#include <limits>
 
 #include "../uexception.h"
 #include "../formatter.h"
@@ -48,6 +49,8 @@ public:
     typedef std::string FieldNameType;
     typedef size_t FieldIndex;
     typedef int ValueType;
+    static constexpr const ValueType ValueTypeMax = INT32_MAX;
+    static constexpr const ValueType ValueTypeMin = INT32_MIN;
     typedef size_t SizeType;
 
 private:

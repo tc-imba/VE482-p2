@@ -4,6 +4,9 @@
 #include "../uexception.h"
 #include "../formatter.h"
 
+constexpr const Table::ValueType Table::ValueTypeMax;
+constexpr const Table::ValueType Table::ValueTypeMin;
+
 void Table::initFromStream(std::istream &infile, std::string source) {
     auto &db = Database::getInstance();
     std::string errString =

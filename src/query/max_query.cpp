@@ -2,7 +2,6 @@
 #include "../db/db.h"
 #include "../db/db_table.h"
 #include "../formatter.h"
-#include <climits>
 
 LEMONDB_TASK_PTR_IMPL(MaxQuery, MaxTask);
 constexpr const char *MaxQuery::qname;
@@ -15,7 +14,6 @@ QueryResult::Ptr MaxQuery::execute() {
                 "Invalid number of operands (? operands)."_f % operands.size()
         );
     Database &db = Database::getInstance();
-//    Table::SizeType counter = 0;
     try {
         auto &table = db[this->targetTable];
         for (const auto &operand : this->operands) {
@@ -28,10 +26,10 @@ QueryResult::Ptr MaxQuery::execute() {
                 fieldsId.emplace_back(table.getFieldIndex(operand));
             }
         }
-		addIterationTask<MaxTask>(db, table);
-		return make_unique<SuccessMsgResult>(qname);
-	}
-	catch (const TableNameNotFound &e) {
+        addIterationTask<MaxTask>(db, table);
+        return make_unique<SuccessMsgResult>(qname);
+    }
+    catch (const TableNameNotFound &e) {
         return make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
                 "No such table."s
@@ -72,26 +70,21 @@ QueryResult::Ptr MaxQuery::combine() {
     for (++it; it != tasks.end(); ++it) {
         auto numFields = fieldsId.size();
         for (int i = 0; i < numFields; ++i) {
-            Table::ValueType tmp = this->getTask(it)->fieldsMax[i];
-            if (tmp > fieldsMax[i]) {
-                fieldsMax[i] = tmp;
-            }
-//            fieldsMin[i] = tmp < fieldsMin[i] ? tmp : fieldsMin[i];
+            fieldsMax[i] = std::max(fieldsMax[i], this->getTask(it)->fieldsMax[i]);
         }
     }
     return make_unique<AnswerResult>(std::move(fieldsMax));
 }
 
 void MaxTask::execute() {
-	auto query = getQuery();
+    auto query = getQuery();
     try {
         auto numFields = query->fieldsId.size();
-        fieldsMax.insert(fieldsMax.end(), numFields, INT_MIN);
+        fieldsMax.insert(fieldsMax.end(), numFields, Table::ValueTypeMin);
         for (auto it = begin; it != end; ++it) {
             if (query->evalCondition(query->getCondition(), *it)) {
                 for (int i = 0; i < numFields; ++i) {
-                    Table::ValueType tmp = (*it)[query->fieldsId[i]];
-                    if (tmp > fieldsMax[i]) fieldsMax[i] = tmp;
+                    fieldsMax[i] = std::max(fieldsMax[i], (*it)[query->fieldsId[i]]);
                 }
             }
         }

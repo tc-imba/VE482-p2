@@ -14,17 +14,21 @@ void TaskQuery::complete() {
     ++taskComplete;
     auto result = combine();
     if (result != nullptr) {
-        if (result->success()) {
-            auto &db = Database::getInstance();
-            if (!targetTable.empty()) {
-                auto &table = db[targetTable];
-                table.refreshQuery();
-            }
-            db.addResult(this, std::move(result));
-            db.completeQuery();
-        } else {
-            fprintf(stderr, "%s\n", result->toString());
+        complete(std::move(result));
+    }
+}
+
+void TaskQuery::complete(QueryResult::Ptr &&result) {
+    if (result->success()) {
+        auto &db = Database::getInstance();
+        if (!targetTable.empty()) {
+            auto &table = db[targetTable];
+            table.refreshQuery();
         }
+        db.addResult(this, std::move(result));
+        db.completeQuery();
+    } else {
+        fprintf(stderr, "%s\n", result->toString().c_str());
     }
 }
 

@@ -42,6 +42,7 @@ public:
     Task *getTask(const std::vector<std::unique_ptr<Task> >::iterator &it) const { return it->get(); }
 
     void complete();
+    void complete(QueryResult::Ptr &&result);
 
     template<class TaskType>
     void addIterationTask(Database &db, Table &table) {

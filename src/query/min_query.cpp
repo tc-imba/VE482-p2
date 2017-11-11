@@ -2,7 +2,6 @@
 #include "../db/db.h"
 #include "../db/db_table.h"
 #include "../formatter.h"
-#include <climits>
 
 LEMONDB_TASK_PTR_IMPL(MinQuery, MinTask);
 constexpr const char *MinQuery::qname;
@@ -15,9 +14,8 @@ QueryResult::Ptr MinQuery::execute() {
                 "Invalid number of operands (? operands)."_f % operands.size()
         );
     Database &db = Database::getInstance();
-//    Table::SizeType counter = 0;
     try {
-		auto &table = db[this->targetTable];
+        auto &table = db[this->targetTable];
         for (const auto &operand : this->operands) {
             if (operand == "KEY") {
                 return make_unique<ErrorMsgResult>(
@@ -28,10 +26,10 @@ QueryResult::Ptr MinQuery::execute() {
                 fieldsId.emplace_back(table.getFieldIndex(operand));
             }
         }
-		addIterationTask<MinTask>(db, table);
-		return make_unique<SuccessMsgResult>(qname);
-	}
-	catch (const TableNameNotFound &e) {
+        addIterationTask<MinTask>(db, table);
+        return make_unique<SuccessMsgResult>(qname);
+    }
+    catch (const TableNameNotFound &e) {
         return make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
                 "No such table."s
@@ -72,26 +70,21 @@ QueryResult::Ptr MinQuery::combine() {
     for (++it; it != tasks.end(); ++it) {
         auto numFields = fieldsId.size();
         for (int i = 0; i < numFields; ++i) {
-            Table::ValueType tmp = this->getTask(it)->fieldsMin[i];
-            if (tmp < fieldsMin[i]) {
-                fieldsMin[i] = tmp;
-            }
-//            fieldsMin[i] = tmp < fieldsMin[i] ? tmp : fieldsMin[i];
+            fieldsMin[i] = std::min(fieldsMin[i], this->getTask(it)->fieldsMin[i]);
         }
     }
     return make_unique<AnswerResult>(std::move(fieldsMin));
 }
 
 void MinTask::execute() {
-	auto query = getQuery();
+    auto query = getQuery();
     try {
         auto numFields = query->fieldsId.size();
-        fieldsMin.insert(fieldsMin.end(), numFields, INT_MAX);
-        for (auto it = begin; it != end; ++it) {
+        fieldsMin.insert(fieldsMin.end(), numFields, Table::ValueTypeMax);
+        for (auto it = begin + 1; it != end; ++it) {
             if (query->evalCondition(query->getCondition(), *it)) {
                 for (int i = 0; i < numFields; ++i) {
-                    Table::ValueType tmp = (*it)[query->fieldsId[i]];
-                    if (tmp < fieldsMin[i]) fieldsMin[i] = tmp;
+                    fieldsMin[i] = std::min(fieldsMin[i], (*it)[query->fieldsId[i]]);
                 }
             }
         }

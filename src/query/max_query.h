@@ -14,14 +14,10 @@ protected:
 public:
     LEMONDB_QUERY_WRITER(false);
     using ComplexQuery::ComplexQuery;
-//	std::vector<std::string> &getOperands() { return operands; }
     QueryResult::Ptr execute() override;
     std::string toString() override;
     QueryResult::Ptr combine() override;
 	friend class MaxTask;
-/*	MaxTask *getTask(int index) {
-		return (MaxTask*)tasks[index].get();
-	}*/
 };
 
 class MaxTask : public Task {
