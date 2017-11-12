@@ -35,6 +35,9 @@ void Table::init(const FieldIDContainer &fields) {
                     "Error creating table \"" + tableName + "\": Multiple KEY field."
             );
         fieldMap.emplace(field, i++);
+        //
+        this->fields.emplace_back(std::move(field));
+        //
     }
     initialized = true;
 }

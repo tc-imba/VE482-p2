@@ -3,6 +3,8 @@
 #include "query/management/load_table_query.h"
 #include "query/management/truncate_query.h"
 #include "query/management/copy_table_query.h"
+#include "query/management/dump_query.h"
+#include "query/management/drop_query.h"
 #include "query/data/update_query.h"
 #include "query/data/delete_query.h"
 #include "query/data/duplicate_query.h"

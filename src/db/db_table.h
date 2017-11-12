@@ -328,6 +328,15 @@ public:
         initialized = true;
     }
 
+    void drop() {
+        queryQueueCounter = -1;
+        fields.clear();
+        fieldMap.clear();
+        data.clear();
+        keyMap.clear();
+        initialized = false;
+    }
+
     bool isInited() const { return initialized; }
 
     FieldIndex getFieldIndex(const FieldNameType &field) const {
