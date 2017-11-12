@@ -3,14 +3,6 @@
 
 #include "query/query.h"
 
-class QuitQuery : public Query {
-    static constexpr const char *qname = "QUIT";
-public:
-    LEMONDB_QUERY_WRITER(false)
-    QuitQuery() {}
-    QueryResult::Ptr execute() override;
-    std::string toString() override;
-};
 
 class DropTableQuery : public Query {
     static constexpr const char *qname = "DROP";

@@ -11,13 +11,15 @@
 class LoadTableQuery : public TaskQuery {
     static constexpr const char *qname = "LOAD";
     const std::string fileName;
-    void setTargetTable(std::string tableName);
 public:
-    LEMONDB_QUERY_WRITER(true)
-    explicit LoadTableQuery(std::string file) : fileName(std::move(file)) {}
+    LEMONDB_QUERY_WRITER(true);
+    LEMONDB_QUERY_INSTANT(true);
+    explicit LoadTableQuery(std::string table, std::string fileName) :
+            TaskQuery(table), fileName(std::move(fileName)) {}
     QueryResult::Ptr execute() override;
     std::string toString() override;
     QueryResult::Ptr combine() override;
+
     friend class LoadTableTask;
 };
 

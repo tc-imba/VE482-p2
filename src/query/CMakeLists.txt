@@ -12,7 +12,7 @@ set(SOURCE_FILES
         #drop
         management/truncate_query.cpp management/truncate_query.h
         management/copy_table_query.cpp management/copy_table_query.h
-        #quit
+        management/quit_query.cpp management/quit_query.h
         # Data query
         data/delete_query.cpp data/delete_query.h #ok
         data/insert_query.cpp data/insert_query.h #ok

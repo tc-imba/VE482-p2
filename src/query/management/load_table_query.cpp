@@ -27,10 +27,6 @@ QueryResult::Ptr LoadTableQuery::combine() {
     return std::make_unique<SuccessMsgResult>(qname);
 }
 
-void LoadTableQuery::setTargetTable(std::string tableName) {
-    targetTable = std::move(tableName);
-}
-
 void LoadTableTask::execute() {
     auto query = getQuery();
     try {
@@ -41,7 +37,6 @@ void LoadTableTask::execute() {
         }
         auto &db = Database::getInstance();
         auto &table = loadTableFromStream(infile, query->fileName);
-        query->setTargetTable(table.name());
         infile.close();
         Task::execute();
     } catch (const std::exception &e) {

@@ -4,6 +4,7 @@
 #include "db.h"
 #include "../uexception.h"
 #include "../formatter.h"
+#include "../query/management/load_table_query.h"
 
 constexpr const Table::ValueType Table::ValueTypeMax;
 constexpr const Table::ValueType Table::ValueTypeMin;
@@ -112,6 +113,11 @@ std::ostream &operator<<(std::ostream &os, const Table &table) {
 
 void Table::addQuery(Query *query) {
     queryQueueMutex.lock();
+    if (query->isInstant() && !initialized && queryQueue.empty()) {
+        queryQueueMutex.unlock();
+        query->execute();
+        return;
+    }
     if (queryQueueCounter < 0 || !initialized) {
         // writing, push back the query
         //fprintf(stderr, "Enqueue %d\n", query->getId());

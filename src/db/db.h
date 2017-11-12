@@ -23,6 +23,8 @@ private:
     std::queue<Task *> tasks;
     std::mutex tasksMutex;
 
+    std::unordered_map<std::string, std::string> fileTableNameMap;
+
     std::vector<std::pair<Query::Ptr, QueryResult::Ptr> > results;
     std::mutex resultsMutex;
     size_t resultNow = 0;
@@ -71,6 +73,10 @@ public:
         return *instance;
     }
 
+    void updateFileTableName(const std::string &fileName, const std::string &tableName);
+
+    std::string getFileTableName(const std::string &fileName);
+
     /**
      * Add a parsed query after reading it
      * dispatch the query according to its target table
@@ -101,7 +107,7 @@ public:
     }
 
     void joinThreads() {
-        for(auto &thread : threads) {
+        for (auto &thread : threads) {
             thread.join();
         }
     }

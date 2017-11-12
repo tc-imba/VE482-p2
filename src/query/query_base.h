@@ -11,6 +11,7 @@
 #include "../query_results.h"
 
 #define LEMONDB_QUERY_WRITER(flag) bool isWriter() const override { return flag; }
+#define LEMONDB_QUERY_INSTANT(flag) bool isInstant() const override { return flag; }
 #define LEMONDB_QUERY_PTR(T) T* getQuery() const override { return dynamic_cast<T*>(query); }
 #define LEMONDB_TASK_PTR_DEF(T) \
     T* getTask(size_t index) const; \
@@ -34,6 +35,7 @@ public:
 
     virtual ~Query() = default;
     virtual bool isWriter() const = 0;
+    virtual bool isInstant() const { return false; }
 
     const std::string &getTableName() { return targetTable; }
 

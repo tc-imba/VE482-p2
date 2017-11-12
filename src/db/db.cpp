@@ -1,6 +1,8 @@
 #include <iostream>
 #include "db.h"
 #include "../uexception.h"
+#include "../query/management/copy_table_query.h"
+#include "../query/management/quit_query.h"
 
 std::unique_ptr<Database> Database::instance = nullptr;
 
@@ -17,7 +19,7 @@ void Database::threadWork(Database *db) {
             }
             std::this_thread::yield();
         } else {
-            auto task = std::move(db->tasks.front());
+            auto task = db->tasks.front();
             db->tasks.pop();
             db->tasksMutex.unlock();
             task->execute();
@@ -87,6 +89,26 @@ void Database::printAllTable() {
     std::cout << "=========================" << std::endl;
 }
 
+void Database::updateFileTableName(const std::string &fileName, const std::string &tableName) {
+    fileTableNameMap[fileName] = tableName;
+}
+
+std::string Database::getFileTableName(const std::string &fileName) {
+    auto it = fileTableNameMap.find(fileName);
+    if (it == fileTableNameMap.end()) {
+        std::ifstream infile(fileName);
+        if (!infile.is_open()) {
+            return "";
+        }
+        std::string tableName;
+        infile >> tableName;
+        infile.close();
+        fileTableNameMap.emplace(fileName, tableName);
+        return tableName;
+    } else {
+        return it->second;
+    }
+}
 
 void Database::addQuery(Query::Ptr &&query) {
     auto q = query.get();
@@ -96,16 +118,24 @@ void Database::addQuery(Query::Ptr &&query) {
     resultsMutex.unlock();
     const auto &tableName = q->getTableName();
     if (tableName.empty()) {
-        // no-target query
-        q->execute();
-        //std::cerr << q->toString() << std::endl;
+        // no-target query (only exit)
+        if (typeid(*q) == typeid(QuitQuery)) {
+            q->execute();
+        } else {
+            std::cerr << "Query with no targetTable: " << q->toString() << std::endl;
+            endQuery();
+        }
         return;
     }
     try {
         auto &table = ensureTable(tableName);
         table.addQuery(q);
+        if (typeid(*q) == typeid(CopyTableQuery)) {
+            addQuery(dynamic_cast<CopyTableQuery *>(q)->createDestQuery());
+        }
     } catch (std::exception &e) {
         std::cerr << "Uncaught error: " << e.what() << std::endl;
+        endQuery();
     }
 }
 

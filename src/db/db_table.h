@@ -541,7 +541,7 @@ private:
      * 0  : idle
      * 1+ : reading (the number of readers)
      */
-    int queryQueueCounter = -1;
+    int queryQueueCounter = 0;
     /** queryQueue and queryQueueCounter must be locked for multi-thread */
     std::mutex queryQueueMutex;
 public:
@@ -549,6 +549,7 @@ public:
 
     void completeQuery();
 };
+
 
 Table &loadTableFromStream(std::istream &is, std::string source = "");
 

@@ -3,6 +3,7 @@
 #include "query/management/load_table_query.h"
 #include "query/management/truncate_query.h"
 #include "query/management/copy_table_query.h"
+#include "query/management/quit_query.h"
 #include "query/data/update_query.h"
 #include "query/data/delete_query.h"
 #include "query/data/duplicate_query.h"
@@ -37,18 +38,24 @@ Query::Ptr FakeQueryBuilder::tryExtractQuery
 Query::Ptr ManageTableQueryBuilder::tryExtractQuery
         (TokenizedQueryString &query) {
     if (query.token.size() == 2) {
-        if (query.token.front() == "LOAD")
-            return std::make_unique<LoadTableQuery>(query.token[1]);
+        if (query.token.front() == "LOAD"){
+            auto &db = Database::getInstance();
+            auto tableName = db.getFileTableName(query.token[1]);
+            return std::make_unique<LoadTableQuery>(tableName, query.token[1]);
+        }
         if (query.token.front() == "DROP")
             return std::make_unique<DropTableQuery>(query.token[1]);
         if (query.token.front() == "TRUNCATE")
             return std::make_unique<TruncateTableQuery>(query.token[1]);
     }
     if (query.token.size() == 3) {
-        if (query.token.front() == "DUMP")
+        if (query.token.front() == "DUMP") {
+            auto &db = Database::getInstance();
+            db.updateFileTableName(query.token[2], query.token[1]);
             return std::make_unique<DumpTableQuery>(
                     query.token[1], query.token[2]
             );
+        }
         if (query.token.front() == "COPYTABLE")
             return std::make_unique<CopyTableQuery>(query.token[1], query.token[2]);
     }
