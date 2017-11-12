@@ -3,6 +3,7 @@
 #include "../db/db_table.h"
 #include "../formatter.h"
 
+LEMONDB_TASK_PTR_IMPL(SubQuery, SubTask);
 constexpr const char *SubQuery::qname;
 
 QueryResult::Ptr SubQuery::execute() {
@@ -16,6 +17,16 @@ QueryResult::Ptr SubQuery::execute() {
     Table::SizeType counter = 0;
     try {
         auto &table = db[this->targetTable];
+        for (const auto &operand : this->operands) {
+            if (operand == "KEY") {
+                return make_unique<ErrorMsgResult>(
+                        qname, this->targetTable.c_str(),
+                        "Cannot subtract KEY!"
+                );
+            } else {
+                fieldsId.emplace_back(table.getFieldIndex(operand));
+            }
+        }
         addIterationTask<SubTask>(db, table);
         return make_unique<RecordCountResult>(counter);
     } catch (const TableNameNotFound &e) {
@@ -67,17 +78,17 @@ QueryResult::Ptr SubQuery::combine() {
 void SubTask::execute() {
     auto query = getQuery();
     try {
-        int numFields = this->getQuery()->getOperands().size();
-        int init;
+        auto numFields = query->fieldsId.size() - 1;
+        Table::ValueType result;
         for (auto it = begin; it != end; ++it) {
             if (query->evalCondition(query->getCondition(), *it)) {
-                init=(*it)[this->getQuery()->getOperands()[0]];
-                for (int i = 1; i < numFields - 1; ++i) {
-                    init = init - (*it)[this->getQuery()->getOperands()[i]];
+                result = (*it)[query->fieldsId[0]];
+                for (int i = 1; i < numFields; ++i) {
+                    result -= (*it)[query->fieldsId[i]];
                 }
-                (*it)[this->getQuery()->getOperands()[numFields-1]] = init;
+                (*it)[query->fieldsId[numFields]] = result;
                 counter++;
-            } 
+            }
         }
        Task::execute();
     } catch (const IllFormedQueryCondition &e) {

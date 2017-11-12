@@ -3,6 +3,7 @@
 #include "../db/db_table.h"
 #include "../formatter.h"
 
+LEMONDB_TASK_PTR_IMPL(AddQuery, AddTask);
 constexpr const char *AddQuery::qname;
 
 QueryResult::Ptr AddQuery::execute() {
@@ -13,11 +14,20 @@ QueryResult::Ptr AddQuery::execute() {
              "Invalid number of operands (? operands)."_f % operands.size()
        );
     Database &db = Database::getInstance();
-    Table::SizeType counter = 0;
     try {
         auto &table = db[this->targetTable];
+        for (const auto &operand : this->operands) {
+            if (operand == "KEY") {
+                return make_unique<ErrorMsgResult>(
+                        qname, this->targetTable.c_str(),
+                        "Cannot add KEY!"
+                );
+            } else {
+                fieldsId.emplace_back(table.getFieldIndex(operand));
+            }
+        }
         addIterationTask<AddTask>(db, table);
-        return make_unique<RecordCountResult>(counter);
+        return make_unique<SuccessMsgResult>(qname);
     } catch (const TableNameNotFound &e) {
         return make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
@@ -67,15 +77,15 @@ QueryResult::Ptr AddQuery::combine() {
 void AddTask::execute() {
     auto query = getQuery();
     try {
-        int numFields = this->getQuery()->getOperands().size();
-        int sum;
+        auto numFields = query->fieldsId.size() - 1;
+        Table::ValueType sum;
         for (auto it = begin; it != end; ++it) {
             if (query->evalCondition(query->getCondition(), *it)) {
                 sum=0;
-                for (int i = 0; i < numFields - 1; ++i) {
-                    sum = sum + (*it)[this->getQuery()->getOperands()[i]];
+                for (int i = 0; i < numFields; ++i) {
+                    sum += (*it)[query->fieldsId[i]];
                 }
-                (*it)[this->getQuery()->getOperands()[numFields-1]] = sum;
+                (*it)[query->fieldsId[numFields]] = sum;
                 counter++;
             } 
         }

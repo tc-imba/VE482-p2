@@ -8,6 +8,8 @@
 #include "query/insert_query.h"
 #include "query/min_query.h"
 #include "query/max_query.h"
+#include "query/add_query.h"
+#include "query/sub_query.h"
 #include "query/sum_query.h"
 #include <iostream>
 #include <iomanip>
@@ -153,6 +155,12 @@ Query::Ptr ComplexQueryBuilder::tryExtractQuery(TokenizedQueryString &query) {
                 this->targetTable, this->operandToken, this->conditionToken);
     if (operation == "MAX")
         return std::make_unique<MaxQuery>(
+                this->targetTable, this->operandToken, this->conditionToken);
+    if (operation == "ADD")
+        return std::make_unique<AddQuery>(
+                this->targetTable, this->operandToken, this->conditionToken);
+    if (operation == "SUB")
+        return std::make_unique<SubQuery>(
                 this->targetTable, this->operandToken, this->conditionToken);
     std::cout << "Complicated query found!" << std::endl;
     std::cout << "Operation = " << query.token.front() << std::endl;
