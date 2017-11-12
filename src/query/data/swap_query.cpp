@@ -23,12 +23,12 @@ QueryResult::Ptr SwapQuery::execute() {
         auto &table = db[this->targetTable];
         this->operand1 = table.getFieldIndex(this->operands[0]);
         this->operand2 = table.getFieldIndex(this->operands[1]);
-        if (condition.empty()) {
+        /*if (condition.empty()) {
             auto counter = table.size();
             table.swapField(this->operands[0], this->operands[1]);
             complete(std::make_unique<RecordCountResult>(counter));
             return make_unique<SuccessMsgResult>(qname);
-        }
+        }*/
         addIterationTask<SwapTask>(db, table);
         return make_unique<SuccessMsgResult>(qname);
     } catch (const TableNameNotFound &e) {

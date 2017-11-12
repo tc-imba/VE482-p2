@@ -7,16 +7,22 @@ constexpr const char *UpdateQuery::qname;
 
 QueryResult::Ptr UpdateQuery::execute() {
     start();
-	using namespace std;
+    using namespace std;
     if (this->operands.size() != 2)
-       return make_unique<ErrorMsgResult> (
-             qname, this->targetTable.c_str(),
-             "Invalid number of operands (? operands)."_f % operands.size()
-       );
+        return make_unique<ErrorMsgResult>(
+                qname, this->targetTable.c_str(),
+                "Invalid number of operands (? operands)."_f % operands.size()
+        );
     Database &db = Database::getInstance();
     Table::SizeType counter = 0;
     try {
         auto &table = db[this->targetTable];
+        if (operands[0] == "KEY") {
+            keyValue = operands[1];
+        } else {
+            fieldId = table.getFieldIndex(operands[0]);
+            fieldValue = strtol(operands[1].c_str(), NULL, 10);
+        }
         addIterationTask<UpdateTask>(db, table);
         return make_unique<RecordCountResult>(counter);
     } catch (const TableNameNotFound &e) {
@@ -68,23 +74,17 @@ QueryResult::Ptr UpdateQuery::combine() {
 void UpdateTask::execute() {
     auto query = getQuery();
     try {
-        for (auto object : *table) {
-            if (query->evalCondition(query->getCondition(), object)) {
-                std::string fieldName = this->getQuery()->getFieldName();
-                if (fieldName == "KEY")
-                {
-                    object.setKey(this->getQuery()->getKey());
+        for (auto it = begin; it != end; ++it) {
+            if (query->evalCondition(query->getCondition(), *it)) {
+                if (query->keyValue.empty()) {
+                    (*it)[query->fieldId] = query->fieldValue;
+                } else {
+                    it->setKey(query->keyValue);
                 }
-                else 
-                {
-                    Table::ValueType newValue = this->getQuery()->getFieldValue();
-                    int index = table->getFieldIndex(fieldName);
-                    object[index]=newValue;
-                }
-                counter++;
-            } 
+                ++counter;
+            }
         }
-       Task::execute();
+        Task::execute();
     } catch (const IllFormedQueryCondition &e) {
         return;
         // @TODO manage query exceptions later

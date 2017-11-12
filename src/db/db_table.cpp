@@ -154,6 +154,14 @@ void Table::addQuery(Query *query) {
 
 void Table::completeQuery() {
     queryQueueMutex.lock();
+    if (!queryQueue.empty() && !initialized && queryQueue.front()->isInstant()  ) {
+        queryQueueMutex.unlock();
+        auto query = queryQueue.front();
+        queryQueue.pop_front();
+        queryQueueMutex.unlock();
+        query->execute();
+        return;
+    }
     if (!initialized) {
         queryQueueMutex.unlock();
         return;

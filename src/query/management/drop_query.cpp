@@ -2,12 +2,12 @@
 // Created by 59889 on 2017/11/12.
 //
 
-#include "Drop_query.h"
+#include "drop_query.h"
 
 constexpr const char* DropTableQuery::qname;
 
 std::string DropTableQuery::toString() {
-    return "QUERY = TRUNCATE, Table = \"" + targetTable + "\"";
+    return "QUERY = DROP, Table = \"" + targetTable + "\"";
 }
 
 QueryResult::Ptr DropTableQuery::execute() {

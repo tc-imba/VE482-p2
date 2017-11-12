@@ -5,7 +5,7 @@ add_definitions(-DDEBUG)
 
 set(SOURCE_FILES
         db/db.cpp db/db.h
-        db/db_table.cpp db/db_table.h db/db_table_impl.hpp
+        db/db_table.cpp db/db_table.h
         query_parser.cpp query_parser.h
         query_builders.cpp query_builders.h
         query_results.cpp query_results.h

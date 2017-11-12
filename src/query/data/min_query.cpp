@@ -68,11 +68,16 @@ QueryResult::Ptr MinQuery::combine() {
     }
     auto it = tasks.begin();
     std::vector<Table::ValueType> fieldsMin(std::move(getTask(it)->fieldsMin));
+    Table::SizeType counter = (*it)->getCounter();
     for (++it; it != tasks.end(); ++it) {
         auto numFields = fieldsId.size();
         for (int i = 0; i < numFields; ++i) {
             fieldsMin[i] = std::min(fieldsMin[i], this->getTask(it)->fieldsMin[i]);
         }
+        counter += (*it)->getCounter();
+    }
+    if (counter == 0) {
+        return make_unique<NullQueryResult>();
     }
     return make_unique<AnswerResult>(std::move(fieldsMin));
 }
@@ -82,11 +87,12 @@ void MinTask::execute() {
     try {
         auto numFields = query->fieldsId.size();
         fieldsMin.insert(fieldsMin.end(), numFields, Table::ValueTypeMax);
-        for (auto it = begin + 1; it != end; ++it) {
+        for (auto it = begin; it != end; ++it) {
             if (query->evalCondition(query->getCondition(), *it)) {
                 for (int i = 0; i < numFields; ++i) {
                     fieldsMin[i] = std::min(fieldsMin[i], (*it)[query->fieldsId[i]]);
                 }
+                counter = 1;
             }
         }
         Task::execute();

@@ -78,6 +78,9 @@ QueryResult::Ptr SelectQuery::combine() {
                                return a.first < b.first;
                            });
     }
+    if (results.empty()) {
+        return make_unique<NullQueryResult>();
+    }
     return make_unique<SelectResult>(std::move(results));
 }
 

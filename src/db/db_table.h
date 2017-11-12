@@ -14,6 +14,9 @@
 #include <atomic>
 #include <limits>
 #include <algorithm>
+#include <sstream>
+#include <iomanip>
+#include <exception>
 
 #include "../uexception.h"
 #include "../formatter.h"
@@ -92,6 +95,7 @@ private:
     std::vector<FieldNameType> fields;
     /** Map field name into index */
     std::unordered_map<FieldNameType, FieldIndex> fieldMap;
+    //std::vector<FieldIndex> fieldIndexMap;
     /** Defined by tripack, seems to be used to speed up processing */
     //const Datum blankDatum;
 
@@ -173,11 +177,13 @@ public:
         KeyType key() const { return it->key; }
 
         void setKey(KeyType key) {
+            table->dataNewMutex.lock();
             auto keyMapIt = table->keyMap.find(it->key);
             auto dataIt = std::move(keyMapIt->second);
             table->keyMap.erase(keyMapIt);
             table->keyMap.emplace(key, dataIt);
             it->key = std::move(key);
+            table->dataNewMutex.unlock();
         }
 
         // Accessing by index should be, at least as fast as
@@ -320,18 +326,20 @@ public:
             fields(origin.fields), tableName(std::move(name)),
             keyMap(origin.keyMap), data(origin.data) {}
 
-    void copy(const Table& origin) {
+    void copy(const Table &origin) {
         fields = origin.fields;
         fieldMap = origin.fieldMap;
+        //fieldIndexMap = origin.fieldIndexMap;
         data = origin.data;
         keyMap = origin.keyMap;
         initialized = true;
     }
 
     void drop() {
-        queryQueueCounter = -1;
+        queryQueueCounter = 0;
         fields.clear();
         fieldMap.clear();
+        //fieldIndexMap.clear();
         data.clear();
         keyMap.clear();
         initialized = false;
@@ -349,7 +357,17 @@ public:
         }
     }
 
-    FieldIndex addField(const FieldNameType &field) {
+/*    FieldIndex getFieldIndex(const FieldIndex &oldIndex) const {
+        try {
+            return fieldIndexMap.at(oldIndex);
+        } catch (const std::out_of_range &e) {
+            throw TableFieldNotFound(
+                    R"(Field id "?" doesn't exists.)"_f % (oldIndex)
+            );
+        }
+    }*/
+
+/*    FieldIndex addField(const FieldNameType &field) {
         auto it = fieldMap.find(field);
         if (it == fieldMap.end()) {
             auto index = fields.size();
@@ -359,7 +377,7 @@ public:
         } else {
             return it->second;
         }
-    }
+    }*/
 
     template<class AssocContainer>
     void insert(KeyType key, const AssocContainer &data) = delete;
@@ -424,14 +442,15 @@ public:
      * Swap two fields of the whole table
      * No exception
      */
-    void swapField(const Table::FieldNameType &field1, const Table::FieldNameType &field2) noexcept {
+    /*void swapField(const Table::FieldNameType &field1, const Table::FieldNameType &field2) noexcept {
         if (field1 == field2) return;
         auto it1 = fieldMap.find(field1);
         auto it2 = fieldMap.find(field2);
         if (it1 != fieldMap.end() && it2 != fieldMap.end()) {
+            //std::swap(fieldIndexMap[it1->second], fieldIndexMap[it2->second]);
             std::swap(it1->second, it2->second);
         }
-    }
+    }*/
 
     /**
      * Duplicate it and put it into dataNew
@@ -559,9 +578,68 @@ public:
     void completeQuery();
 };
 
+template<class FieldIDContainer>
+Table::Table(const std::string &name, const FieldIDContainer &_fields)
+        : tableName(name),
+          fields(_fields.cbegin(), _fields.cend()) {
+    size_t i = 0;
+    for (const auto &field : fields) {
+        if (field == "KEY")
+            throw MultipleKey(
+                    "Error creating table \"" + name + "\": Multiple KEY field."
+            );
+        fieldMap.insert({{field},
+                         {i++}});
+    }
+}
+
+template<class FieldIDContainer>
+void Table::init(const FieldIDContainer &fields) {
+    size_t i = 0;
+    for (const auto &field : fields) {
+        if (field == "KEY")
+            throw MultipleKey(
+                    "Error creating table \"" + tableName + "\": Multiple KEY field."
+            );
+        fieldMap.emplace(field, i++);
+        this->fields.emplace_back(std::move(field));
+        //fieldIndexMap.emplace_back(i++);
+    }
+    initialized = true;
+}
+
+/*template<class AssocContainer>
+    void Table::insert(KeyType key, const AssocContainer& data) {
+    if (this->keySet.find(key) != this->keySet.end()) {
+        std::string err = "In Table \"" + this->tableName
+                          + "\" : Key \"" + key + "\" already exists!";
+        throw ConflictingKey(err);
+    }
+    Datum d(blankDatum);
+    d.key = key;
+    for (const auto& field : this->fields) {
+        auto it = data.find(field);
+        d.datum[field] = (it == data.end() ? ValueType() : it->second);
+    }
+    this->data.push_back(d);
+    this->keySet.insert(key);
+}*/
+
+template<class ValueTypeContainer>
+void Table::insertByIndex(KeyType key, const ValueTypeContainer &data) {
+    if (this->keyMap.find(key) != this->keyMap.end()) {
+        std::string err = "In Table \"" + this->tableName
+                          + "\" : Key \"" + key + "\" already exists!";
+        throw ConflictingKey(err);
+    }
+    auto size = this->data.size();
+    this->data.emplace_back(key, data);
+    //this->keySet.insert(key);
+    this->keyMap.emplace(key, size);
+}
 
 Table &loadTableFromStream(std::istream &is, std::string source = "");
 
-#include "db_table_impl.hpp"
+std::ostream &operator<<(std::ostream &os, const Table &table);
 
 #endif //SRC_DB_TABLE_H

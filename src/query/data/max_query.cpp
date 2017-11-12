@@ -68,11 +68,16 @@ QueryResult::Ptr MaxQuery::combine() {
     }
     auto it = tasks.begin();
     std::vector<Table::ValueType> fieldsMax(std::move(getTask(it)->fieldsMax));
+    Table::SizeType counter = (*it)->getCounter();
     for (++it; it != tasks.end(); ++it) {
         auto numFields = fieldsId.size();
         for (int i = 0; i < numFields; ++i) {
             fieldsMax[i] = std::max(fieldsMax[i], this->getTask(it)->fieldsMax[i]);
         }
+        counter += (*it)->getCounter();
+    }
+    if (counter == 0) {
+        return make_unique<NullQueryResult>();
     }
     return make_unique<AnswerResult>(std::move(fieldsMax));
 }
@@ -87,6 +92,7 @@ void MaxTask::execute() {
                 for (int i = 0; i < numFields; ++i) {
                     fieldsMax[i] = std::max(fieldsMax[i], (*it)[query->fieldsId[i]]);
                 }
+                counter = 1;
             }
         }
         Task::execute();

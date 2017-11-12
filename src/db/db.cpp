@@ -159,10 +159,11 @@ void Database::completeQuery() {
     outputMutex.lock();
     for (auto it = results.begin() + resultNow; it != results.end() && it->second != nullptr; ++it) {
         // SuccessMsgResult should not output
-        if (typeid(*(it->second)) == typeid(SuccessMsgResult)) {
+        if (typeid(*(it->second)) == typeid(SuccessMsgResult) || typeid(*(it->second)) == typeid(NullQueryResult)) {
             //std::cout.flush();
             //std::cerr << it->second->toString() << std::endl;
         } else {
+            //std::cout << it->first->getId() << " " << it->first->toString() << " ";
             std::cout << it->second->toString() << std::endl;
         }
         // Delete the query after output

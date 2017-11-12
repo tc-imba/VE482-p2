@@ -57,7 +57,6 @@ QueryResult::Ptr InsertQuery::combine() {
 
 void InsertTask::execute() {
     auto query = getQuery();
-    //fprintf(stderr, "Start %d\n", query->getId());
     try {
         auto &operands = query->getOperands();
         auto &key = operands.front();
