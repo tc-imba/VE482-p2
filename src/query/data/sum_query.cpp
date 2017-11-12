@@ -1,12 +1,17 @@
-#include "min_query.h"
-#include "../db/db.h"
-#include "../db/db_table.h"
-#include "../formatter.h"
+//
+// Created by linzhi on 2017/11/7.
+//
 
-LEMONDB_TASK_PTR_IMPL(MinQuery, MinTask);
-constexpr const char *MinQuery::qname;
+#include <algorithm>
+#include "sum_query.h"
+#include "../../db/db.h"
+#include "../../db/db_table.h"
+#include "../../formatter.h"
 
-QueryResult::Ptr MinQuery::execute() {
+LEMONDB_TASK_PTR_IMPL(SumQuery, SumTask);
+constexpr const char *SumQuery::qname;
+
+QueryResult::Ptr SumQuery::execute() {
     start();
     using namespace std;
     if (this->operands.empty())
@@ -14,6 +19,7 @@ QueryResult::Ptr MinQuery::execute() {
                 qname, this->targetTable.c_str(),
                 "Invalid number of operands (? operands)."_f % operands.size()
         );
+
     Database &db = Database::getInstance();
     try {
         auto &table = db[this->targetTable];
@@ -21,16 +27,15 @@ QueryResult::Ptr MinQuery::execute() {
             if (operand == "KEY") {
                 return make_unique<ErrorMsgResult>(
                         qname, this->targetTable.c_str(),
-                        "Cannot compare KEY!"
+                        "Cannot sum KEY!"
                 );
             } else {
                 fieldsId.emplace_back(table.getFieldIndex(operand));
             }
         }
-        addIterationTask<MinTask>(db, table);
+        addIterationTask<SumTask>(db, table);
         return make_unique<SuccessMsgResult>(qname);
-    }
-    catch (const TableNameNotFound &e) {
+    } catch (const TableNameNotFound &e) {
         return make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
                 "No such table."s
@@ -54,11 +59,11 @@ QueryResult::Ptr MinQuery::execute() {
     }
 }
 
-std::string MinQuery::toString() {
-    return "QUERY = MIN " + this->targetTable + "\"";
+std::string SumQuery::toString() {
+    return "QUERY = SUM " + this->targetTable + "\"";
 }
 
-QueryResult::Ptr MinQuery::combine() {
+QueryResult::Ptr SumQuery::combine() {
     using namespace std;
     if (taskComplete < tasks.size()) {
         return make_unique<ErrorMsgResult>(
@@ -67,25 +72,25 @@ QueryResult::Ptr MinQuery::combine() {
         );
     }
     auto it = tasks.begin();
-    std::vector<Table::ValueType> fieldsMin(std::move(getTask(it)->fieldsMin));
+    std::vector<Table::ValueType> fieldsSum(std::move(getTask(it)->fieldsSum));
     for (++it; it != tasks.end(); ++it) {
         auto numFields = fieldsId.size();
         for (int i = 0; i < numFields; ++i) {
-            fieldsMin[i] = std::min(fieldsMin[i], this->getTask(it)->fieldsMin[i]);
+            fieldsSum[i] += this->getTask(it)->fieldsSum[i];
         }
     }
-    return make_unique<AnswerResult>(std::move(fieldsMin));
+    return make_unique<AnswerResult>(std::move(fieldsSum));
 }
 
-void MinTask::execute() {
+void SumTask::execute() {
     auto query = getQuery();
     try {
         auto numFields = query->fieldsId.size();
-        fieldsMin.insert(fieldsMin.end(), numFields, Table::ValueTypeMax);
-        for (auto it = begin + 1; it != end; ++it) {
+        fieldsSum.insert(fieldsSum.end(), numFields, 0);
+        for (auto it = begin; it != end; ++it) {
             if (query->evalCondition(query->getCondition(), *it)) {
                 for (int i = 0; i < numFields; ++i) {
-                    fieldsMin[i] = std::min(fieldsMin[i], (*it)[query->fieldsId[i]]);
+                    fieldsSum[i] += (*it)[query->fieldsId[i]];
                 }
             }
         }

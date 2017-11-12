@@ -1,9 +1,9 @@
 #include <algorithm>
 #include <iostream>
 #include "insert_query.h"
-#include "../db/db.h"
-#include "../db/db_table.h"
-#include "../formatter.h"
+#include "../../db/db.h"
+#include "../../db/db_table.h"
+#include "../../formatter.h"
 
 constexpr const char *InsertQuery::qname;
 
@@ -60,7 +60,7 @@ void InsertTask::execute() {
     //fprintf(stderr, "Start %d\n", query->getId());
     try {
         auto &operands = query->getOperands();
-        Table::KeyType &key = operands.front();
+        auto &key = operands.front();
         std::vector<Table::ValueType> data;
         std::for_each(++operands.begin(), operands.end(), [&data](const std::string &item) {
             data.emplace_back(strtol(item.c_str(), NULL, 10));

@@ -4,8 +4,8 @@
 
 #ifndef LEMONDB_SWAP_QUERY_H
 #define LEMONDB_SWAP_QUERY_H
-#include "query.h"
-#include "task.h"
+#include "../query.h"
+#include "../task.h"
 
 class SwapTask;
 

@@ -63,10 +63,10 @@ void Table::insertByIndex(KeyType key, const ValueTypeContainer &data) {
                           + "\" : Key \"" + key + "\" already exists!";
         throw ConflictingKey(err);
     }
-    auto it = this->data.end();
+    auto size = this->data.size();
     this->data.emplace_back(key, data);
     //this->keySet.insert(key);
-    this->keyMap.emplace(key, it);
+    this->keyMap.emplace(key, size);
 }
 
 std::ostream &operator<<(std::ostream &os, const Table &table);

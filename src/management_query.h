@@ -53,26 +53,8 @@ public:
     std::string toString() override;
 };
 
-class TruncateTableQuery : public Query {
-    static constexpr const char *qname = "TRUNCATE";
-    const std::string tableName;
-public:
-    LEMONDB_QUERY_WRITER(true)
-    TruncateTableQuery(std::string table) : tableName(table) {}
-    QueryResult::Ptr execute() override;
-    std::string toString() override;
-};
 
-class CopytableTableQuery : public Query {
-    static constexpr const char *qname = "COPYTABLE";
-    const std::string tableName;
-    const std::string newTableName;
-public:
-    LEMONDB_QUERY_WRITER(false)
-    CopytableTableQuery(std::string table, std::string newTable)
-            : tableName(table), newTableName(newTable) {}
-    QueryResult::Ptr execute() override;
-    std::string toString() override;
-};
+
+
 
 #endif //SRC_MANAGEMENT_QUERY_H

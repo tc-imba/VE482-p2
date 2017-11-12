@@ -91,7 +91,7 @@ private:
     /** The fields, ordered as defined in fieldMap */
     std::vector<FieldNameType> fields;
     /** Map field name into index */
-    std::unordered_map<FieldNameType, SizeType> fieldMap;
+    std::unordered_map<FieldNameType, FieldIndex> fieldMap;
     /** Defined by tripack, seems to be used to speed up processing */
     //const Datum blankDatum;
 
@@ -101,12 +101,8 @@ private:
     std::vector<Datum> dataNew;
     /** mutex to protect dataNew */
     std::mutex dataNewMutex;
-    /** Used to keep the keys unique */
-    //std::unordered_set<KeyType> keySet;
     /** Used to keep the keys unique and provide O(1) access with key */
-    std::unordered_map<KeyType, std::vector<Datum>::iterator> keyMap;
-    /** Only erase should ve locked by this */
-    //std::mutex keyMapMutex;
+    std::unordered_map<KeyType, SizeType> keyMap;
     /** The name of table */
     std::string tableName;
 
@@ -311,7 +307,7 @@ private:
 public:
     Table() = delete;
 
-    Table(const std::string &name) : tableName(name) {}
+    explicit Table(const std::string &name) : tableName(name) {}
 
     // Accept any container that contains string.
     template<class FieldIDContainer>
@@ -324,6 +320,14 @@ public:
             fields(origin.fields), tableName(std::move(name)),
             keyMap(origin.keyMap), data(origin.data) {}
 
+    void copy(const Table& origin) {
+        fields = origin.fields;
+        fieldMap = origin.fieldMap;
+        data = origin.data;
+        keyMap = origin.keyMap;
+        initialized = true;
+    }
+
     bool isInited() const { return initialized; }
 
     FieldIndex getFieldIndex(const FieldNameType &field) const {
@@ -333,6 +337,18 @@ public:
             throw TableFieldNotFound(
                     R"(Field name "?" doesn't exists.)"_f % (field)
             );
+        }
+    }
+
+    FieldIndex addField(const FieldNameType &field) {
+        auto it = fieldMap.find(field);
+        if (it == fieldMap.end()) {
+            auto index = fields.size();
+            fields.emplace_back(field);
+            fieldMap.emplace(field, index);
+            return index;
+        } else {
+            return it->second;
         }
     }
 
@@ -347,13 +363,13 @@ public:
      * @param key
      * @return the Object that KEY = key, or nullptr if key doesn't exist
      */
-    Object::Ptr operator[](const KeyType &key) const {
+    Object::Ptr operator[](const KeyType &key) {
         auto it = keyMap.find(key);
         if (it == keyMap.end()) {
             // not found
             return nullptr;
         } else {
-            return createProxy(it->second, this);
+            return createProxy(data.begin() + it->second, this);
         }
     }
 
@@ -379,7 +395,7 @@ public:
      */
     void move(Iterator &it) {
         dataNewMutex.lock();
-        keyMap.at(it.it->key) = dataNew.end();
+        keyMap.at(it.it->key) = dataNew.size();
         dataNew.emplace_back(std::move(*(it.it)));
         dataNewMutex.unlock();
     }
@@ -431,7 +447,7 @@ public:
      */
     void mergeData() {
         std::for_each(dataNew.begin(), dataNew.end(), [this](Datum &datum) {
-            keyMap.emplace(datum.key, data.end());
+            keyMap.emplace(datum.key, data.size());
             data.emplace_back(std::move(datum));
         });
         dataNew.clear();

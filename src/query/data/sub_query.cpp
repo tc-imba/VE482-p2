@@ -1,27 +1,33 @@
-#include "count_query.h"
-#include "../db/db.h"
-#include "../db/db_table.h"
-#include "../formatter.h"
+#include "sub_query.h"
+#include "../../db/db.h"
+#include "../../db/db_table.h"
+#include "../../formatter.h"
 
-constexpr const char *CountQuery::qname;
+LEMONDB_TASK_PTR_IMPL(SubQuery, SubTask);
+constexpr const char *SubQuery::qname;
 
-QueryResult::Ptr CountQuery::execute() {
+QueryResult::Ptr SubQuery::execute() {
     start();
     using namespace std;
-    if (!this->operands.empty())
+    if (this->operands.size() < 2)
         return make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
                 "Invalid number of operands (? operands)."_f % operands.size()
         );
-    auto &db = Database::getInstance();
+    Database &db = Database::getInstance();
     try {
         auto &table = db[this->targetTable];
-        if (condition.empty()) {
-            auto counter = table.size();
-            complete(std::make_unique<AnswerResult>(counter));
-            return make_unique<SuccessMsgResult>(qname);
+        for (const auto &operand : this->operands) {
+            if (operand == "KEY") {
+                return make_unique<ErrorMsgResult>(
+                        qname, this->targetTable.c_str(),
+                        "Cannot subtract KEY!"
+                );
+            } else {
+                fieldsId.emplace_back(table.getFieldIndex(operand));
+            }
         }
-        addIterationTask<CountTask>(db, table);
+        addIterationTask<SubTask>(db, table);
         return make_unique<SuccessMsgResult>(qname);
     } catch (const TableNameNotFound &e) {
         return make_unique<ErrorMsgResult>(
@@ -47,11 +53,11 @@ QueryResult::Ptr CountQuery::execute() {
     }
 }
 
-std::string CountQuery::toString() {
-    return "QUERY = COUNT " + this->targetTable + "\"";
+std::string SubQuery::toString() {
+    return "QUERY = SUB " + this->targetTable + "\"";
 }
 
-QueryResult::Ptr CountQuery::combine() {
+QueryResult::Ptr SubQuery::combine() {
     using namespace std;
     if (taskComplete < tasks.size()) {
         return make_unique<ErrorMsgResult>(
@@ -59,18 +65,28 @@ QueryResult::Ptr CountQuery::combine() {
                 "Not completed yet."s
         );
     }
+    Database &db = Database::getInstance();
+    auto &table = db[this->targetTable];
     Table::SizeType counter = 0;
     for (auto &task:tasks) {
         counter += task->getCounter();
     }
-    return std::make_unique<AnswerResult>(counter);
+    return make_unique<RecordCountResult>(counter);
 }
 
-void CountTask::execute() {
+
+void SubTask::execute() {
     auto query = getQuery();
     try {
+        auto destId = query->fieldsId.back();
         for (auto it = begin; it != end; ++it) {
             if (query->evalCondition(query->getCondition(), *it)) {
+                auto itId = query->fieldsId.begin();
+                auto result = (*it)[*itId];
+                for (++itId; itId != query->fieldsId.end() - 1; ++itId) {
+                    result -= (*it)[*itId];
+                }
+                (*it)[destId] = result;
                 ++counter;
             }
         }
@@ -84,4 +100,3 @@ void CountTask::execute() {
         );*/
     }
 }
-

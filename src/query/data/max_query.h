@@ -1,8 +1,8 @@
 #ifndef LEMONDB_MAX_QUERY_H
 #define LEMONDB_MAX_QUERY_H
 
-#include "query.h"
-#include "task.h"
+#include "../query.h"
+#include "../task.h"
 
 class MaxTask;
 

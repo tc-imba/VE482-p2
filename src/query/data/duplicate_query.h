@@ -5,8 +5,8 @@
 #ifndef LEMONDB_DUPLICATE_QUERY_H
 #define LEMONDB_DUPLICATE_QUERY_H
 
-#include "query.h"
-#include "task.h"
+#include "../query.h"
+#include "../task.h"
 
 class DuplicateQuery : public ComplexQuery {
     static constexpr const char *qname = "DUPLICATE";

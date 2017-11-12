@@ -6,7 +6,7 @@
 #include <cassert>
 
 void TaskQuery::start() {
-    //fprintf(stderr, "Start %d: %s\n", id, toString().c_str());
+    //fprintf(stderr, "Start %d: %s %s\n", id, toString().c_str(), targetTable.empty() ? "( no target )" : "");
 }
 
 void TaskQuery::complete() {
@@ -25,7 +25,7 @@ void TaskQuery::complete() {
 void TaskQuery::complete(QueryResult::Ptr &&result) {
     if (result->success()) {
         auto &db = Database::getInstance();
-        //fprintf(stderr, "End: %s\n", toString().c_str());
+        //fprintf(stderr, "End %d: %s\n", id, toString().c_str());
         if (!targetTable.empty()) {
             auto &table = db[targetTable];
             table.completeQuery();

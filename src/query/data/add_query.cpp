@@ -1,19 +1,15 @@
-//
-// Created by linzhi on 2017/11/7.
-//
+#include "add_query.h"
+#include "../../db/db.h"
+#include "../../db/db_table.h"
+#include "../../formatter.h"
 
-#include "swap_query.h"
+LEMONDB_TASK_PTR_IMPL(AddQuery, AddTask);
+constexpr const char *AddQuery::qname;
 
-#include "../db/db.h"
-#include "../db/db_table.h"
-#include "../formatter.h"
-
-constexpr const char *SwapQuery::qname;
-
-QueryResult::Ptr SwapQuery::execute() {
+QueryResult::Ptr AddQuery::execute() {
     start();
     using namespace std;
-    if (this->operands.size() != 2 || this->operands[0] == "KEY" || this->operands[1] == "KEY")
+    if (this->operands.size() < 2)
         return make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
                 "Invalid number of operands (? operands)."_f % operands.size()
@@ -21,15 +17,17 @@ QueryResult::Ptr SwapQuery::execute() {
     Database &db = Database::getInstance();
     try {
         auto &table = db[this->targetTable];
-        this->operand1 = table.getFieldIndex(this->operands[0]);
-        this->operand2 = table.getFieldIndex(this->operands[1]);
-        if (condition.empty()) {
-            auto counter = table.size();
-            table.swapField(this->operands[0], this->operands[1]);
-            complete(std::make_unique<RecordCountResult>(counter));
-            return make_unique<SuccessMsgResult>(qname);
+        for (const auto &operand : this->operands) {
+            if (operand == "KEY") {
+                return make_unique<ErrorMsgResult>(
+                        qname, this->targetTable.c_str(),
+                        "Cannot add KEY!"
+                );
+            } else {
+                fieldsId.emplace_back(table.getFieldIndex(operand));
+            }
         }
-        addIterationTask<SwapTask>(db, table);
+        addIterationTask<AddTask>(db, table);
         return make_unique<SuccessMsgResult>(qname);
     } catch (const TableNameNotFound &e) {
         return make_unique<ErrorMsgResult>(
@@ -55,11 +53,11 @@ QueryResult::Ptr SwapQuery::execute() {
     }
 }
 
-std::string SwapQuery::toString() {
-    return "QUERY = SWAP " + this->targetTable + "\"";
+std::string AddQuery::toString() {
+    return "QUERY = ADD" + this->targetTable + "\"";
 }
 
-QueryResult::Ptr SwapQuery::combine() {
+QueryResult::Ptr AddQuery::combine() {
     using namespace std;
     if (taskComplete < tasks.size()) {
         return make_unique<ErrorMsgResult>(
@@ -67,6 +65,8 @@ QueryResult::Ptr SwapQuery::combine() {
                 "Not completed yet."s
         );
     }
+    Database &db = Database::getInstance();
+    auto &table = db[this->targetTable];
     Table::SizeType counter = 0;
     for (auto &task:tasks) {
         counter += task->getCounter();
@@ -74,18 +74,19 @@ QueryResult::Ptr SwapQuery::combine() {
     return make_unique<RecordCountResult>(counter);
 }
 
-#include <iostream>
 
-void SwapTask::execute() {
+void AddTask::execute() {
     auto query = getQuery();
     try {
+        auto destId = query->fieldsId.back();
         for (auto it = begin; it != end; ++it) {
             if (query->evalCondition(query->getCondition(), *it)) {
-                //std::cerr << (*it)[query->operand1] << " " << (*it)[query->operand2] << std::endl;
-                std::swap((*it)[query->operand1], (*it)[query->operand2]);
-                /*Table::ValueType tmp((*it)[query->operand1]);
-                (*it)[query->operand1] = (*it)[query->operand2];
-                (*it)[query->operand2] = tmp;*/
+                auto itId = query->fieldsId.begin();
+                auto result = (*it)[*itId];
+                for (++itId; itId != query->fieldsId.end() - 1; ++itId) {
+                    result += (*it)[*itId];
+                }
+                (*it)[destId] = result;
                 ++counter;
             }
         }
@@ -99,4 +100,3 @@ void SwapTask::execute() {
         );*/
     }
 }
-

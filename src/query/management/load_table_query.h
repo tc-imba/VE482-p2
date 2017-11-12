@@ -5,8 +5,8 @@
 #ifndef LEMONDB_LOAD_QUERY_H
 #define LEMONDB_LOAD_QUERY_H
 
-#include "query.h"
-#include "task.h"
+#include "../query.h"
+#include "../task.h"
 
 class LoadTableQuery : public TaskQuery {
     static constexpr const char *qname = "LOAD";

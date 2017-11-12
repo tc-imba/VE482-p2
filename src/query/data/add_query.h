@@ -1,8 +1,8 @@
 #ifndef LEMONDB_ADD_QUERY_H
 #define LEMONDB_ADD_QUERY_H
 
-#include "query.h"
-#include "task.h"
+#include "../query.h"
+#include "../task.h"
 
 class AddTask;
 

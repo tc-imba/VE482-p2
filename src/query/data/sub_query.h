@@ -1,8 +1,8 @@
 #ifndef LEMONDB_SUB_QUERY_H
 #define LEMONDB_SUB_QUERY_H
 
-#include "query.h"
-#include "task.h"
+#include "../query.h"
+#include "../task.h"
 
 class SubTask;
 

@@ -1,8 +1,8 @@
 #ifndef LEMONDB_COUNT_QUERY_H
 #define LEMONDB_COUNT_QUERY_H
 
-#include "query.h"
-#include "task.h"
+#include "../query.h"
+#include "../task.h"
 
 class CountQuery : public ComplexQuery {
     static constexpr const char *qname = "COUNT";

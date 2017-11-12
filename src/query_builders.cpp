@@ -1,18 +1,20 @@
 #include "query_builders.h"
 #include "management_query.h"
-#include "query/load_table_query.h"
-#include "query/update_query.h"
-#include "query/delete_query.h"
-#include "query/duplicate_query.h"
-#include "query/select_query.h"
-#include "query/count_query.h"
-#include "query/insert_query.h"
-#include "query/swap_query.h"
-#include "query/min_query.h"
-#include "query/max_query.h"
-#include "query/add_query.h"
-#include "query/sub_query.h"
-#include "query/sum_query.h"
+#include "query/management/load_table_query.h"
+#include "query/management/truncate_query.h"
+#include "query/management/copy_table_query.h"
+#include "query/data/update_query.h"
+#include "query/data/delete_query.h"
+#include "query/data/duplicate_query.h"
+#include "query/data/select_query.h"
+#include "query/data/count_query.h"
+#include "query/data/insert_query.h"
+#include "query/data/swap_query.h"
+#include "query/data/min_query.h"
+#include "query/data/max_query.h"
+#include "query/data/add_query.h"
+#include "query/data/sub_query.h"
+#include "query/data/sum_query.h"
 #include <iostream>
 #include <iomanip>
 
@@ -48,7 +50,7 @@ Query::Ptr ManageTableQueryBuilder::tryExtractQuery
                     query.token[1], query.token[2]
             );
         if (query.token.front() == "COPYTABLE")
-            return std::make_unique<CopytableTableQuery>(query.token[1], query.token[2]);
+            return std::make_unique<CopyTableQuery>(query.token[1], query.token[2]);
     }
     return this->nextBuilder->tryExtractQuery(query);
 }

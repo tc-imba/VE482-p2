@@ -5,9 +5,8 @@
 #ifndef LEMONDB_SELECT_QUERY_H
 #define LEMONDB_SELECT_QUERY_H
 
-#include <algorithm>
-#include "query.h"
-#include "task.h"
+#include "../query.h"
+#include "../task.h"
 
 class SelectTask;
 

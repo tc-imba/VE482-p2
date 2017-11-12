@@ -2,38 +2,34 @@
 // Created by linzhi on 2017/11/7.
 //
 
-#include <algorithm>
-#include "sum_query.h"
-#include "../db/db.h"
-#include "../db/db_table.h"
-#include "../formatter.h"
+#include "swap_query.h"
 
-LEMONDB_TASK_PTR_IMPL(SumQuery, SumTask);
-constexpr const char *SumQuery::qname;
+#include "../../db/db.h"
+#include "../../db/db_table.h"
+#include "../../formatter.h"
 
-QueryResult::Ptr SumQuery::execute() {
+constexpr const char *SwapQuery::qname;
+
+QueryResult::Ptr SwapQuery::execute() {
     start();
     using namespace std;
-    if (this->operands.empty())
+    if (this->operands.size() != 2 || this->operands[0] == "KEY" || this->operands[1] == "KEY")
         return make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
                 "Invalid number of operands (? operands)."_f % operands.size()
         );
-
     Database &db = Database::getInstance();
     try {
         auto &table = db[this->targetTable];
-        for (const auto &operand : this->operands) {
-            if (operand == "KEY") {
-                return make_unique<ErrorMsgResult>(
-                        qname, this->targetTable.c_str(),
-                        "Cannot sum KEY!"
-                );
-            } else {
-                fieldsId.emplace_back(table.getFieldIndex(operand));
-            }
+        this->operand1 = table.getFieldIndex(this->operands[0]);
+        this->operand2 = table.getFieldIndex(this->operands[1]);
+        if (condition.empty()) {
+            auto counter = table.size();
+            table.swapField(this->operands[0], this->operands[1]);
+            complete(std::make_unique<RecordCountResult>(counter));
+            return make_unique<SuccessMsgResult>(qname);
         }
-        addIterationTask<SumTask>(db, table);
+        addIterationTask<SwapTask>(db, table);
         return make_unique<SuccessMsgResult>(qname);
     } catch (const TableNameNotFound &e) {
         return make_unique<ErrorMsgResult>(
@@ -59,11 +55,11 @@ QueryResult::Ptr SumQuery::execute() {
     }
 }
 
-std::string SumQuery::toString() {
-    return "QUERY = SUM " + this->targetTable + "\"";
+std::string SwapQuery::toString() {
+    return "QUERY = SWAP " + this->targetTable + "\"";
 }
 
-QueryResult::Ptr SumQuery::combine() {
+QueryResult::Ptr SwapQuery::combine() {
     using namespace std;
     if (taskComplete < tasks.size()) {
         return make_unique<ErrorMsgResult>(
@@ -71,27 +67,26 @@ QueryResult::Ptr SumQuery::combine() {
                 "Not completed yet."s
         );
     }
-    auto it = tasks.begin();
-    std::vector<Table::ValueType> fieldsSum(std::move(getTask(it)->fieldsSum));
-    for (++it; it != tasks.end(); ++it) {
-        auto numFields = fieldsId.size();
-        for (int i = 0; i < numFields; ++i) {
-            fieldsSum[i] += this->getTask(it)->fieldsSum[i];
-        }
+    Table::SizeType counter = 0;
+    for (auto &task:tasks) {
+        counter += task->getCounter();
     }
-    return make_unique<AnswerResult>(std::move(fieldsSum));
+    return make_unique<RecordCountResult>(counter);
 }
 
-void SumTask::execute() {
+#include <iostream>
+
+void SwapTask::execute() {
     auto query = getQuery();
     try {
-        auto numFields = query->fieldsId.size();
-        fieldsSum.insert(fieldsSum.end(), numFields, 0);
         for (auto it = begin; it != end; ++it) {
             if (query->evalCondition(query->getCondition(), *it)) {
-                for (int i = 0; i < numFields; ++i) {
-                    fieldsSum[i] += (*it)[query->fieldsId[i]];
-                }
+                //std::cerr << (*it)[query->operand1] << " " << (*it)[query->operand2] << std::endl;
+                std::swap((*it)[query->operand1], (*it)[query->operand2]);
+                /*Table::ValueType tmp((*it)[query->operand1]);
+                (*it)[query->operand1] = (*it)[query->operand2];
+                (*it)[query->operand2] = tmp;*/
+                ++counter;
             }
         }
         Task::execute();

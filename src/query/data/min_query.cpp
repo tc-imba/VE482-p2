@@ -1,19 +1,19 @@
-#include "add_query.h"
-#include "../db/db.h"
-#include "../db/db_table.h"
-#include "../formatter.h"
+#include "min_query.h"
+#include "../../db/db.h"
+#include "../../db/db_table.h"
+#include "../../formatter.h"
 
-LEMONDB_TASK_PTR_IMPL(AddQuery, AddTask);
-constexpr const char *AddQuery::qname;
+LEMONDB_TASK_PTR_IMPL(MinQuery, MinTask);
+constexpr const char *MinQuery::qname;
 
-QueryResult::Ptr AddQuery::execute() {
+QueryResult::Ptr MinQuery::execute() {
     start();
-	using namespace std;
-    if (this->operands.size() < 2)
-       return make_unique<ErrorMsgResult> (
-             qname, this->targetTable.c_str(),
-             "Invalid number of operands (? operands)."_f % operands.size()
-       );
+    using namespace std;
+    if (this->operands.empty())
+        return make_unique<ErrorMsgResult>(
+                qname, this->targetTable.c_str(),
+                "Invalid number of operands (? operands)."_f % operands.size()
+        );
     Database &db = Database::getInstance();
     try {
         auto &table = db[this->targetTable];
@@ -21,15 +21,16 @@ QueryResult::Ptr AddQuery::execute() {
             if (operand == "KEY") {
                 return make_unique<ErrorMsgResult>(
                         qname, this->targetTable.c_str(),
-                        "Cannot add KEY!"
+                        "Cannot compare KEY!"
                 );
             } else {
                 fieldsId.emplace_back(table.getFieldIndex(operand));
             }
         }
-        addIterationTask<AddTask>(db, table);
+        addIterationTask<MinTask>(db, table);
         return make_unique<SuccessMsgResult>(qname);
-    } catch (const TableNameNotFound &e) {
+    }
+    catch (const TableNameNotFound &e) {
         return make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
                 "No such table."s
@@ -53,11 +54,11 @@ QueryResult::Ptr AddQuery::execute() {
     }
 }
 
-std::string AddQuery::toString() {
-    return "QUERY = ADD" + this->targetTable + "\"";
+std::string MinQuery::toString() {
+    return "QUERY = MIN " + this->targetTable + "\"";
 }
 
-QueryResult::Ptr AddQuery::combine() {
+QueryResult::Ptr MinQuery::combine() {
     using namespace std;
     if (taskComplete < tasks.size()) {
         return make_unique<ErrorMsgResult>(
@@ -65,32 +66,30 @@ QueryResult::Ptr AddQuery::combine() {
                 "Not completed yet."s
         );
     }
-    Database &db = Database::getInstance();
-    auto &table = db[this->targetTable];
-    Table::SizeType counter = 0;
-    for (auto &task:tasks) {
-        counter += task->getCounter();
+    auto it = tasks.begin();
+    std::vector<Table::ValueType> fieldsMin(std::move(getTask(it)->fieldsMin));
+    for (++it; it != tasks.end(); ++it) {
+        auto numFields = fieldsId.size();
+        for (int i = 0; i < numFields; ++i) {
+            fieldsMin[i] = std::min(fieldsMin[i], this->getTask(it)->fieldsMin[i]);
+        }
     }
-    return make_unique<RecordCountResult>(counter);
+    return make_unique<AnswerResult>(std::move(fieldsMin));
 }
 
-
-void AddTask::execute() {
+void MinTask::execute() {
     auto query = getQuery();
     try {
-        auto numFields = query->fieldsId.size() - 1;
-        Table::ValueType sum;
-        for (auto it = begin; it != end; ++it) {
+        auto numFields = query->fieldsId.size();
+        fieldsMin.insert(fieldsMin.end(), numFields, Table::ValueTypeMax);
+        for (auto it = begin + 1; it != end; ++it) {
             if (query->evalCondition(query->getCondition(), *it)) {
-                sum=0;
                 for (int i = 0; i < numFields; ++i) {
-                    sum += (*it)[query->fieldsId[i]];
+                    fieldsMin[i] = std::min(fieldsMin[i], (*it)[query->fieldsId[i]]);
                 }
-                (*it)[query->fieldsId[numFields]] = sum;
-                counter++;
-            } 
+            }
         }
-       Task::execute();
+        Task::execute();
     } catch (const IllFormedQueryCondition &e) {
         return;
         // @TODO manage query exceptions later
@@ -100,3 +99,4 @@ void AddTask::execute() {
         );*/
     }
 }
+

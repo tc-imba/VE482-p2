@@ -4,9 +4,9 @@
 
 #include <algorithm>
 #include "select_query.h"
-#include "../db/db.h"
-#include "../db/db_table.h"
-#include "../formatter.h"
+#include "../../db/db.h"
+#include "../../db/db_table.h"
+#include "../../formatter.h"
 
 LEMONDB_TASK_PTR_IMPL(SelectQuery, SelectTask);
 constexpr const char *SelectQuery::qname;

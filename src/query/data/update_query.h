@@ -1,8 +1,8 @@
 #ifndef LEMONDB_UPDATE_QUERY_H
 #define LEMONDB_UPDATE_QUERY_H
 
-#include "query.h"
-#include "task.h"
+#include "../query.h"
+#include "../task.h"
 
 class UpdateQuery : public ComplexQuery {
     static constexpr const char *qname = "UPDATE";

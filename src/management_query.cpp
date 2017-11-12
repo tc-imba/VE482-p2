@@ -7,8 +7,6 @@
 constexpr const char *QuitQuery::qname;
 constexpr const char *DropTableQuery::qname;
 constexpr const char *DumpTableQuery::qname;
-constexpr const char* TruncateTableQuery::qname;
-constexpr const char* CopytableTableQuery::qname;
 constexpr const char *ListTableQuery::qname;
 constexpr const char *PrintTableQuery::qname;
 
@@ -101,50 +99,3 @@ std::string PrintTableQuery::toString() {
     return "QUERY = SHOWTABLE, Table = \"" + this->tableName + "\"";
 }
 
-QueryResult::Ptr TruncateTableQuery::execute() {
-    using namespace std;
-    Database& db = Database::getInstance();
-    try{
-        db[this->tableName].clear();
-        return make_unique<SuccessMsgResult>(
-                qname, tableName.c_str()
-        );
-    } catch (const TableNameNotFound& e) {
-        return make_unique<ErrorMsgResult>(
-                qname, this->tableName.c_str(),
-                "No such table."s
-        );
-    }  catch (const exception& e) {
-        return make_unique<ErrorMsgResult>(qname, e.what());
-    }
-}
-
-std::string TruncateTableQuery::toString() {
-    return "QUERY = TRUNCATE, Table = \"" + this->tableName + "\"";
-}
-
-QueryResult::Ptr CopytableTableQuery::execute() {
-    using namespace std;
-    Database& db = Database::getInstance();
-    try{
-        Table::Ptr table = nullptr;
-        table = make_unique<Table>(this->newTableName, db[this->tableName]);
-        db.registerTable(move(table));
-        return make_unique<SuccessMsgResult>(
-                qname, tableName.c_str()
-        );
-    } catch (const TableNameNotFound& e) {
-        return make_unique<ErrorMsgResult>(
-                qname, this->tableName.c_str(),
-                "No such table."s
-        );
-    }  catch (const exception& e) {
-        return make_unique<ErrorMsgResult>(qname, e.what());
-    }
-}
-
-std::string CopytableTableQuery::toString() {
-    return "QUERY = Copy TABLE, "
-                   "Table = \"" + this->tableName + "\", "
-                   "To Table = \"" + this->newTableName + "\"" ;
-}

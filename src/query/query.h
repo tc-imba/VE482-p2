@@ -38,6 +38,9 @@ protected:
      */
     std::atomic_int taskComplete{0};
 public:
+    TaskQuery() = default;
+    explicit TaskQuery(std::string targetTable) { this->targetTable = std::move(targetTable); }
+
     Task *getTask(size_t index) const { return tasks[index].get(); }
     Task *getTask(const std::vector<std::unique_ptr<Task> >::iterator &it) const { return it->get(); }
 
@@ -95,9 +98,9 @@ public:
     ComplexQuery(std::string targetTable,
                  std::vector<std::string> operands,
                  std::vector<QueryCondition> condition)
-            : operands(std::move(operands)),
+            : TaskQuery(std::move(targetTable)),
+              operands(std::move(operands)),
               condition(std::move(condition)) {
-        this->targetTable = std::move(targetTable);
     }
 
     const std::vector<std::string> &getOperands() const { return operands; }

@@ -1,15 +1,14 @@
-#include "sub_query.h"
-#include "../db/db.h"
-#include "../db/db_table.h"
-#include "../formatter.h"
+#include "update_query.h"
+#include "../../db/db.h"
+#include "../../db/db_table.h"
+#include "../../formatter.h"
 
-LEMONDB_TASK_PTR_IMPL(SubQuery, SubTask);
-constexpr const char *SubQuery::qname;
+constexpr const char *UpdateQuery::qname;
 
-QueryResult::Ptr SubQuery::execute() {
+QueryResult::Ptr UpdateQuery::execute() {
     start();
 	using namespace std;
-    if (this->operands.size() < 2)
+    if (this->operands.size() != 2)
        return make_unique<ErrorMsgResult> (
              qname, this->targetTable.c_str(),
              "Invalid number of operands (? operands)."_f % operands.size()
@@ -18,17 +17,7 @@ QueryResult::Ptr SubQuery::execute() {
     Table::SizeType counter = 0;
     try {
         auto &table = db[this->targetTable];
-        for (const auto &operand : this->operands) {
-            if (operand == "KEY") {
-                return make_unique<ErrorMsgResult>(
-                        qname, this->targetTable.c_str(),
-                        "Cannot subtract KEY!"
-                );
-            } else {
-                fieldsId.emplace_back(table.getFieldIndex(operand));
-            }
-        }
-        addIterationTask<SubTask>(db, table);
+        addIterationTask<UpdateTask>(db, table);
         return make_unique<RecordCountResult>(counter);
     } catch (const TableNameNotFound &e) {
         return make_unique<ErrorMsgResult>(
@@ -54,11 +43,11 @@ QueryResult::Ptr SubQuery::execute() {
     }
 }
 
-std::string SubQuery::toString() {
-    return "QUERY = SUB" + this->targetTable + "\"";
+std::string UpdateQuery::toString() {
+    return "QUERY = UPDATE " + this->targetTable + "\"";
 }
 
-QueryResult::Ptr SubQuery::combine() {
+QueryResult::Ptr UpdateQuery::combine() {
     using namespace std;
     if (taskComplete < tasks.size()) {
         return make_unique<ErrorMsgResult>(
@@ -76,20 +65,24 @@ QueryResult::Ptr SubQuery::combine() {
 }
 
 
-void SubTask::execute() {
+void UpdateTask::execute() {
     auto query = getQuery();
     try {
-        auto numFields = query->fieldsId.size() - 1;
-        Table::ValueType result;
-        for (auto it = begin; it != end; ++it) {
-            if (query->evalCondition(query->getCondition(), *it)) {
-                result = (*it)[query->fieldsId[0]];
-                for (int i = 1; i < numFields; ++i) {
-                    result -= (*it)[query->fieldsId[i]];
+        for (auto object : *table) {
+            if (query->evalCondition(query->getCondition(), object)) {
+                std::string fieldName = this->getQuery()->getFieldName();
+                if (fieldName == "KEY")
+                {
+                    object.setKey(this->getQuery()->getKey());
                 }
-                (*it)[query->fieldsId[numFields]] = result;
+                else 
+                {
+                    Table::ValueType newValue = this->getQuery()->getFieldValue();
+                    int index = table->getFieldIndex(fieldName);
+                    object[index]=newValue;
+                }
                 counter++;
-            }
+            } 
         }
        Task::execute();
     } catch (const IllFormedQueryCondition &e) {
@@ -101,3 +94,14 @@ void SubTask::execute() {
         );*/
     }
 }
+
+
+
+
+
+
+
+
+
+
+

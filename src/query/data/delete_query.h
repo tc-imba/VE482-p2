@@ -5,8 +5,8 @@
 #ifndef LEMONDB_DELETE_QUERY_H
 #define LEMONDB_DELETE_QUERY_H
 
-#include "query.h"
-#include "task.h"
+#include "../query.h"
+#include "../task.h"
 
 class DeleteQuery : public ComplexQuery {
     static constexpr const char *qname = "DELETE";

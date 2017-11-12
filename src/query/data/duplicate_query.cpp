@@ -3,9 +3,9 @@
 //
 
 #include "duplicate_query.h"
-#include "../db/db.h"
-#include "../db/db_table.h"
-#include "../formatter.h"
+#include "../../db/db.h"
+#include "../../db/db_table.h"
+#include "../../formatter.h"
 
 constexpr const char *DuplicateQuery::qname;
 
