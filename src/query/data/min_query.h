@@ -16,7 +16,7 @@ public:
     using ComplexQuery::ComplexQuery;
     QueryResult::Ptr execute() override;
     std::string toString() override;
-    QueryResult::Ptr combine() override;
+    QueryResult::Ptr combine(int taskComplete) override;
 	friend class MinTask;
 };
 

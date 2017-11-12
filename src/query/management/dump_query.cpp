@@ -22,7 +22,7 @@ QueryResult::Ptr DumpTableQuery::execute() {
     return std::make_unique<SuccessMsgResult>(qname);
 }
 
-QueryResult::Ptr DumpTableQuery::combine() {
+QueryResult::Ptr DumpTableQuery::combine(int taskComplete) {
     //std::cerr << "Complete " << toString() << std::endl;
     return std::make_unique<SuccessMsgResult>(qname);
 }

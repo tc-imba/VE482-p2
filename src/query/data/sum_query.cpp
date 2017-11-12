@@ -33,6 +33,17 @@ QueryResult::Ptr SumQuery::execute() {
                 fieldsId.emplace_back(table.getFieldIndex(operand));
             }
         }
+/*        if (testKeyCondition(table, [&table, this](bool flag, Table::Object::Ptr &&object) {
+            std::vector<Table::ValueType> fieldsSum(fieldsId.size(), 0);
+            if (flag) {
+                for (int i = 0; i < fieldsId.size(); ++i) {
+                    fieldsSum[i] = (*object)[fieldsId[i]];
+                }
+            }
+            complete(std::make_unique<AnswerResult>(std::move(fieldsSum)));
+        })) {
+            return make_unique<NullQueryResult>();
+        }*/
         auto result = initConditionFast(table);
         if (!result.second) {
             std::vector<Table::ValueType> fieldsSum(fieldsId.size(), 0);
@@ -69,9 +80,9 @@ std::string SumQuery::toString() {
     return "QUERY = SUM " + this->targetTable + "\"";
 }
 
-QueryResult::Ptr SumQuery::combine() {
+QueryResult::Ptr SumQuery::combine(int taskComplete) {
     using namespace std;
-    if (taskComplete < tasks.size()) {
+    if (taskComplete < tasksSize - 1) {
         return make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
                 "Not completed yet."s
@@ -82,8 +93,10 @@ QueryResult::Ptr SumQuery::combine() {
     for (++it; it != tasks.end(); ++it) {
         auto numFields = fieldsId.size();
         for (int i = 0; i < numFields; ++i) {
+            //fprintf(stderr, "%d ", this->getTask(it)->fieldsSum[i]);
             fieldsSum[i] += this->getTask(it)->fieldsSum[i];
         }
+        //fprintf(stderr, "\n");
     }
     return make_unique<AnswerResult>(std::move(fieldsSum));
 }

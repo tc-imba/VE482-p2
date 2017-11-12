@@ -79,9 +79,9 @@ std::string SubQuery::toString() {
     return "QUERY = SUB " + this->targetTable + "\"";
 }
 
-QueryResult::Ptr SubQuery::combine() {
+QueryResult::Ptr SubQuery::combine(int taskComplete) {
     using namespace std;
-    if (taskComplete < tasks.size()) {
+    if (taskComplete < tasksSize - 1) {
         return make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
                 "Not completed yet."s

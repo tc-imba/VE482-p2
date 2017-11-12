@@ -21,7 +21,7 @@ QueryResult::Ptr CountQuery::execute() {
             complete(std::make_unique<AnswerResult>(counter));
             return make_unique<NullQueryResult>();
         }
-/*        if (testKeyCondition(table, [&table, this](bool flag, Table::Object::Ptr &&object){
+        /*if (testKeyCondition(table, [&table, this](bool flag, Table::Object::Ptr &&object){
             if (flag) {
                 complete(std::make_unique<AnswerResult>(1));
             } else {
@@ -65,9 +65,9 @@ std::string CountQuery::toString() {
     return "QUERY = COUNT " + this->targetTable + "\"";
 }
 
-QueryResult::Ptr CountQuery::combine() {
+QueryResult::Ptr CountQuery::combine(int taskComplete) {
     using namespace std;
-    if (taskComplete < tasks.size()) {
+    if (taskComplete < tasksSize - 1) {
         return make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
                 "Not completed yet."s

@@ -64,9 +64,9 @@ std::string SwapQuery::toString() {
     return "QUERY = SWAP " + this->targetTable + "\"";
 }
 
-QueryResult::Ptr SwapQuery::combine() {
+QueryResult::Ptr SwapQuery::combine(int taskComplete) {
     using namespace std;
-    if (taskComplete < tasks.size()) {
+    if (taskComplete < tasksSize - 1) {
         return make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
                 "Not completed yet."s

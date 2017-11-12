@@ -67,9 +67,9 @@ std::string DeleteQuery::toString() {
     return "QUERY = DELETE " + this->targetTable + "\"";
 }
 
-QueryResult::Ptr DeleteQuery::combine() {
+QueryResult::Ptr DeleteQuery::combine(int taskComplete) {
     using namespace std;
-    if (taskComplete < tasks.size()) {
+    if (taskComplete < tasksSize - 1) {
         return std::make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
                 "Not completed yet."s

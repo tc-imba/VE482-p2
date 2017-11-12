@@ -50,7 +50,7 @@ std::string InsertQuery::toString() {
     return "QUERY = INSERT " + this->targetTable + "\"";
 }
 
-QueryResult::Ptr InsertQuery::combine() {
+QueryResult::Ptr InsertQuery::combine(int taskComplete) {
     //fprintf(stderr, "Complete %d\n", getId());
     return std::make_unique<SuccessMsgResult>(qname);
 }

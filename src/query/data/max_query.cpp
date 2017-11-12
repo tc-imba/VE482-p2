@@ -27,6 +27,19 @@ QueryResult::Ptr MaxQuery::execute() {
                 fieldsId.emplace_back(table.getFieldIndex(operand));
             }
         }
+/*        if (testKeyCondition(table, [&table, this](bool flag, Table::Object::Ptr &&object) {
+            if (flag) {
+                std::vector<Table::ValueType> fieldsMax(fieldsId.size());
+                for (int i = 0; i < fieldsId.size(); ++i) {
+                    fieldsMax[i] = (*object)[fieldsId[i]];
+                }
+                complete(std::make_unique<AnswerResult>(std::move(fieldsMax)));
+            } else {
+                complete(std::make_unique<NullQueryResult>());
+            }
+        })) {
+            return make_unique<NullQueryResult>();
+        }*/
         auto result = initConditionFast(table);
         if (!result.second) {
             complete(std::make_unique<NullQueryResult>());
@@ -63,9 +76,9 @@ std::string MaxQuery::toString() {
     return "QUERY = MAX " + this->targetTable + "\"";
 }
 
-QueryResult::Ptr MaxQuery::combine() {
+QueryResult::Ptr MaxQuery::combine(int taskComplete) {
     using namespace std;
-    if (taskComplete < tasks.size()) {
+    if (taskComplete < tasksSize - 1) {
         return make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
                 "Not completed yet."s

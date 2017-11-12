@@ -14,7 +14,7 @@ public:
     using ComplexQuery::ComplexQuery;
     QueryResult::Ptr execute() override;
     std::string toString() override;
-    QueryResult::Ptr combine() override;
+    QueryResult::Ptr combine(int taskComplete) override;
     //Table::ValueType getFieldValue() { return fieldValue; }
     //std::string getFieldName() {return operands[0];}
     //std::string getKey() {return operands[1];}

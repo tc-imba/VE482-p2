@@ -17,7 +17,7 @@ public:
     : TaskQuery(std::move(table)), fileName(std::move(filename)) {}
     QueryResult::Ptr execute() override;
     std::string toString() override;
-    QueryResult::Ptr combine() override;
+    QueryResult::Ptr combine(int taskComplete) override;
     friend class DumpTableTask;
 };
 

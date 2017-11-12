@@ -95,9 +95,6 @@ private:
     std::vector<FieldNameType> fields;
     /** Map field name into index */
     std::unordered_map<FieldNameType, FieldIndex> fieldMap;
-    //std::vector<FieldIndex> fieldIndexMap;
-    /** Defined by tripack, seems to be used to speed up processing */
-    //const Datum blankDatum;
 
     /** The rows are saved in a vector, which is unsorted */
     std::vector<Datum> data;
@@ -112,34 +109,6 @@ private:
 
 public:
     typedef std::unique_ptr<Table> Ptr;
-
-    /**
-     * This class is for tasks of queries to store their results, and to combine
-     */
-    class resultArray {
-
-    private:
-        std::vector<Datum> results;
-
-    public:
-
-        void push_back(const KeyType &key, std::vector<ValueType> &&datum) {
-            results.emplace_back(Datum(key, datum));
-        }
-
-        static bool comp(const Datum &a, const Datum &b) {
-            return a.key < b.key;
-        }
-
-        decltype(results.begin()) begin() { return results.begin(); }
-
-        decltype(results.begin()) end() { return results.end(); }
-
-        std::vector<Datum>::iterator
-        insert(std::vector<Datum>::iterator pos, std::vector<Datum>::iterator begin, std::vector<Datum>::iterator end) {
-            return results.insert(pos, begin, end);
-        }
-    };
 
     /**
      * A proxy class that provides abstraction on internal
@@ -329,7 +298,6 @@ public:
     void copy(const Table &origin) {
         fields = origin.fields;
         fieldMap = origin.fieldMap;
-        //fieldIndexMap = origin.fieldIndexMap;
         data = origin.data;
         keyMap = origin.keyMap;
         initialized = true;
@@ -339,7 +307,6 @@ public:
         queryQueueCounter = 0;
         fields.clear();
         fieldMap.clear();
-        //fieldIndexMap.clear();
         data.clear();
         keyMap.clear();
         initialized = false;
@@ -356,31 +323,6 @@ public:
             );
         }
     }
-
-/*    FieldIndex getFieldIndex(const FieldIndex &oldIndex) const {
-        try {
-            return fieldIndexMap.at(oldIndex);
-        } catch (const std::out_of_range &e) {
-            throw TableFieldNotFound(
-                    R"(Field id "?" doesn't exists.)"_f % (oldIndex)
-            );
-        }
-    }*/
-
-/*    FieldIndex addField(const FieldNameType &field) {
-        auto it = fieldMap.find(field);
-        if (it == fieldMap.end()) {
-            auto index = fields.size();
-            fields.emplace_back(field);
-            fieldMap.emplace(field, index);
-            return index;
-        } else {
-            return it->second;
-        }
-    }*/
-
-    template<class AssocContainer>
-    void insert(KeyType key, const AssocContainer &data) = delete;
 
     template<class ValueTypeContainer>
     void insertByIndex(KeyType key, const ValueTypeContainer &data);
@@ -451,30 +393,17 @@ public:
     }
 
     /**
-     * Swap two fields of the whole table
-     * No exception
-     */
-    /*void swapField(const Table::FieldNameType &field1, const Table::FieldNameType &field2) noexcept {
-        if (field1 == field2) return;
-        auto it1 = fieldMap.find(field1);
-        auto it2 = fieldMap.find(field2);
-        if (it1 != fieldMap.end() && it2 != fieldMap.end()) {
-            //std::swap(fieldIndexMap[it1->second], fieldIndexMap[it2->second]);
-            std::swap(it1->second, it2->second);
-        }
-    }*/
-
-    /**
      * Duplicate it and put it into dataNew
      * if {key}_copy exists, nothing happens
      * this function is used only in duplicate query
      */
     bool duplicate(Iterator &it) {
         auto key = it->key() + "_copy";
+        dataNewMutex.lock();
         if (keyMap.find(key) != keyMap.end()) {
+            dataNewMutex.unlock();
             return false;
         }
-        dataNewMutex.lock();
         dataNew.emplace_back(key, it->it->datum);
         dataNewMutex.unlock();
         return true;

@@ -55,9 +55,9 @@ std::string DuplicateQuery::toString() {
     return "QUERY = DUPLICATE " + this->targetTable + "\"";
 }
 
-QueryResult::Ptr DuplicateQuery::combine() {
+QueryResult::Ptr DuplicateQuery::combine(int taskComplete) {
     using namespace std;
-    if (taskComplete < tasks.size()) {
+    if (taskComplete < tasksSize - 1) {
         return make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
                 "Not completed yet."s

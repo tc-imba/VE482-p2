@@ -29,7 +29,7 @@ public:
     virtual QueryResult::Ptr execute() = 0;
     virtual std::string toString() = 0;
 
-    virtual QueryResult::Ptr combine() {
+    virtual QueryResult::Ptr combine(int taskComplete) {
         return nullptr;
     };
 

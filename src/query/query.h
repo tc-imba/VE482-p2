@@ -33,6 +33,7 @@ public:
 class TaskQuery : public Query {
 protected:
     std::vector<std::unique_ptr<Task> > tasks;
+    size_t tasksSize = 1;
     std::mutex tasksMutex;
     /**
      * Count the completed tasks
@@ -57,22 +58,27 @@ public:
         decltype(begin) end;
         auto size = table.size();
         tasksMutex.lock();
+        const int part = 10000;
         if (size == 0) {
             auto task = std::unique_ptr<Task>(new TaskType(this, &table, begin, begin));
-            db.addTask(task.get());
+            auto t = task.get();
             tasks.emplace_back(std::move(task));
+            db.addTask(t);
         } else {
+            tasksSize = (size - 1) / part + 1;
             while (size > 0) {
-                if (size >= 100000) {
-                    size -= 100000;
-                    end = begin + 100000;
+                if (size >= part) {
+                    size -= part;
+                    end = begin + part;
                 } else {
                     size = 0;
                     end = table.end();
                 }
                 auto task = std::unique_ptr<Task>(new TaskType(this, &table, begin, end));
-                db.addTask(task.get());
+                begin = end;
+                auto t = task.get();
                 tasks.emplace_back(std::move(task));
+                db.addTask(t);
             }
         }
         tasksMutex.unlock();
@@ -81,8 +87,9 @@ public:
     template<class TaskType>
     void addUniqueTask(Database &db, Table *table = nullptr) {
         auto task = std::unique_ptr<Task>(new TaskType(this, table));
-        db.addTask(task.get());
+        auto t = task.get();
         tasks.emplace_back(std::move(task));
+        db.addTask(t);
     }
 };
 

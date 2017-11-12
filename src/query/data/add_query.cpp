@@ -79,9 +79,9 @@ std::string AddQuery::toString() {
     return "QUERY = ADD" + this->targetTable + "\"";
 }
 
-QueryResult::Ptr AddQuery::combine() {
+QueryResult::Ptr AddQuery::combine(int taskComplete) {
     using namespace std;
-    if (taskComplete < tasks.size()) {
+    if (taskComplete < tasksSize - 1) {
         return make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
                 "Not completed yet."s
