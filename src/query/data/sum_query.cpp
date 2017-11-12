@@ -33,6 +33,12 @@ QueryResult::Ptr SumQuery::execute() {
                 fieldsId.emplace_back(table.getFieldIndex(operand));
             }
         }
+        auto result = initConditionFast(table);
+        if (!result.second) {
+            std::vector<Table::ValueType> fieldsSum(fieldsId.size(), 0);
+            complete(std::make_unique<AnswerResult>(std::move(fieldsSum)));
+            return make_unique<NullQueryResult>();
+        }
         addIterationTask<SumTask>(db, table);
         return make_unique<SuccessMsgResult>(qname);
     } catch (const TableNameNotFound &e) {
@@ -88,7 +94,7 @@ void SumTask::execute() {
         auto numFields = query->fieldsId.size();
         fieldsSum.insert(fieldsSum.end(), numFields, 0);
         for (auto it = begin; it != end; ++it) {
-            if (query->evalCondition(query->getCondition(), *it)) {
+            if (query->evalConditionFast(*it)) {
                 for (int i = 0; i < numFields; ++i) {
                     fieldsSum[i] += (*it)[query->fieldsId[i]];
                 }

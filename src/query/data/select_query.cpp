@@ -25,11 +25,12 @@ QueryResult::Ptr SelectQuery::execute() {
         for (auto it = ++operands.begin(); it != operands.end(); ++it) {
             fieldsId.emplace_back(table.getFieldIndex(*it));
         }
+        auto result = initConditionFast(table);
+        if (!result.second) {
+            complete(std::make_unique<NullQueryResult>());
+            return make_unique<NullQueryResult>();
+        }
         addIterationTask<SelectTask>(db, table);
-        /*for (int i = 0; i < tasks.size(); ++i) {
-            taskResults.emplace_back();
-            taskToIndex.insert({tasks[i].get(),i});
-        }*/
         return make_unique<SuccessMsgResult>("");
     } catch (const TableNameNotFound &e) {
         return make_unique<ErrorMsgResult>(
@@ -88,7 +89,7 @@ void SelectTask::execute() {
     auto query = getQuery();
     try {
         for (auto it = begin; it != end; ++it) {
-            if (query->evalCondition(query->getCondition(), *it)) {
+            if (query->evalConditionFast(*it)) {
                 std::vector<Table::ValueType> tuple;
                 for (auto &index:query->fieldsId) {
                     tuple.emplace_back((*it)[index]);

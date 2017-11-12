@@ -27,6 +27,28 @@ QueryResult::Ptr SubQuery::execute() {
                 fieldsId.emplace_back(table.getFieldIndex(operand));
             }
         }
+/*        if (testKeyCondition(table, [&table, this](bool flag, Table::Object::Ptr &&object) {
+            if (flag) {
+                auto itId = fieldsId.begin();
+                auto result = (*object)[*itId];
+                for (++itId; itId != fieldsId.end() - 1; ++itId) {
+                    result -= (*object)[*itId];
+                }
+                auto destId = fieldsId.back();
+                (*object)[destId] = result;
+                table.eraseUnique(std::move(object));
+                complete(std::make_unique<RecordCountResult>(1));
+            } else {
+                complete(std::make_unique<RecordCountResult>(0));
+            }
+        })) {
+            return make_unique<NullQueryResult>();
+        }*/
+        auto result = initConditionFast(table);
+        if (!result.second) {
+            complete(std::make_unique<RecordCountResult>(0));
+            return make_unique<NullQueryResult>();
+        }
         addIterationTask<SubTask>(db, table);
         return make_unique<SuccessMsgResult>(qname);
     } catch (const TableNameNotFound &e) {
@@ -80,7 +102,7 @@ void SubTask::execute() {
     try {
         auto destId = query->fieldsId.back();
         for (auto it = begin; it != end; ++it) {
-            if (query->evalCondition(query->getCondition(), *it)) {
+            if (query->evalConditionFast(*it)) {
                 auto itId = query->fieldsId.begin();
                 auto result = (*it)[*itId];
                 for (++itId; itId != query->fieldsId.end() - 1; ++itId) {

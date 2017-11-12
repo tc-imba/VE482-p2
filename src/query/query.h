@@ -12,8 +12,11 @@
 
 struct QueryCondition {
     std::string field;
+    size_t fieldId;
     std::string op;
+    std::function<bool(const Table::ValueType &, const Table::ValueType &)> comp;
     std::string value;
+    Table::ValueType valueParsed;
 };
 
 class NopQuery : public Query {
@@ -92,6 +95,27 @@ public:
     bool evalCondition(const std::vector<QueryCondition> &conditions,
                        const Table::Object &object);
 
+    /**
+     * init a fast condition according to the table
+     * note that the condition is only effective if the table fields are not changed
+     * @param table
+     * @param conditions
+     * @return a pair of the key and a flag
+     * if flag is false, the condition is always false
+     * in this situation, the condition may not be fully initialized to save time
+     */
+    std::pair<std::string, bool> initConditionFast(const Table &table);
+
+    /**
+     * skip the evaluation of KEY
+     * (which should be done after initConditionFast is called)
+     * @param conditions
+     * @param object
+     * @return
+     */
+    bool evalConditionFast(const Table::Object &object);
+
+    bool testKeyCondition(Table &table, std::function<void(bool, Table::Object::Ptr &&)> function);
 
     typedef std::unique_ptr<ComplexQuery> Ptr;
 

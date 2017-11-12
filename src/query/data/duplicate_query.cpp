@@ -20,6 +20,11 @@ QueryResult::Ptr DuplicateQuery::execute() {
     Database &db = Database::getInstance();
     try {
         auto &table = db[this->targetTable];
+        auto result = initConditionFast(table);
+        if (!result.second) {
+            complete(std::make_unique<RecordCountResult>(0));
+            return make_unique<NullQueryResult>();
+        }
         addIterationTask<DuplicateTask>(db, table);
         return make_unique<SuccessMsgResult>(qname);
     } catch (const TableNameNotFound &e) {
@@ -72,7 +77,7 @@ void DuplicateTask::execute() {
     auto query = getQuery();
     try {
         for (auto it = begin; it != end; ++it) {
-            if (query->evalCondition(query->getCondition(), *it)) {
+            if (query->evalConditionFast(*it)) {
                 if (table->duplicate(it)) {
                     ++counter;
                 }

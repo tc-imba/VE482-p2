@@ -23,6 +23,11 @@ QueryResult::Ptr UpdateQuery::execute() {
             fieldId = table.getFieldIndex(operands[0]);
             fieldValue = strtol(operands[1].c_str(), NULL, 10);
         }
+        auto result = initConditionFast(table);
+        if (!result.second) {
+            complete(std::make_unique<RecordCountResult>(0));
+            return make_unique<NullQueryResult>();
+        }
         addIterationTask<UpdateTask>(db, table);
         return make_unique<RecordCountResult>(counter);
     } catch (const TableNameNotFound &e) {
@@ -75,7 +80,7 @@ void UpdateTask::execute() {
     auto query = getQuery();
     try {
         for (auto it = begin; it != end; ++it) {
-            if (query->evalCondition(query->getCondition(), *it)) {
+            if (query->evalConditionFast(*it)) {
                 if (query->keyValue.empty()) {
                     (*it)[query->fieldId] = query->fieldValue;
                 } else {

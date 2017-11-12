@@ -20,7 +20,22 @@ QueryResult::Ptr DeleteQuery::execute() {
         if (condition.empty()) {
             auto counter = table.clear();
             complete(std::make_unique<RecordCountResult>(counter));
-            return make_unique<SuccessMsgResult>(qname);
+            return make_unique<NullQueryResult>();
+        }
+/*        if (testKeyCondition(table, [&table, this](bool flag, Table::Object::Ptr &&object){
+            if (flag) {
+                table.eraseUnique(std::move(object));
+                complete(std::make_unique<RecordCountResult>(1));
+            } else {
+                complete(std::make_unique<RecordCountResult>(0));
+            }
+        })) {
+            return make_unique<NullQueryResult>();
+        }*/
+        auto result = initConditionFast(table);
+        if (!result.second) {
+            complete(std::make_unique<RecordCountResult>(0));
+            return make_unique<NullQueryResult>();
         }
         addIterationTask<DeleteTask>(db, table);
         return make_unique<SuccessMsgResult>(qname);
@@ -74,7 +89,7 @@ void DeleteTask::execute() {
     auto query = getQuery();
     try {
         for (auto it = begin; it != end; ++it) {
-            if (query->evalCondition(query->getCondition(), *it)) {
+            if (query->evalConditionFast(*it)) {
                 table->erase(it);
                 counter++;
             } else {

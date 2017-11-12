@@ -401,6 +401,18 @@ public:
     }
 
     /**
+     * not thread safe function
+     * Remove only one datum
+     * only used when delete by key
+     * @param it
+     */
+    void eraseUnique(Object::Ptr &&object) {
+        auto pair = keyMap.find(object->it->key);
+        data.erase(data.begin() + pair->second);
+        keyMap.erase(pair);
+    }
+
+    /**
      * thread safe function
      * Erase the key in the table
      * Caution: this function only erases the key in keyMap, leaves data unchanged
@@ -632,10 +644,9 @@ void Table::insertByIndex(KeyType key, const ValueTypeContainer &data) {
                           + "\" : Key \"" + key + "\" already exists!";
         throw ConflictingKey(err);
     }
-    auto size = this->data.size();
+    this->keyMap.emplace(key, this->data.size());
     this->data.emplace_back(key, data);
     //this->keySet.insert(key);
-    this->keyMap.emplace(key, size);
 }
 
 Table &loadTableFromStream(std::istream &is, std::string source = "");

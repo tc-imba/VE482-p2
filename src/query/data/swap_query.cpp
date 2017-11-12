@@ -29,6 +29,11 @@ QueryResult::Ptr SwapQuery::execute() {
             complete(std::make_unique<RecordCountResult>(counter));
             return make_unique<SuccessMsgResult>(qname);
         }*/
+        auto result = initConditionFast(table);
+        if (!result.second) {
+            complete(std::make_unique<RecordCountResult>(0));
+            return make_unique<NullQueryResult>();
+        }
         addIterationTask<SwapTask>(db, table);
         return make_unique<SuccessMsgResult>(qname);
     } catch (const TableNameNotFound &e) {
@@ -80,7 +85,7 @@ void SwapTask::execute() {
     auto query = getQuery();
     try {
         for (auto it = begin; it != end; ++it) {
-            if (query->evalCondition(query->getCondition(), *it)) {
+            if (query->evalConditionFast(*it)) {
                 //std::cerr << (*it)[query->operand1] << " " << (*it)[query->operand2] << std::endl;
                 std::swap((*it)[query->operand1], (*it)[query->operand2]);
                 /*Table::ValueType tmp((*it)[query->operand1]);
