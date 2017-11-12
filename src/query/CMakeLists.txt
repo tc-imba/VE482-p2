@@ -26,6 +26,6 @@ set(SOURCE_FILES
         data/sum_query.cpp data/sum_query.h #ok
         data/min_query.cpp data/min_query.h #ok
         data/max_query.cpp data/max_query.h #ok
-        )
+        management/drop_query.h management/drop_query.cpp management/dump_query.h management/dump_query.cpp)
 
 add_library(lemondb_query_lib ${SOURCE_FILES})
