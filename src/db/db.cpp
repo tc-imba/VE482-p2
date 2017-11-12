@@ -5,13 +5,13 @@
 std::unique_ptr<Database> Database::instance = nullptr;
 
 void Database::threadWork(Database *db) {
-    fprintf(stderr, "Start thread %lu\n", std::this_thread::get_id());
+    //fprintf(stderr, "Start thread %lu\n", std::this_thread::get_id());
     while (true) {
         db->tasksMutex.lock();
         if (db->tasks.empty()) {
             db->tasksMutex.unlock();
             if (db->readyExit) {
-                fprintf(stderr, "Terminate thread %lu\n", std::this_thread::get_id());
+                //fprintf(stderr, "Terminate thread %lu\n", std::this_thread::get_id());
                 //std::terminate();
                 return;
             }
@@ -130,7 +130,8 @@ void Database::completeQuery() {
     for (auto it = results.begin() + resultNow; it != results.end() && it->second != nullptr; ++it) {
         // SuccessMsgResult should not output
         if (typeid(*(it->second)) == typeid(SuccessMsgResult)) {
-            std::cerr << it->second->toString() << std::endl;
+            //std::cout.flush();
+            //std::cerr << it->second->toString() << std::endl;
         } else {
             std::cout << it->second->toString() << std::endl;
         }

@@ -6,7 +6,7 @@
 constexpr const char *CountQuery::qname;
 
 QueryResult::Ptr CountQuery::execute() {
-
+    start();
     using namespace std;
     if (!this->operands.empty())
         return make_unique<ErrorMsgResult>(
@@ -17,7 +17,7 @@ QueryResult::Ptr CountQuery::execute() {
     try {
         auto &table = db[this->targetTable];
         if (condition.empty()) {
-            auto counter = table.clear();
+            auto counter = table.size();
             complete(std::make_unique<AnswerResult>(counter));
             return make_unique<SuccessMsgResult>(qname);
         }

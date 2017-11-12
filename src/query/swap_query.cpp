@@ -11,6 +11,7 @@
 constexpr const char *SwapQuery::qname;
 
 QueryResult::Ptr SwapQuery::execute() {
+    start();
     using namespace std;
     if (this->operands.size() != 2 || this->operands[0] == "KEY" || this->operands[1] == "KEY")
         return make_unique<ErrorMsgResult>(
@@ -18,13 +19,18 @@ QueryResult::Ptr SwapQuery::execute() {
                 "Invalid number of operands (? operands)."_f % operands.size()
         );
     Database &db = Database::getInstance();
-    Table::SizeType counter = 0;
     try {
         auto &table = db[this->targetTable];
         this->operand1 = table.getFieldIndex(this->operands[0]);
         this->operand2 = table.getFieldIndex(this->operands[1]);
+        if (condition.empty()) {
+            auto counter = table.size();
+            table.swapField(this->operands[0], this->operands[1]);
+            complete(std::make_unique<RecordCountResult>(counter));
+            return make_unique<SuccessMsgResult>(qname);
+        }
         addIterationTask<SwapTask>(db, table);
-        return make_unique<RecordCountResult>(counter);
+        return make_unique<SuccessMsgResult>(qname);
     } catch (const TableNameNotFound &e) {
         return make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),
@@ -68,15 +74,19 @@ QueryResult::Ptr SwapQuery::combine() {
     return make_unique<RecordCountResult>(counter);
 }
 
+#include <iostream>
+
 void SwapTask::execute() {
     auto query = getQuery();
     try {
         for (auto it = begin; it != end; ++it) {
             if (query->evalCondition(query->getCondition(), *it)) {
-                Table::ValueType tmp((*it)[query->operand1]);
+                //std::cerr << (*it)[query->operand1] << " " << (*it)[query->operand2] << std::endl;
+                std::swap((*it)[query->operand1], (*it)[query->operand2]);
+                /*Table::ValueType tmp((*it)[query->operand1]);
                 (*it)[query->operand1] = (*it)[query->operand2];
-                (*it)[query->operand2] = tmp;
-                counter++;
+                (*it)[query->operand2] = tmp;*/
+                ++counter;
             }
         }
         Task::execute();

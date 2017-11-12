@@ -13,6 +13,7 @@
 #include <mutex>
 #include <atomic>
 #include <limits>
+#include <algorithm>
 
 #include "../uexception.h"
 #include "../formatter.h"
@@ -104,11 +105,14 @@ private:
     //std::unordered_set<KeyType> keySet;
     /** Used to keep the keys unique and provide O(1) access with key */
     std::unordered_map<KeyType, std::vector<Datum>::iterator> keyMap;
+    /** Only erase should ve locked by this */
+    //std::mutex keyMapMutex;
     /** The name of table */
     std::string tableName;
 
 public:
     typedef std::unique_ptr<Table> Ptr;
+
     /**
      * This class is for tasks of queries to store their results, and to combine
      */
@@ -119,11 +123,11 @@ public:
 
     public:
 
-        void push_back (const KeyType &key, std::vector<ValueType> &&datum) {
+        void push_back(const KeyType &key, std::vector<ValueType> &&datum) {
             results.emplace_back(Datum(key, datum));
         }
 
-        static bool comp (const Datum &a, const Datum &b) {
+        static bool comp(const Datum &a, const Datum &b) {
             return a.key < b.key;
         }
 
@@ -131,7 +135,8 @@ public:
 
         decltype(results.begin()) end() { return results.end(); }
 
-        std::vector<Datum>::iterator insert (std::vector<Datum>::iterator pos, std::vector<Datum>::iterator begin, std::vector<Datum>::iterator end) {
+        std::vector<Datum>::iterator
+        insert(std::vector<Datum>::iterator pos, std::vector<Datum>::iterator begin, std::vector<Datum>::iterator end) {
             return results.insert(pos, begin, end);
         }
     };
@@ -315,13 +320,6 @@ public:
     template<class FieldIDContainer>
     void init(const FieldIDContainer &fields);
 
-    /**
-     * init the table from the input file
-     * @param infile
-     * @param source
-     */
-    void initFromStream(std::istream &infile, std::string source = "");
-
     Table(std::string name, const Table &origin) :
             fields(origin.fields), tableName(std::move(name)),
             keyMap(origin.keyMap), data(origin.data) {}
@@ -360,16 +358,20 @@ public:
     }
 
     /**
+     * thread safe function
      * Erase the key in the table
      * Caution: this function only erases the key in keyMap, leaves data unchanged
      * no other operation related to keyMap can be applied before swapData is called
      * @param it
      */
     void erase(const Iterator &it) {
-        this->keyMap.erase(it.it->key);
+        dataNewMutex.lock();
+        keyMap.erase(it.it->key);
+        dataNewMutex.unlock();
     }
 
     /**
+     * thread safe function
      * Move datum from data to dataNew
      * Caution: iterator it can't be accessed again after move() is called
      * no other operation related to keyMap can be applied before swapData is called
@@ -378,11 +380,12 @@ public:
     void move(Iterator &it) {
         dataNewMutex.lock();
         keyMap.at(it.it->key) = dataNew.end();
-        dataNew.push_back(std::move(*(it.it)));
+        dataNew.emplace_back(std::move(*(it.it)));
         dataNewMutex.unlock();
     }
 
     /**
+     * not thread safe function
      * Swap data and newData
      * vector::clear ensures that the capacity of dataNew unchanged
      * so push_back to dataNew is efficient
@@ -393,14 +396,32 @@ public:
     }
 
     /**
+     * Swap two fields of the whole table
+     * No exception
+     */
+    void swapField(const Table::FieldNameType &field1, const Table::FieldNameType &field2) noexcept {
+        if (field1 == field2) return;
+        auto it1 = fieldMap.find(field1);
+        auto it2 = fieldMap.find(field2);
+        if (it1 != fieldMap.end() && it2 != fieldMap.end()) {
+            std::swap(it1->second, it2->second);
+        }
+    }
+
+    /**
      * Duplicate it and put it into dataNew
-     * new key is oldkey_copy, datum is identical
+     * if {key}_copy exists, nothing happens
      * this function is used only in duplicate query
      */
-    void duplicate(Iterator &it) {
+    bool duplicate(Iterator &it) {
+        auto key = it->key() + "_copy";
+        if (keyMap.find(key) != keyMap.end()) {
+            return false;
+        }
         dataNewMutex.lock();
-        dataNew.push_back(Datum((*it).key() + "_copy", (*it).it->datum));
+        dataNew.emplace_back(key, it->it->datum);
         dataNewMutex.unlock();
+        return true;
     }
 
     /**
@@ -409,7 +430,10 @@ public:
      * this function is used only in duplicate query
      */
     void mergeData() {
-        data.insert(data.end(), dataNew.begin(), dataNew.end());
+        std::for_each(dataNew.begin(), dataNew.end(), [this](Datum &datum) {
+            keyMap.emplace(datum.key, data.end());
+            data.emplace_back(std::move(datum));
+        });
         dataNew.clear();
     }
 
@@ -493,7 +517,7 @@ private:
      * only push_back, pop_front and splice with forward iterator should be used
      * std::queue is not used because it doesn't support iterator
      */
-    std::list<Query*> queryQueue;
+    std::list<Query *> queryQueue;
     /**
      * (protected by @see queryQueueMutex)
      * The value of queryQueueCounter have different meanings
@@ -501,16 +525,16 @@ private:
      * 0  : idle
      * 1+ : reading (the number of readers)
      */
-    int queryQueueCounter = 0;
+    int queryQueueCounter = -1;
     /** queryQueue and queryQueueCounter must be locked for multi-thread */
     std::mutex queryQueueMutex;
 public:
     void addQuery(Query *query);
 
-    void refreshQuery();
+    void completeQuery();
 };
 
-Table& loadTableFromStream(std::istream &is, std::string source = "");
+Table &loadTableFromStream(std::istream &is, std::string source = "");
 
 #include "db_table_impl.hpp"
 

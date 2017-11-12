@@ -12,6 +12,7 @@ std::string LoadTableQuery::toString() {
 }
 
 QueryResult::Ptr LoadTableQuery::execute() {
+    start();
     try {
         auto &db = Database::getInstance();
         addUniqueTask<LoadTableTask>(db);

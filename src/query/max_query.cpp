@@ -7,6 +7,7 @@ LEMONDB_TASK_PTR_IMPL(MaxQuery, MaxTask);
 constexpr const char *MaxQuery::qname;
 
 QueryResult::Ptr MaxQuery::execute() {
+    start();
     using namespace std;
     if (this->operands.empty())
         return make_unique<ErrorMsgResult>(

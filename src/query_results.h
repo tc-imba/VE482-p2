@@ -109,7 +109,7 @@ class AnswerResult : public SuceededQueryResult {
     std::string str;
 public:
     explicit AnswerResult(std::vector<int> &&answer) {
-        str = "ANSWER = ( ?)"_f % answer;
+        str = "ANSWER = ( ?) "_f % answer;
     }
 
     explicit AnswerResult(int answer) {

@@ -12,6 +12,7 @@ LEMONDB_TASK_PTR_IMPL(SelectQuery, SelectTask);
 constexpr const char *SelectQuery::qname;
 
 QueryResult::Ptr SelectQuery::execute() {
+    start();
     using namespace std;
     if (this->operands.empty() || this->operands[0] != "KEY")
         return make_unique<ErrorMsgResult>(

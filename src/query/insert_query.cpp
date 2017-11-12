@@ -8,7 +8,7 @@
 constexpr const char *InsertQuery::qname;
 
 QueryResult::Ptr InsertQuery::execute() {
-
+    start();
     using namespace std;
     if (this->operands.empty())
         return make_unique<ErrorMsgResult>(

@@ -7,6 +7,7 @@ LEMONDB_TASK_PTR_IMPL(MinQuery, MinTask);
 constexpr const char *MinQuery::qname;
 
 QueryResult::Ptr MinQuery::execute() {
+    start();
     using namespace std;
     if (this->operands.empty())
         return make_unique<ErrorMsgResult>(

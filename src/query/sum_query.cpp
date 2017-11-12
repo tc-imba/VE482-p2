@@ -12,6 +12,7 @@ LEMONDB_TASK_PTR_IMPL(SumQuery, SumTask);
 constexpr const char *SumQuery::qname;
 
 QueryResult::Ptr SumQuery::execute() {
+    start();
     using namespace std;
     if (this->operands.empty())
         return make_unique<ErrorMsgResult>(

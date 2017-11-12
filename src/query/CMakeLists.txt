@@ -19,7 +19,7 @@ set(SOURCE_FILES
         update_query.cpp update_query.h #ok
         select_query.cpp select_query.h #ok
         duplicate_query.cpp duplicate_query.h
-        swap_query.cpp swap_query.h
+        swap_query.cpp swap_query.h #ok
         count_query.cpp count_query.h #ok
         add_query.cpp add_query.h
         sub_query.cpp sub_query.h

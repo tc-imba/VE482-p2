@@ -7,6 +7,7 @@ LEMONDB_TASK_PTR_IMPL(AddQuery, AddTask);
 constexpr const char *AddQuery::qname;
 
 QueryResult::Ptr AddQuery::execute() {
+    start();
 	using namespace std;
     if (this->operands.size() < 2)
        return make_unique<ErrorMsgResult> (

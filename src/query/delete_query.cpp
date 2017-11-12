@@ -7,6 +7,7 @@
 constexpr const char *DeleteQuery::qname;
 
 QueryResult::Ptr DeleteQuery::execute() {
+    start();
     using namespace std;
     if (!this->operands.empty())
         return std::make_unique<ErrorMsgResult>(

@@ -60,6 +60,11 @@ int main(int argc, char *argv[]) {
             break;
         } catch (const std::exception &e) {
             cerr << e.what() << endl;
+            db.endQuery();
+            break;
+        } catch (...) {
+            db.endQuery();
+            break;
         }
     }
     db.joinThreads();

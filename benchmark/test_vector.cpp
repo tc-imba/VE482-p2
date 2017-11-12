@@ -2,6 +2,8 @@
 // Created by liu on 2017/10/27.
 //
 
+#include <unordered_map>
+#include <unordered_set>
 #include <vector>
 #include <queue>
 #include <cstdlib>
@@ -11,39 +13,57 @@
 #include <thread>
 #include <atomic>
 #include <mutex>
+#include <algorithm>
 
 using namespace std;
+
+unordered_map<string, int> map1;
+unordered_map<string, int> map2;
+vector<string> vec;
+mutex map1_lock;
 
 atomic_flag v1_lock = ATOMIC_FLAG_INIT;
 mutex v2_lock;
 
-void thread_work_atomic(vector<int> *v) {
-    for (int i = 0; i < 1000000; i++) {
-        while (v1_lock.test_and_set(std::memory_order_acquire)) {
-            std::this_thread::yield();
-        }
-        auto a = v->back();
-        v->push_back(a + 1);
-        v1_lock.clear(std::memory_order_release);
+
+string construct_string(int i) {
+    string str;
+    for (int j = 0; j < 2; j++) {
+        str += to_string(i);
+    }
+    return str;
+}
+
+void thread_work_lock(vector<string>::iterator begin, vector<string>::iterator end) {
+    for (auto i = begin; i < end; ++i) {
+        //map1_lock.lock();
+        map1.erase(*i);
+        //map1_lock.unlock();
     }
 }
 
-void thread_work_mutex(vector<int> *v) {
-    for (int i = 0; i < 1000000; i++) {
-        v2_lock.lock();
-        auto a = v->back();
-        v->push_back(a + 1);
-        v2_lock.unlock();
+void thread_work_no_lock(vector<string>::iterator begin, vector<string>::iterator end, unordered_set<string> *set1) {
+    for (auto i = begin; i < end; ++i) {
+        set1->emplace(*i);
     }
 }
 
 int main() {
     int thread_num = 4;
     thread threads[thread_num];
-    vector<int> vector1(1);
+    int begin = 1000000;
+    int size = 1000000;
+    for (int i = begin; i < begin + size; i++) {
+        auto str = construct_string(i);
+        vec.push_back(str);
+        map1.emplace(str, i);
+        map2.emplace(str, i);
+    }
+
     auto start = std::chrono::high_resolution_clock::now();
     for (int i = 0; i < thread_num; i++) {
-        threads[i] = std::thread(thread_work_atomic, &vector1);
+        threads[i] = std::thread(thread_work_lock, vec.begin() + size / thread_num * i,
+                                 vec.begin() + size / thread_num * (i + 1));
     }
     for (int i = 0; i < thread_num; i++) {
         threads[i].join();
@@ -51,13 +71,14 @@ int main() {
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff = end - start;
     std::cout << diff.count() << " s\n";
-    std::cout << vector1.back() << endl;
 
     thread threads2[thread_num];
-    vector<int> vector2(1);
+    unordered_set<string> sets[thread_num];
+
     start = std::chrono::high_resolution_clock::now();
     for (int i = 0; i < thread_num; i++) {
-        threads2[i] = std::thread(thread_work_mutex, &vector2);
+        threads2[i] = std::thread(thread_work_no_lock, vec.begin() + size / thread_num * i,
+                                  vec.begin() + size / thread_num * (i + 1), sets + i);
     }
     for (int i = 0; i < thread_num; i++) {
         threads2[i].join();
@@ -65,6 +86,15 @@ int main() {
     end = std::chrono::high_resolution_clock::now();
     diff = end - start;
     std::cout << diff.count() << " s\n";
-    std::cout << vector1.back() << endl;
+
+    start = std::chrono::high_resolution_clock::now();
+    for (int i = 0; i < thread_num; i++) {
+        for_each(sets[i].begin(), sets[i].end(), [](const string &i) {
+            map2.erase(i);
+        });
+    }
+    end = std::chrono::high_resolution_clock::now();
+    diff = end - start;
+    std::cout << diff.count() << " s\n";
 }
 

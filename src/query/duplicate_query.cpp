@@ -10,6 +10,7 @@
 constexpr const char *DuplicateQuery::qname;
 
 QueryResult::Ptr DuplicateQuery::execute() {
+    start();
     using namespace std;
     if (!this->operands.empty())
         return make_unique<ErrorMsgResult>(
@@ -72,8 +73,9 @@ void DuplicateTask::execute() {
     try {
         for (auto it = begin; it != end; ++it) {
             if (query->evalCondition(query->getCondition(), *it)) {
-                table->duplicate(it);
-                counter++;
+                if (table->duplicate(it)) {
+                    ++counter;
+                }
             }
         }
         Task::execute();

@@ -7,6 +7,7 @@ LEMONDB_TASK_PTR_IMPL(SubQuery, SubTask);
 constexpr const char *SubQuery::qname;
 
 QueryResult::Ptr SubQuery::execute() {
+    start();
 	using namespace std;
     if (this->operands.size() < 2)
        return make_unique<ErrorMsgResult> (

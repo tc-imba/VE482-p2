@@ -6,6 +6,7 @@
 constexpr const char *UpdateQuery::qname;
 
 QueryResult::Ptr UpdateQuery::execute() {
+    start();
 	using namespace std;
     if (this->operands.size() != 2)
        return make_unique<ErrorMsgResult> (

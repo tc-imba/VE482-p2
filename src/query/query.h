@@ -41,6 +41,7 @@ public:
     Task *getTask(size_t index) const { return tasks[index].get(); }
     Task *getTask(const std::vector<std::unique_ptr<Task> >::iterator &it) const { return it->get(); }
 
+    void start();
     void complete();
     void complete(QueryResult::Ptr &&result);
 
@@ -50,17 +51,23 @@ public:
         decltype(begin) end;
         auto size = table.size();
         tasksMutex.lock();
-        while (size > 0) {
-            if (size >= 100000) {
-                size -= 100000;
-                end = begin + 100000;
-            } else {
-                size = 0;
-                end = table.end();
-            }
-            auto task = std::unique_ptr<Task>(new TaskType(this, &table, begin, end));
+        if (size == 0) {
+            auto task = std::unique_ptr<Task>(new TaskType(this, &table, begin, begin));
             db.addTask(task.get());
             tasks.emplace_back(std::move(task));
+        } else {
+            while (size > 0) {
+                if (size >= 100000) {
+                    size -= 100000;
+                    end = begin + 100000;
+                } else {
+                    size = 0;
+                    end = table.end();
+                }
+                auto task = std::unique_ptr<Task>(new TaskType(this, &table, begin, end));
+                db.addTask(task.get());
+                tasks.emplace_back(std::move(task));
+            }
         }
         tasksMutex.unlock();
     }

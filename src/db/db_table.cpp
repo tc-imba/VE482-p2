@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <iostream>
 #include "db_table.h"
 #include "db.h"
 #include "../uexception.h"
@@ -6,100 +7,6 @@
 
 constexpr const Table::ValueType Table::ValueTypeMax;
 constexpr const Table::ValueType Table::ValueTypeMin;
-
-void Table::initFromStream(std::istream &infile, std::string source) {
-    auto &db = Database::getInstance();
-    std::string errString =
-            !source.empty() ?
-            R"(Invalid table (from "?") format: )"_f % source :
-            "Invalid table format: ";
-
-    std::string tableName;
-    int fieldCount;
-    //std::vector<Table::KeyType> fields;
-    fields.clear();
-
-    std::string line;
-    std::stringstream sstream;
-    if (!std::getline(infile, line))
-        throw LoadFromStreamException(
-                errString + "Failed to read table metadata line."
-        );
-
-    sstream.str(line);
-    sstream >> tableName >> fieldCount;
-    if (!sstream) {
-        throw LoadFromStreamException(
-                errString + "Failed to parse table metadata."
-        );
-    }
-
-    if (!(std::getline(infile, line)))
-        throw LoadFromStreamException(
-                errString + "Failed to load field names."
-        );
-
-    sstream.str("");
-    sstream.str(line);
-    sstream.clear();
-    for (int i = 0; i < fieldCount; ++i) {
-        std::string field;
-        if (!(sstream >> field))
-            throw LoadFromStreamException(
-                    errString + "Failed to load field names."
-            );
-        else
-            fields.push_back(field);
-    }
-
-    if (fields.front() != "KEY")
-        throw LoadFromStreamException(
-                errString + "Missing or invalid KEY field."
-        );
-
-    fields.erase(fields.begin()); // Remove leading key
-    //Table::Ptr table = std::make_unique<Table>(tableName, fields);
-    //auto &table = db.ensureTable(tableName);
-
-    fieldMap.clear();
-    size_t i = 0;
-    for (const auto &field : fields) {
-        if (field == "KEY")
-            throw MultipleKey(
-                    "Error creating table \"" + tableName + "\": Multiple KEY field."
-            );
-        fieldMap.emplace(field, i++);
-    }
-
-    //table.init(fields);
-
-    int count = 2;
-    while (std::getline(infile, line)) {
-        if (line.empty()) break; // Read to an empty line
-        count++;
-        sstream.str("");
-        sstream.clear();
-        sstream.str(line);
-        std::string key;
-        if (!(sstream >> key))
-            throw LoadFromStreamException(
-                    errString + "Missing or invalid KEY field."
-            );
-        std::vector<int> tuple;
-        for (int i = 1; i < fieldCount; ++i) {
-            int value;
-            if (!(sstream >> value))
-                throw LoadFromStreamException(
-                        errString + "Invalid row on LINE " + std::to_string(count)
-                );
-            tuple.push_back(value);
-        }
-        insertByIndex(key, tuple);
-    }
-
-    initialized = true;
-}
-
 
 Table &loadTableFromStream(std::istream &infile, std::string source) {
     auto &db = Database::getInstance();
@@ -225,16 +132,21 @@ void Table::addQuery(Query *query) {
             queryQueueMutex.unlock();
         }
     } else {
-        // add a reader and execute it at once
-        ++queryQueueCounter;
-        queryQueueMutex.unlock();
-        query->execute();
+        if (queryQueueCounter >= 0 && queryQueue.empty()) {
+            // add a reader and execute it at once if queue is empty
+            ++queryQueueCounter;
+            queryQueueMutex.unlock();
+            query->execute();
+        } else {
+            //fprintf(stderr, "Enqueue %d\n", query->getId());
+            queryQueue.push_back(query);
+            queryQueueMutex.unlock();
+        }
     }
 
 }
 
-#include <iostream>
-void Table::refreshQuery() {
+void Table::completeQuery() {
     queryQueueMutex.lock();
     if (!initialized) {
         queryQueueMutex.unlock();
@@ -245,6 +157,10 @@ void Table::refreshQuery() {
         queryQueueCounter = 0;
     } else {
         --queryQueueCounter;
+    }
+    if (queryQueue.empty()) {
+        queryQueueMutex.unlock();
+        return;
     }
     if (queryQueueCounter == 0 && !queryQueue.empty() && queryQueue.front()->isWriter()) {
         // if idle with a write query, execute it
@@ -264,6 +180,7 @@ void Table::refreshQuery() {
         //auto it = queryQueue.begin();
         //for (; it != queryQueue.end() && !(*it)->isWriter(); ++it) {}
         list.splice(list.begin(), queryQueue, queryQueue.begin(), it);
+        queryQueueCounter += list.size();
         queryQueueMutex.unlock();
         for (auto &item:list) {
             item->execute();
