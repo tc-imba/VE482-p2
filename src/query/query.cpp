@@ -15,7 +15,9 @@ void TaskQuery::complete() {
      * should add a unique id for each query - ok
      * should add a function to print results in correct order
      */
-    auto result = combine(taskComplete.fetch_add(1, std::memory_order_relaxed));
+    tasksMutex.lock();
+    auto result = combine(++taskComplete);
+    tasksMutex.unlock();
     if (result != nullptr) {
         complete(std::move(result));
     }

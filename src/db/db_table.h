@@ -89,7 +89,7 @@ private:
     typedef std::vector<Datum>::const_iterator ConstDataIterator;
 
     /** Whether the table can be used now */
-    std::atomic_bool initialized{false};
+    bool initialized = false;
 
     /** The fields, ordered as defined in fieldMap */
     std::vector<FieldNameType> fields;
@@ -300,7 +300,9 @@ public:
         fieldMap = origin.fieldMap;
         data = origin.data;
         keyMap = origin.keyMap;
+        queryQueueMutex.lock();
         initialized = true;
+        queryQueueMutex.unlock();
     }
 
     void drop() {
@@ -309,7 +311,9 @@ public:
         fieldMap.clear();
         data.clear();
         keyMap.clear();
+        queryQueueMutex.lock();
         initialized = false;
+        queryQueueMutex.unlock();
     }
 
     bool isInited() const { return initialized; }
@@ -546,7 +550,9 @@ void Table::init(const FieldIDContainer &fields) {
         this->fields.emplace_back(std::move(field));
         //fieldIndexMap.emplace_back(i++);
     }
+    queryQueueMutex.lock();
     initialized = true;
+    queryQueueMutex.unlock();
 }
 
 /*template<class AssocContainer>

@@ -167,7 +167,7 @@ void Database::completeQuery() {
             std::cout << it->second->toString() << std::endl;
         }
         // Delete the query after output
-        it->first.reset();
+        //it->first.reset();
         ++resultNow;
     }
     if (endInput && resultNow == results.size()) {

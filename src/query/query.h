@@ -39,8 +39,9 @@ protected:
      * Count the completed tasks
      * atomic is used because only ++ and < is applied
      * spin lock will be faster than mutex
+     * (have bug, use int now)
      */
-    std::atomic_int taskComplete{0};
+    int taskComplete = 0;
 public:
     TaskQuery() = default;
     explicit TaskQuery(std::string targetTable) { this->targetTable = std::move(targetTable); }
