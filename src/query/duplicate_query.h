@@ -16,6 +16,7 @@ public:
     QueryResult::Ptr execute() override;
     std::string toString() override;
     QueryResult::Ptr combine() override;
+    friend class DuplicateTask;
 };
 
 class DuplicateTask : public Task {
@@ -24,6 +25,7 @@ protected:
 public:
     using Task::Task;
     void execute() override;
+//    friend class DuplicateQuery;
 };
 
 #endif //LEMONDB_DUPLICATE_QUERY_H

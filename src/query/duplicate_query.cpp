@@ -17,11 +17,10 @@ QueryResult::Ptr DuplicateQuery::execute() {
                 "Invalid number of operands (? operands)."_f % operands.size()
         );
     Database &db = Database::getInstance();
-    Table::SizeType counter = 0;
     try {
         auto &table = db[this->targetTable];
         addIterationTask<DuplicateTask>(db, table);
-        return make_unique<RecordCountResult>(counter);
+        return make_unique<SuccessMsgResult>(qname);
     } catch (const TableNameNotFound &e) {
         return make_unique<ErrorMsgResult>(
                 qname, this->targetTable.c_str(),

@@ -3,9 +3,11 @@
 #include "query/load_table_query.h"
 #include "query/update_query.h"
 #include "query/delete_query.h"
+#include "query/duplicate_query.h"
 #include "query/select_query.h"
 #include "query/count_query.h"
 #include "query/insert_query.h"
+#include "query/swap_query.h"
 #include "query/min_query.h"
 #include "query/max_query.h"
 #include "query/add_query.h"
@@ -144,6 +146,9 @@ Query::Ptr ComplexQueryBuilder::tryExtractQuery(TokenizedQueryString &query) {
     if (operation == "DELETE")
         return std::make_unique<DeleteQuery>(
                 this->targetTable, this->operandToken, this->conditionToken);
+    if (operation == "DUPLICATE")
+        return std::make_unique<DuplicateQuery>(
+                this->targetTable, this->operandToken, this->conditionToken);
     if (operation == "COUNT")
         return std::make_unique<CountQuery>(
                 this->targetTable, this->operandToken, this->conditionToken);
@@ -161,6 +166,9 @@ Query::Ptr ComplexQueryBuilder::tryExtractQuery(TokenizedQueryString &query) {
                 this->targetTable, this->operandToken, this->conditionToken);
     if (operation == "SUB")
         return std::make_unique<SubQuery>(
+                this->targetTable, this->operandToken, this->conditionToken);
+    if (operation == "SWAP")
+        return std::make_unique<SwapQuery>(
                 this->targetTable, this->operandToken, this->conditionToken);
     std::cout << "Complicated query found!" << std::endl;
     std::cout << "Operation = " << query.token.front() << std::endl;

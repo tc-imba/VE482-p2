@@ -21,6 +21,8 @@ QueryResult::Ptr SwapQuery::execute() {
     Table::SizeType counter = 0;
     try {
         auto &table = db[this->targetTable];
+        this->operand1 = table.getFieldIndex(this->operands[0]);
+        this->operand2 = table.getFieldIndex(this->operands[1]);
         addIterationTask<SwapTask>(db, table);
         return make_unique<RecordCountResult>(counter);
     } catch (const TableNameNotFound &e) {
@@ -71,9 +73,9 @@ void SwapTask::execute() {
     try {
         for (auto it = begin; it != end; ++it) {
             if (query->evalCondition(query->getCondition(), *it)) {
-                int temp = (*it)[this->getQuery()->firstField()];
-                (*it)[this->getQuery()->firstField()] = (*it)[this->getQuery()->secondField()];
-                (*it)[this->getQuery()->secondField()] = temp;
+                Table::ValueType tmp((*it)[query->operand1]);
+                (*it)[query->operand1] = (*it)[query->operand2];
+                (*it)[query->operand2] = tmp;
                 counter++;
             }
         }
