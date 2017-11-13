@@ -14,6 +14,7 @@ This version is used for debugging.
 mkdir debug && cd debug
 cmake ..  -DCMAKE_BUILD_TYPE=Debug
 make lemondb
+src/lemondb
 ```
 
 ### Release
@@ -22,6 +23,7 @@ This version is used for performance test.
 mkdir release && cd release
 cmake ..  -DCMAKE_BUILD_TYPE=Release
 make lemondb
+src/lemondb
 ```
 
 ## Testing
