@@ -62,7 +62,6 @@ $(function() {
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="class_query-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -75,23 +74,26 @@ Inheritance diagram for Query:</div>
  <div class="center">
   <img src="class_query.png" usemap="#Query_map" alt=""/>
   <map id="Query_map" name="Query_map">
-<area href="class_conditioned_query.html" alt="ConditionedQuery" shape="rect" coords="146,56,282,80"/>
-<area href="class_copytable_table_query.html" alt="CopytableTableQuery" shape="rect" coords="146,112,282,136"/>
-<area href="class_drop_table_query.html" alt="DropTableQuery" shape="rect" coords="146,168,282,192"/>
-<area href="class_dump_table_query.html" alt="DumpTableQuery" shape="rect" coords="146,224,282,248"/>
-<area href="class_list_table_query.html" alt="ListTableQuery" shape="rect" coords="146,280,282,304"/>
-<area href="class_load_table_query.html" alt="LoadTableQuery" shape="rect" coords="146,336,282,360"/>
-<area href="class_nop_query.html" alt="NopQuery" shape="rect" coords="146,392,282,416"/>
-<area href="class_print_table_query.html" alt="PrintTableQuery" shape="rect" coords="146,448,282,472"/>
-<area href="class_truncate_table_query.html" alt="TruncateTableQuery" shape="rect" coords="146,504,282,528"/>
+<area href="class_list_table_query.html" alt="ListTableQuery" shape="rect" coords="0,56,134,80"/>
+<area href="class_nop_query.html" alt="NopQuery" shape="rect" coords="144,56,278,80"/>
+<area href="class_print_table_query.html" alt="PrintTableQuery" shape="rect" coords="288,56,422,80"/>
+<area href="class_task_query.html" alt="TaskQuery" shape="rect" coords="432,56,566,80"/>
+<area href="class_complex_query.html" alt="ComplexQuery" shape="rect" coords="576,112,710,136"/>
+<area href="class_copy_table_dest_query.html" alt="CopyTableDestQuery" shape="rect" coords="576,168,710,192"/>
+<area href="class_copy_table_query.html" alt="CopyTableQuery" shape="rect" coords="576,224,710,248"/>
+<area href="class_drop_table_query.html" alt="DropTableQuery" shape="rect" coords="576,280,710,304"/>
+<area href="class_dump_table_query.html" alt="DumpTableQuery" shape="rect" coords="576,336,710,360"/>
+<area href="class_load_table_query.html" alt="LoadTableQuery" shape="rect" coords="576,392,710,416"/>
+<area href="class_quit_query.html" alt="QuitQuery" shape="rect" coords="576,448,710,472"/>
+<area href="class_truncate_table_query.html" alt="TruncateTableQuery" shape="rect" coords="576,504,710,528"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:acb23c3aa126722d3e66e5be4d1cd4496"><td class="memItemLeft" align="right" valign="top"><a id="acb23c3aa126722d3e66e5be4d1cd4496"></a>
-typedef std::shared_ptr&lt; <a class="el" href="class_query.html">Query</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Ptr</b></td></tr>
-<tr class="separator:acb23c3aa126722d3e66e5be4d1cd4496"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a0a7f0fc1097f196ecd56a44baec036"><td class="memItemLeft" align="right" valign="top"><a id="a0a0a7f0fc1097f196ecd56a44baec036"></a>
+typedef std::unique_ptr&lt; <a class="el" href="class_query.html">Query</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Ptr</b></td></tr>
+<tr class="separator:a0a0a7f0fc1097f196ecd56a44baec036"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -101,32 +103,35 @@ virtual QueryResult::Ptr&#160;</td><td class="memItemRight" valign="bottom"><b>e
 <tr class="memitem:afaa6bbe4624620f71e71e259d3f22e31"><td class="memItemLeft" align="right" valign="top"><a id="afaa6bbe4624620f71e71e259d3f22e31"></a>
 virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> ()=0</td></tr>
 <tr class="separator:afaa6bbe4624620f71e71e259d3f22e31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe155a5d150777548767feb8f41348bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_query.html#abe155a5d150777548767feb8f41348bd">complete</a> ()</td></tr>
-<tr class="separator:abe155a5d150777548767feb8f41348bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a073b5b30f3a37f092bbce14a4ae8c557"><td class="memItemLeft" align="right" valign="top"><a id="a073b5b30f3a37f092bbce14a4ae8c557"></a>
-virtual QueryResult::Ptr&#160;</td><td class="memItemRight" valign="bottom"><b>combine</b> ()</td></tr>
-<tr class="separator:a073b5b30f3a37f092bbce14a4ae8c557"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4cc3a0f8d7b0472b4cf7a26f677b9bf0"><td class="memItemLeft" align="right" valign="top"><a id="a4cc3a0f8d7b0472b4cf7a26f677b9bf0"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>isWriter</b> ()=0</td></tr>
-<tr class="separator:a4cc3a0f8d7b0472b4cf7a26f677b9bf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9372fbd5d47c9ab56f37a003a9d7953"><td class="memItemLeft" align="right" valign="top"><a id="af9372fbd5d47c9ab56f37a003a9d7953"></a>
+virtual QueryResult::Ptr&#160;</td><td class="memItemRight" valign="bottom"><b>combine</b> (int taskComplete)</td></tr>
+<tr class="separator:af9372fbd5d47c9ab56f37a003a9d7953"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf7e3add22f3f1317984787fd2e0a251"><td class="memItemLeft" align="right" valign="top"><a id="acf7e3add22f3f1317984787fd2e0a251"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>isWriter</b> () const =0</td></tr>
+<tr class="separator:acf7e3add22f3f1317984787fd2e0a251"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadb2c7d662d4d2a0ee7b5538c4bf90c4"><td class="memItemLeft" align="right" valign="top"><a id="aadb2c7d662d4d2a0ee7b5538c4bf90c4"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>isInstant</b> () const</td></tr>
+<tr class="separator:aadb2c7d662d4d2a0ee7b5538c4bf90c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1627ac6e59d31bc9b5b0e1a58315e8b7"><td class="memItemLeft" align="right" valign="top"><a id="a1627ac6e59d31bc9b5b0e1a58315e8b7"></a>
 const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getTableName</b> ()</td></tr>
 <tr class="separator:a1627ac6e59d31bc9b5b0e1a58315e8b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:aae74f84fc7251575f00cdf4ad77681bd"><td class="memItemLeft" align="right" valign="top">std::atomic_int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_query.html#aae74f84fc7251575f00cdf4ad77681bd">taskComplete</a> {0}</td></tr>
-<tr class="separator:aae74f84fc7251575f00cdf4ad77681bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af59c2164a6ccfe1ad6cc0c6b8ae33938"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_query.html#af59c2164a6ccfe1ad6cc0c6b8ae33938">getId</a> () const</td></tr>
+<tr class="separator:af59c2164a6ccfe1ad6cc0c6b8ae33938"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a162c2530d5a3dc048759ec12788b5c90"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_query.html#a162c2530d5a3dc048759ec12788b5c90">initId</a> (int id)</td></tr>
+<tr class="separator:a162c2530d5a3dc048759ec12788b5c90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:ae4aa2f36a804413761d4e131ea407a0b"><td class="memItemLeft" align="right" valign="top"><a id="ae4aa2f36a804413761d4e131ea407a0b"></a>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><b>targetTable</b></td></tr>
 <tr class="separator:ae4aa2f36a804413761d4e131ea407a0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f961ca1a9c82eda79aef080b00a91ef"><td class="memItemLeft" align="right" valign="top"><a id="a3f961ca1a9c82eda79aef080b00a91ef"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>id</b> = -1</td></tr>
+<tr class="separator:a3f961ca1a9c82eda79aef080b00a91ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="abe155a5d150777548767feb8f41348bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abe155a5d150777548767feb8f41348bd">&#9670;&nbsp;</a></span>complete()</h2>
+<a id="af59c2164a6ccfe1ad6cc0c6b8ae33938"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af59c2164a6ccfe1ad6cc0c6b8ae33938">&#9670;&nbsp;</a></span>getId()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -135,9 +140,36 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>targetTable</b
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Query::complete </td>
+          <td class="memname">int Query::getId </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>get the unique id of this query </p><dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="a162c2530d5a3dc048759ec12788b5c90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a162c2530d5a3dc048759ec12788b5c90">&#9670;&nbsp;</a></span>initId()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Query::initId </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -147,23 +179,13 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>targetTable</b
   </tr>
 </table>
 </div><div class="memdoc">
-<p>add the complete query to the result vector here should add a unique id for each query should add a function to print results in correct order</p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="aae74f84fc7251575f00cdf4ad77681bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae74f84fc7251575f00cdf4ad77681bd">&#9670;&nbsp;</a></span>taskComplete</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::atomic_int Query::taskComplete {0}</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Count the completed tasks atomic is used because only ++ and &lt; is applied spin lock will be faster than mutex </p>
+<p>will only work when first init the query id </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
 </div>
 </div>

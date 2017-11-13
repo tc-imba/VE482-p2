@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['nopquery',['NopQuery',['../class_nop_query.html',1,'']]],
-  ['nullqueryresult',['NullQueryResult',['../class_null_query_result.html',1,'']]]
+  ['objectimpl',['ObjectImpl',['../class_table_1_1_object_impl.html',1,'Table']]]
 ];

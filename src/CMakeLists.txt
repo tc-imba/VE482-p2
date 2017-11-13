@@ -14,5 +14,4 @@ set(SOURCE_FILES
         )
 add_executable(lemondb main.cpp ${SOURCE_FILES})
 target_link_libraries(lemondb lemondb_query_lib pthread)
-add_executable(table_test test/main_test_table.cpp ${SOURCE_FILES})
 

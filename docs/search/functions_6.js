@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['mergedata',['mergeData',['../class_table.html#a3b94156f321448e74ad74b0276ca1a32',1,'Table']]],
-  ['move',['move',['../class_table.html#a2c4dc9ae2d3c20e2b20fab04b996ccc4',1,'Table']]]
+  ['getid',['getId',['../class_query.html#af59c2164a6ccfe1ad6cc0c6b8ae33938',1,'Query']]]
 ];

@@ -63,6 +63,7 @@ $(function() {
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="#friends">Friends</a> &#124;
 <a href="class_table-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -76,17 +77,15 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table_1_1_object_impl.html">ObjectImpl</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table_1_1result_array.html">resultArray</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:a7ec536bb39802e0f446dad42e08d4fdf"><td class="memItemLeft" align="right" valign="top"><a id="a7ec536bb39802e0f446dad42e08d4fdf"></a>
 typedef std::string&#160;</td><td class="memItemRight" valign="bottom"><b>KeyType</b></td></tr>
 <tr class="separator:a7ec536bb39802e0f446dad42e08d4fdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2903c32f8b8fdb0ffc0bc27bc0e34d0e"><td class="memItemLeft" align="right" valign="top"><a id="a2903c32f8b8fdb0ffc0bc27bc0e34d0e"></a>
-typedef std::string&#160;</td><td class="memItemRight" valign="bottom"><b>FieldID</b></td></tr>
-<tr class="separator:a2903c32f8b8fdb0ffc0bc27bc0e34d0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3535e31e3b4cb2fef2b18ff98657fa85"><td class="memItemLeft" align="right" valign="top"><a id="a3535e31e3b4cb2fef2b18ff98657fa85"></a>
+typedef std::string&#160;</td><td class="memItemRight" valign="bottom"><b>FieldNameType</b></td></tr>
+<tr class="separator:a3535e31e3b4cb2fef2b18ff98657fa85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3b5004cab41ef3fcf8708aefd44228b6"><td class="memItemLeft" align="right" valign="top"><a id="a3b5004cab41ef3fcf8708aefd44228b6"></a>
 typedef size_t&#160;</td><td class="memItemRight" valign="bottom"><b>FieldIndex</b></td></tr>
 <tr class="separator:a3b5004cab41ef3fcf8708aefd44228b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -114,6 +113,9 @@ typedef <a class="el" href="class_table_1_1_iterator_impl.html">IteratorImpl</a>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a875b5199dcecbdf2a2430856e4761d6b"><td class="memItemLeft" align="right" valign="top"><a id="a875b5199dcecbdf2a2430856e4761d6b"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Table</b> (const std::string &amp;<a class="el" href="class_table.html#aac2cc68c2c50c66f7de7656fa495fc2a">name</a>)</td></tr>
+<tr class="separator:a875b5199dcecbdf2a2430856e4761d6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeb192735d371cc146836b7a4c1fe627c"><td class="memTemplParams" colspan="2"><a id="aeb192735d371cc146836b7a4c1fe627c"></a>
 template&lt;class FieldIDContainer &gt; </td></tr>
 <tr class="memitem:aeb192735d371cc146836b7a4c1fe627c"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>Table</b> (const std::string &amp;<a class="el" href="class_table.html#aac2cc68c2c50c66f7de7656fa495fc2a">name</a>, const FieldIDContainer &amp;_fields)</td></tr>
@@ -125,30 +127,34 @@ template&lt;class FieldIDContainer &gt; </td></tr>
 <tr class="memitem:a9efda1846fa5fe1e1c11e79896c26211"><td class="memItemLeft" align="right" valign="top"><a id="a9efda1846fa5fe1e1c11e79896c26211"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Table</b> (std::string <a class="el" href="class_table.html#aac2cc68c2c50c66f7de7656fa495fc2a">name</a>, const <a class="el" href="class_table.html">Table</a> &amp;origin)</td></tr>
 <tr class="separator:a9efda1846fa5fe1e1c11e79896c26211"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d36a9931085cb0626c4c3361a5470b6"><td class="memItemLeft" align="right" valign="top"><a id="a9d36a9931085cb0626c4c3361a5470b6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>copy</b> (const <a class="el" href="class_table.html">Table</a> &amp;origin)</td></tr>
+<tr class="separator:a9d36a9931085cb0626c4c3361a5470b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b8b8c25efea1b8da70b223cf9829c1a"><td class="memItemLeft" align="right" valign="top"><a id="a5b8b8c25efea1b8da70b223cf9829c1a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>drop</b> ()</td></tr>
+<tr class="separator:a5b8b8c25efea1b8da70b223cf9829c1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2c8c050e99e9f85fd543a1768baa3a7"><td class="memItemLeft" align="right" valign="top"><a id="ae2c8c050e99e9f85fd543a1768baa3a7"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>isInited</b> () const</td></tr>
 <tr class="separator:ae2c8c050e99e9f85fd543a1768baa3a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6224afc3bf508ed96105bf8aa773d297"><td class="memItemLeft" align="right" valign="top"><a id="a6224afc3bf508ed96105bf8aa773d297"></a>
-FieldIndex&#160;</td><td class="memItemRight" valign="bottom"><b>getFieldIndex</b> (const FieldID &amp;<a class="el" href="class_table.html#a8ce61d2b23d59890cd06cdc90d1de05d">field</a>) const</td></tr>
-<tr class="separator:a6224afc3bf508ed96105bf8aa773d297"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a363408b84dc70d3b33a265af94d84f21"><td class="memTemplParams" colspan="2"><a id="a363408b84dc70d3b33a265af94d84f21"></a>
-template&lt;class AssocContainer &gt; </td></tr>
-<tr class="memitem:a363408b84dc70d3b33a265af94d84f21"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>insert</b> (KeyType key, const AssocContainer &amp;data)=delete</td></tr>
-<tr class="separator:a363408b84dc70d3b33a265af94d84f21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7527dfb6c0bf79d75dcb18e85fba8ff"><td class="memItemLeft" align="right" valign="top"><a id="aa7527dfb6c0bf79d75dcb18e85fba8ff"></a>
+FieldIndex&#160;</td><td class="memItemRight" valign="bottom"><b>getFieldIndex</b> (const FieldNameType &amp;<a class="el" href="class_table.html#ab68bc133d1d01f516d0bfb1a9c06e40f">field</a>) const</td></tr>
+<tr class="separator:aa7527dfb6c0bf79d75dcb18e85fba8ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4abc8b47696c07171b014c08c4df49b7"><td class="memTemplParams" colspan="2"><a id="a4abc8b47696c07171b014c08c4df49b7"></a>
 template&lt;class ValueTypeContainer &gt; </td></tr>
 <tr class="memitem:a4abc8b47696c07171b014c08c4df49b7"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>insertByIndex</b> (KeyType key, const ValueTypeContainer &amp;data)</td></tr>
 <tr class="separator:a4abc8b47696c07171b014c08c4df49b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adca81256f5e75385b8286b91929dd124"><td class="memItemLeft" align="right" valign="top">Object::Ptr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#adca81256f5e75385b8286b91929dd124">operator[]</a> (const KeyType &amp;key) const</td></tr>
-<tr class="separator:adca81256f5e75385b8286b91929dd124"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71ca4f3dfa88d0b057cd63920c5028e9"><td class="memItemLeft" align="right" valign="top">Object::Ptr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a71ca4f3dfa88d0b057cd63920c5028e9">operator[]</a> (const KeyType &amp;key)</td></tr>
+<tr class="separator:a71ca4f3dfa88d0b057cd63920c5028e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0e71468c62bca660627296be71dc590"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#ad0e71468c62bca660627296be71dc590">eraseUnique</a> (Object::Ptr &amp;&amp;object)</td></tr>
+<tr class="separator:ad0e71468c62bca660627296be71dc590"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9597c9976c3b83f757171f44c4101120"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a9597c9976c3b83f757171f44c4101120">erase</a> (const <a class="el" href="class_table_1_1_iterator_impl.html">Iterator</a> &amp;it)</td></tr>
 <tr class="separator:a9597c9976c3b83f757171f44c4101120"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c4dc9ae2d3c20e2b20fab04b996ccc4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a2c4dc9ae2d3c20e2b20fab04b996ccc4">move</a> (<a class="el" href="class_table_1_1_iterator_impl.html">Iterator</a> &amp;it)</td></tr>
 <tr class="separator:a2c4dc9ae2d3c20e2b20fab04b996ccc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae064a04cc7772a51f163f81f0187446e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#ae064a04cc7772a51f163f81f0187446e">swapData</a> ()</td></tr>
 <tr class="separator:ae064a04cc7772a51f163f81f0187446e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0dce4944645a1f3fa76ca7c8d78778a2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a0dce4944645a1f3fa76ca7c8d78778a2">duplicate</a> (<a class="el" href="class_table_1_1_iterator_impl.html">Iterator</a> &amp;it)</td></tr>
-<tr class="separator:a0dce4944645a1f3fa76ca7c8d78778a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7b2e954e0631acf5fbfe3e801eca1e3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#aa7b2e954e0631acf5fbfe3e801eca1e3">duplicate</a> (<a class="el" href="class_table_1_1_iterator_impl.html">Iterator</a> &amp;it)</td></tr>
+<tr class="separator:aa7b2e954e0631acf5fbfe3e801eca1e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3b94156f321448e74ad74b0276ca1a32"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a3b94156f321448e74ad74b0276ca1a32">mergeData</a> ()</td></tr>
 <tr class="separator:a3b94156f321448e74ad74b0276ca1a32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaee2603a21e2ad0de4e073ada88e4b8d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#aaee2603a21e2ad0de4e073ada88e4b8d">setName</a> (std::string <a class="el" href="class_table.html#aac2cc68c2c50c66f7de7656fa495fc2a">name</a>)</td></tr>
@@ -159,8 +165,8 @@ template&lt;class ValueTypeContainer &gt; </td></tr>
 <tr class="separator:abb7690114d028b87e337540f42780cbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aec548eba07f9b3aebcde324c19e19fde"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#aec548eba07f9b3aebcde324c19e19fde">size</a> () const</td></tr>
 <tr class="separator:aec548eba07f9b3aebcde324c19e19fde"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ce61d2b23d59890cd06cdc90d1de05d"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; FieldID &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a8ce61d2b23d59890cd06cdc90d1de05d">field</a> () const</td></tr>
-<tr class="separator:a8ce61d2b23d59890cd06cdc90d1de05d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab68bc133d1d01f516d0bfb1a9c06e40f"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; FieldNameType &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#ab68bc133d1d01f516d0bfb1a9c06e40f">field</a> () const</td></tr>
+<tr class="separator:ab68bc133d1d01f516d0bfb1a9c06e40f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af94164c4dde76690be6b7f3a1d5e7733"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#af94164c4dde76690be6b7f3a1d5e7733">clear</a> ()</td></tr>
 <tr class="separator:af94164c4dde76690be6b7f3a1d5e7733"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9df56e33923bbff648f98367d723ddb5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_table_1_1_iterator_impl.html">Iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a9df56e33923bbff648f98367d723ddb5">begin</a> ()</td></tr>
@@ -171,12 +177,21 @@ template&lt;class ValueTypeContainer &gt; </td></tr>
 <tr class="separator:a8b9f35b26e064b9104afcdc804e05883"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7fa70114351a55ad1602f48396d13359"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_table_1_1_iterator_impl.html">ConstIterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_table.html#a7fa70114351a55ad1602f48396d13359">end</a> () const</td></tr>
 <tr class="separator:a7fa70114351a55ad1602f48396d13359"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a62011f3cb0c62419dd50c937e3076916"><td class="memItemLeft" align="right" valign="top"><a id="a62011f3cb0c62419dd50c937e3076916"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>addQuery</b> (Query::Ptr &amp;query)</td></tr>
-<tr class="separator:a62011f3cb0c62419dd50c937e3076916"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5723ab13d6888467478a5fe5b2f57334"><td class="memItemLeft" align="right" valign="top"><a id="a5723ab13d6888467478a5fe5b2f57334"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>refreshQuery</b> ()</td></tr>
-<tr class="separator:a5723ab13d6888467478a5fe5b2f57334"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a5b44db06f077bea635ce5c0c24f0bf"><td class="memItemLeft" align="right" valign="top"><a id="a7a5b44db06f077bea635ce5c0c24f0bf"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>addQuery</b> (<a class="el" href="class_query.html">Query</a> *query)</td></tr>
+<tr class="separator:a7a5b44db06f077bea635ce5c0c24f0bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a88ee4aa176f0763b90bc71a82813a8"><td class="memItemLeft" align="right" valign="top"><a id="a2a88ee4aa176f0763b90bc71a82813a8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>completeQuery</b> ()</td></tr>
+<tr class="separator:a2a88ee4aa176f0763b90bc71a82813a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a18c1c0fc4538dcd9c38b66afa63b1739"><td class="memItemLeft" align="right" valign="top"><a id="a18c1c0fc4538dcd9c38b66afa63b1739"></a>
+static constexpr const ValueType&#160;</td><td class="memItemRight" valign="bottom"><b>ValueTypeMax</b> = INT32_MAX</td></tr>
+<tr class="separator:a18c1c0fc4538dcd9c38b66afa63b1739"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91fea5fb967510c0c6e66efff8c39f7d"><td class="memItemLeft" align="right" valign="top"><a id="a91fea5fb967510c0c6e66efff8c39f7d"></a>
+static constexpr const ValueType&#160;</td><td class="memItemRight" valign="bottom"><b>ValueTypeMin</b> = INT32_MIN</td></tr>
+<tr class="separator:a91fea5fb967510c0c6e66efff8c39f7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
@@ -262,8 +277,8 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a id="a0dce4944645a1f3fa76ca7c8d78778a2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0dce4944645a1f3fa76ca7c8d78778a2">&#9670;&nbsp;</a></span>duplicate()</h2>
+<a id="aa7b2e954e0631acf5fbfe3e801eca1e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7b2e954e0631acf5fbfe3e801eca1e3">&#9670;&nbsp;</a></span>duplicate()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -272,7 +287,7 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Table::duplicate </td>
+          <td class="memname">bool Table::duplicate </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_table_1_1_iterator_impl.html">Iterator</a> &amp;&#160;</td>
           <td class="paramname"><em>it</em></td><td>)</td>
@@ -285,7 +300,7 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Duplicate it and put it into dataNew new key is oldkey_copy, datum is identical this function is used only in duplicate query </p>
+<p>Duplicate it and put it into dataNew if {key}_copy exists, nothing happens this function is used only in duplicate query </p>
 
 </div>
 </div>
@@ -390,7 +405,7 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Erase the key in the table Caution: this function only erases the key in keyMap, leaves data unchanged no other operation related to keyMap can be applied before swapData is called </p><dl class="params"><dt>Parameters</dt><dd>
+<p>thread safe function Erase the key in the table Caution: this function only erases the key in keyMap, leaves data unchanged no other operation related to keyMap can be applied before swapData is called </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">it</td><td></td></tr>
   </table>
@@ -399,8 +414,8 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a id="a8ce61d2b23d59890cd06cdc90d1de05d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8ce61d2b23d59890cd06cdc90d1de05d">&#9670;&nbsp;</a></span>field()</h2>
+<a id="ad0e71468c62bca660627296be71dc590"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0e71468c62bca660627296be71dc590">&#9670;&nbsp;</a></span>eraseUnique()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -409,7 +424,39 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::vector&lt;FieldID&gt;&amp; Table::field </td>
+          <td class="memname">void Table::eraseUnique </td>
+          <td>(</td>
+          <td class="paramtype">Object::Ptr &amp;&amp;&#160;</td>
+          <td class="paramname"><em>object</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>not thread safe function Remove only one datum only used when delete by key </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">it</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab68bc133d1d01f516d0bfb1a9c06e40f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab68bc133d1d01f516d0bfb1a9c06e40f">&#9670;&nbsp;</a></span>field()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt;FieldNameType&gt;&amp; Table::field </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -474,7 +521,7 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Move datum from data to dataNew Caution: iterator it can't be accessed again after <a class="el" href="class_table.html#a2c4dc9ae2d3c20e2b20fab04b996ccc4">move()</a> is called no other operation related to keyMap can be applied before swapData is called </p><dl class="params"><dt>Parameters</dt><dd>
+<p>thread safe function Move datum from data to dataNew Caution: iterator it can't be accessed again after <a class="el" href="class_table.html#a2c4dc9ae2d3c20e2b20fab04b996ccc4">move()</a> is called no other operation related to keyMap can be applied before swapData is called </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">it</td><td></td></tr>
   </table>
@@ -509,8 +556,8 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a id="adca81256f5e75385b8286b91929dd124"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adca81256f5e75385b8286b91929dd124">&#9670;&nbsp;</a></span>operator[]()</h2>
+<a id="a71ca4f3dfa88d0b057cd63920c5028e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71ca4f3dfa88d0b057cd63920c5028e9">&#9670;&nbsp;</a></span>operator[]()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -523,7 +570,7 @@ Friends</h2></td></tr>
           <td>(</td>
           <td class="paramtype">const KeyType &amp;&#160;</td>
           <td class="paramname"><em>key</em></td><td>)</td>
-          <td> const</td>
+          <td></td>
         </tr>
       </table>
   </td>
@@ -622,7 +669,7 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Swap data and newData vector::clear ensures that the capacity of dataNew unchanged so push_back to dataNew is efficient </p>
+<p>not thread safe function Swap data and newData vector::clear ensures that the capacity of dataNew unchanged so push_back to dataNew is efficient </p>
 
 </div>
 </div>
@@ -674,7 +721,6 @@ Friends</h2></td></tr>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/db/<a class="el" href="db__table_8h_source.html">db_table.h</a></li>
 <li>src/db/db_table.cpp</li>
-<li>src/db/<a class="el" href="db__table__impl_8hpp_source.html">db_table_impl.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

@@ -60,11 +60,11 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="class_task-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Task Class Reference</div>  </div>
@@ -76,59 +76,55 @@ Inheritance diagram for Task:</div>
  <div class="center">
   <img src="class_task.png" usemap="#Task_map" alt=""/>
   <map id="Task_map" name="Task_map">
-<area href="class_add_task.html" alt="AddTask" shape="rect" coords="107,56,204,80"/>
-<area href="class_count_task.html" alt="CountTask" shape="rect" coords="107,112,204,136"/>
-<area href="class_delete_task.html" alt="DeleteTask" shape="rect" coords="107,168,204,192"/>
-<area href="class_duplicate_task.html" alt="DuplicateTask" shape="rect" coords="107,224,204,248"/>
-<area href="class_insert_task.html" alt="InsertTask" shape="rect" coords="107,280,204,304"/>
-<area href="class_load_table_task.html" alt="LoadTableTask" shape="rect" coords="107,336,204,360"/>
-<area href="class_max_task.html" alt="MaxTask" shape="rect" coords="107,392,204,416"/>
-<area href="class_min_task.html" alt="MinTask" shape="rect" coords="107,448,204,472"/>
-<area href="class_select_task.html" alt="SelectTask" shape="rect" coords="107,504,204,528"/>
-<area href="class_sub_task.html" alt="SubTask" shape="rect" coords="107,560,204,584"/>
-<area href="class_sum_task.html" alt="SumTask" shape="rect" coords="107,616,204,640"/>
-<area href="class_swap_task.html" alt="SwapTask" shape="rect" coords="107,672,204,696"/>
-<area href="class_update_task.html" alt="UpdateTask" shape="rect" coords="107,728,204,752"/>
+<area href="class_add_task.html" alt="AddTask" shape="rect" coords="111,56,212,80"/>
+<area href="class_count_task.html" alt="CountTask" shape="rect" coords="111,112,212,136"/>
+<area href="class_delete_task.html" alt="DeleteTask" shape="rect" coords="111,168,212,192"/>
+<area href="class_dump_table_task.html" alt="DumpTableTask" shape="rect" coords="111,224,212,248"/>
+<area href="class_duplicate_task.html" alt="DuplicateTask" shape="rect" coords="111,280,212,304"/>
+<area href="class_insert_task.html" alt="InsertTask" shape="rect" coords="111,336,212,360"/>
+<area href="class_load_table_task.html" alt="LoadTableTask" shape="rect" coords="111,392,212,416"/>
+<area href="class_max_task.html" alt="MaxTask" shape="rect" coords="111,448,212,472"/>
+<area href="class_min_task.html" alt="MinTask" shape="rect" coords="111,504,212,528"/>
+<area href="class_select_task.html" alt="SelectTask" shape="rect" coords="111,560,212,584"/>
+<area href="class_sub_task.html" alt="SubTask" shape="rect" coords="111,616,212,640"/>
+<area href="class_sum_task.html" alt="SumTask" shape="rect" coords="111,672,212,696"/>
+<area href="class_swap_task.html" alt="SwapTask" shape="rect" coords="111,728,212,752"/>
+<area href="class_update_task.html" alt="UpdateTask" shape="rect" coords="111,784,212,808"/>
 </map>
  </div></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_task_1_1_get_ptr.html">GetPtr</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:ac98023288334db60c00ba2517024ea6c"><td class="memItemLeft" align="right" valign="top"><a id="ac98023288334db60c00ba2517024ea6c"></a>
-typedef std::shared_ptr&lt; <a class="el" href="class_task.html">Task</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Ptr</b></td></tr>
-<tr class="separator:ac98023288334db60c00ba2517024ea6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a636a488a23020fcac3380e0fc876e55c"><td class="memItemLeft" align="right" valign="top"><a id="a636a488a23020fcac3380e0fc876e55c"></a>
+typedef std::unique_ptr&lt; <a class="el" href="class_task.html">Task</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Ptr</b></td></tr>
+<tr class="separator:a636a488a23020fcac3380e0fc876e55c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae8900babcf732f8a70edc460f5c4bc2b"><td class="memItemLeft" align="right" valign="top"><a id="ae8900babcf732f8a70edc460f5c4bc2b"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Task</b> (std::shared_ptr&lt; <a class="el" href="class_query.html">Query</a> &gt; query, <a class="el" href="class_table.html">Table</a> *table=nullptr)</td></tr>
-<tr class="separator:ae8900babcf732f8a70edc460f5c4bc2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af8195acfc8945236fab7c9e4423224f2"><td class="memItemLeft" align="right" valign="top"><a id="af8195acfc8945236fab7c9e4423224f2"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Task</b> (std::shared_ptr&lt; <a class="el" href="class_query.html">Query</a> &gt; query, <a class="el" href="class_table.html">Table</a> *table, <a class="el" href="class_table_1_1_iterator_impl.html">Table::Iterator</a> begin, <a class="el" href="class_table_1_1_iterator_impl.html">Table::Iterator</a> end)</td></tr>
-<tr class="separator:af8195acfc8945236fab7c9e4423224f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0449cba22c5a93fea99a5cb100a24e9"><td class="memItemLeft" align="right" valign="top"><a id="af0449cba22c5a93fea99a5cb100a24e9"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Task</b> (<a class="el" href="class_query.html">Query</a> *query, <a class="el" href="class_table.html">Table</a> *table=nullptr)</td></tr>
+<tr class="separator:af0449cba22c5a93fea99a5cb100a24e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa42dbfc5b52058cdc161d7a8b7b023bf"><td class="memItemLeft" align="right" valign="top"><a id="aa42dbfc5b52058cdc161d7a8b7b023bf"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Task</b> (<a class="el" href="class_query.html">Query</a> *query, <a class="el" href="class_table.html">Table</a> *table, <a class="el" href="class_table_1_1_iterator_impl.html">Table::Iterator</a> begin, <a class="el" href="class_table_1_1_iterator_impl.html">Table::Iterator</a> end)</td></tr>
+<tr class="separator:aa42dbfc5b52058cdc161d7a8b7b023bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ade38031c3ed134ec20cbbcd58e575745"><td class="memItemLeft" align="right" valign="top"><a id="ade38031c3ed134ec20cbbcd58e575745"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>execute</b> ()</td></tr>
 <tr class="separator:ade38031c3ed134ec20cbbcd58e575745"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7103a6fb91e80d6b7f7eba9b5a3f6eff"><td class="memItemLeft" align="right" valign="top"><a id="a7103a6fb91e80d6b7f7eba9b5a3f6eff"></a>
-Table::SizeType&#160;</td><td class="memItemRight" valign="bottom"><b>getCounter</b> ()</td></tr>
-<tr class="separator:a7103a6fb91e80d6b7f7eba9b5a3f6eff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b5770928a7e40b46ec339d67f747b32"><td class="memItemLeft" align="right" valign="top"><a id="a2b5770928a7e40b46ec339d67f747b32"></a>
+Table::SizeType&#160;</td><td class="memItemRight" valign="bottom"><b>getCounter</b> () const</td></tr>
+<tr class="separator:a2b5770928a7e40b46ec339d67f747b32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a7da75b85bb397141df0f9b876ccc900b"><td class="memItemLeft" align="right" valign="top"><a id="a7da75b85bb397141df0f9b876ccc900b"></a>
-virtual <a class="el" href="class_query.html">Query</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>getQuery</b> ()</td></tr>
-<tr class="separator:a7da75b85bb397141df0f9b876ccc900b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a755ffdd69b2a9e69afa239a7cf5bb768"><td class="memItemLeft" align="right" valign="top"><a id="a755ffdd69b2a9e69afa239a7cf5bb768"></a>
+virtual <a class="el" href="class_task_query.html">TaskQuery</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>getQuery</b> () const</td></tr>
+<tr class="separator:a755ffdd69b2a9e69afa239a7cf5bb768"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a95fe6c4805e451c3e8f6cb2e630c59d8"><td class="memItemLeft" align="right" valign="top"><a id="a95fe6c4805e451c3e8f6cb2e630c59d8"></a>
-std::shared_ptr&lt; <a class="el" href="class_query.html">Query</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>query</b></td></tr>
-<tr class="separator:a95fe6c4805e451c3e8f6cb2e630c59d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba7c96b09298eb1d88c0cfba899a5370"><td class="memItemLeft" align="right" valign="top"><a id="aba7c96b09298eb1d88c0cfba899a5370"></a>
+<a class="el" href="class_query.html">Query</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>query</b></td></tr>
+<tr class="separator:aba7c96b09298eb1d88c0cfba899a5370"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a19f21bd1d9c8b2cc7e91b4cef04f0566"><td class="memItemLeft" align="right" valign="top"><a id="a19f21bd1d9c8b2cc7e91b4cef04f0566"></a>
 <a class="el" href="class_table.html">Table</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>table</b> = nullptr</td></tr>
 <tr class="separator:a19f21bd1d9c8b2cc7e91b4cef04f0566"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -143,6 +139,12 @@ std::shared_ptr&lt; <a class="el" href="class_query.html">Query</a> &gt;&#160;</
 <tr class="memitem:a42637d575d28f22528a8d90ed6c7bbe3"><td class="memItemLeft" align="right" valign="top"><a id="a42637d575d28f22528a8d90ed6c7bbe3"></a>
 QueryResult::Ptr&#160;</td><td class="memItemRight" valign="bottom"><b>errorResult</b> = nullptr</td></tr>
 <tr class="separator:a42637d575d28f22528a8d90ed6c7bbe3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:a6efef52d7a939622bbc934ff6b90ffe0"><td class="memItemLeft" align="right" valign="top"><a id="a6efef52d7a939622bbc934ff6b90ffe0"></a>
+class&#160;</td><td class="memItemRight" valign="bottom"><b>Database</b></td></tr>
+<tr class="separator:a6efef52d7a939622bbc934ff6b90ffe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Data Documentation</h2>
 <a id="a797775a347a221efdaefe853a0977991"></a>
