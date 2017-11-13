@@ -35,6 +35,8 @@ public:
     virtual void execute();
 
     Table::SizeType getCounter() const { return counter; };
+
+    friend class Database;
 };
 
 #endif //LEMONDB_TASK_H

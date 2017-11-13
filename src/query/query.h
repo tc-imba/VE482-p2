@@ -61,7 +61,7 @@ public:
         tasksMutex.lock();
         const int part = 10000;
         if (size == 0) {
-            auto task = std::unique_ptr<Task>(new TaskType(this, &table, begin, begin));
+            auto task = std::unique_ptr<TaskType>(new TaskType(this, &table, begin, begin));
             auto t = task.get();
             tasks.emplace_back(std::move(task));
             db.addTask(t);
@@ -75,7 +75,7 @@ public:
                     size = 0;
                     end = table.end();
                 }
-                auto task = std::unique_ptr<Task>(new TaskType(this, &table, begin, end));
+                auto task = std::unique_ptr<TaskType>(new TaskType(this, &table, begin, end));
                 begin = end;
                 auto t = task.get();
                 tasks.emplace_back(std::move(task));
@@ -87,7 +87,7 @@ public:
 
     template<class TaskType>
     void addUniqueTask(Database &db, Table *table = nullptr) {
-        auto task = std::unique_ptr<Task>(new TaskType(this, table));
+        auto task = std::unique_ptr<TaskType>(new TaskType(this, table));
         auto t = task.get();
         tasks.emplace_back(std::move(task));
         db.addTask(t);

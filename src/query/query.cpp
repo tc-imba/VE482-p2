@@ -30,6 +30,8 @@ void TaskQuery::complete(QueryResult::Ptr &&result) {
         if (!targetTable.empty()) {
             auto &table = db[targetTable];
             table.completeQuery();
+        } else {
+            fprintf(stderr, "No target: %d %s\n", getId(), toString().c_str());
         }
         db.addResult(this, std::move(result));
         db.completeQuery();
@@ -38,7 +40,7 @@ void TaskQuery::complete(QueryResult::Ptr &&result) {
     }
 }
 
-static const std::unordered_map<std::string, int> opmap{
+const std::unordered_map<std::string, int> opmap{
         {">",  '>'},
         {"<",  '<'},
         {"=",  '='},

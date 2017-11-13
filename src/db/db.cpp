@@ -22,7 +22,11 @@ void Database::threadWork(Database *db) {
             auto task = db->tasks.front();
             db->tasks.pop();
             db->tasksMutex.unlock();
-            task->execute();
+            try {
+                task->execute();
+            } catch (std::exception &e) {
+                fprintf(stderr, "%s %s", e.what(), task->query->toString());
+            }
         }
     }
 }
@@ -150,6 +154,9 @@ void Database::addResult(Query *query, QueryResult::Ptr &&result) {
     auto id = query->getId();
     if (id >= 0) {
         auto &pair = results.at((size_t) id);
+        if (pair.second != nullptr) {
+            fprintf(stderr, "Multiple result: %d %s\n", query->getId(), query->toString().c_str());
+        }
         pair.second = std::move(result);
     }
     resultsMutex.unlock();

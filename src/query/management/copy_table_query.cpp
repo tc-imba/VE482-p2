@@ -26,11 +26,11 @@ QueryResult::Ptr CopyTableQuery::execute() {
     auto &db = Database::getInstance();
     try {
         auto &table = db.ensureTable(destTableName);
-        if (table.isInited()) {
+        /*if (table.isInited()) {
             return make_unique<ErrorMsgResult>(qname, destTableName.c_str(),
                     "Already exists."s
             );
-        }
+        }*/
         table.copy(db[targetTable]);
         complete(make_unique<SuccessMsgResult>(qname, targetTable.c_str()));
         destQuery->complete(make_unique<SuccessMsgResult>(qname, targetTable.c_str()));
