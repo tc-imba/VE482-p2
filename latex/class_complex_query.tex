@@ -1,0 +1,156 @@
+\hypertarget{class_complex_query}{}\section{Complex\+Query Class Reference}
+\label{class_complex_query}\index{Complex\+Query@{Complex\+Query}}
+Inheritance diagram for Complex\+Query\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=12.000000cm]{class_complex_query}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_complex_query_a713f4580157fdd4a058b891599d5347e}\label{class_complex_query_a713f4580157fdd4a058b891599d5347e}} 
+typedef std\+::unique\+\_\+ptr$<$ \hyperlink{class_complex_query}{Complex\+Query} $>$ {\bfseries Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+std\+::pair$<$ std\+::string, bool $>$ \hyperlink{class_complex_query_af4a16c28edc5ecc3631ef528349279af}{init\+Condition} (const \hyperlink{class_table}{Table} \&table)
+\item 
+bool \hyperlink{class_complex_query_ae6d00834afbcbe7322b5d7c2fee11e1e}{eval\+Condition} (const \hyperlink{class_table_1_1_object_impl}{Table\+::\+Object} \&object)
+\item 
+bool \hyperlink{class_complex_query_a111c6bb74ca841541a89c68c4e6a641f}{test\+Key\+Condition} (\hyperlink{class_table}{Table} \&table, std\+::function$<$ void(bool, Table\+::\+Object\+::\+Ptr \&\&)$>$ function)
+\item 
+\mbox{\Hypertarget{class_complex_query_a5988043a8ce728b0d7740706c5cac9fd}\label{class_complex_query_a5988043a8ce728b0d7740706c5cac9fd}} 
+{\bfseries Complex\+Query} (std\+::string target\+Table, std\+::vector$<$ std\+::string $>$ \hyperlink{class_complex_query_a00f38ae7b87fefa8668d7bac95addd94}{operands}, std\+::vector$<$ \hyperlink{struct_query_condition}{Query\+Condition} $>$ \hyperlink{class_complex_query_ac65a30ad8b99278b03d6a64ad34a8a75}{condition})
+\item 
+const std\+::vector$<$ std\+::string $>$ \& \hyperlink{class_complex_query_a8b01ad18d858402ac96ab83e85e5198f}{get\+Operands} () const
+\item 
+const std\+::vector$<$ \hyperlink{struct_query_condition}{Query\+Condition} $>$ \& \hyperlink{class_complex_query_a675cc1fc7bbecf1c92698171131fd3c1}{get\+Condition} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ std\+::string $>$ \hyperlink{class_complex_query_a00f38ae7b87fefa8668d7bac95addd94}{operands}
+\item 
+std\+::vector$<$ \hyperlink{struct_query_condition}{Query\+Condition} $>$ \hyperlink{class_complex_query_ac65a30ad8b99278b03d6a64ad34a8a75}{condition}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 100 of file query.\+h.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_complex_query_ae6d00834afbcbe7322b5d7c2fee11e1e}\label{class_complex_query_ae6d00834afbcbe7322b5d7c2fee11e1e}} 
+\index{Complex\+Query@{Complex\+Query}!eval\+Condition@{eval\+Condition}}
+\index{eval\+Condition@{eval\+Condition}!Complex\+Query@{Complex\+Query}}
+\subsubsection{\texorpdfstring{eval\+Condition()}{evalCondition()}}
+{\footnotesize\ttfamily bool Complex\+Query\+::eval\+Condition (\begin{DoxyParamCaption}\item[{const \hyperlink{class_table_1_1_object_impl}{Table\+::\+Object} \&}]{object }\end{DoxyParamCaption})}
+
+skip the evaluation of K\+EY (which should be done after init\+Condition\+Fast is called) 
+\begin{DoxyParams}{Parameters}
+{\em conditions} & \\
+\hline
+{\em object} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Definition at line 101 of file query.\+cpp.
+
+\mbox{\Hypertarget{class_complex_query_a675cc1fc7bbecf1c92698171131fd3c1}\label{class_complex_query_a675cc1fc7bbecf1c92698171131fd3c1}} 
+\index{Complex\+Query@{Complex\+Query}!get\+Condition@{get\+Condition}}
+\index{get\+Condition@{get\+Condition}!Complex\+Query@{Complex\+Query}}
+\subsubsection{\texorpdfstring{get\+Condition()}{getCondition()}}
+{\footnotesize\ttfamily const std\+::vector$<$\hyperlink{struct_query_condition}{Query\+Condition}$>$\& Complex\+Query\+::get\+Condition (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get condition in the query, seems no use now 
+
+Definition at line 150 of file query.\+h.
+
+\mbox{\Hypertarget{class_complex_query_a8b01ad18d858402ac96ab83e85e5198f}\label{class_complex_query_a8b01ad18d858402ac96ab83e85e5198f}} 
+\index{Complex\+Query@{Complex\+Query}!get\+Operands@{get\+Operands}}
+\index{get\+Operands@{get\+Operands}!Complex\+Query@{Complex\+Query}}
+\subsubsection{\texorpdfstring{get\+Operands()}{getOperands()}}
+{\footnotesize\ttfamily const std\+::vector$<$std\+::string$>$\& Complex\+Query\+::get\+Operands (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get operands in the query 
+
+Definition at line 147 of file query.\+h.
+
+\mbox{\Hypertarget{class_complex_query_af4a16c28edc5ecc3631ef528349279af}\label{class_complex_query_af4a16c28edc5ecc3631ef528349279af}} 
+\index{Complex\+Query@{Complex\+Query}!init\+Condition@{init\+Condition}}
+\index{init\+Condition@{init\+Condition}!Complex\+Query@{Complex\+Query}}
+\subsubsection{\texorpdfstring{init\+Condition()}{initCondition()}}
+{\footnotesize\ttfamily std\+::pair$<$ std\+::string, bool $>$ Complex\+Query\+::init\+Condition (\begin{DoxyParamCaption}\item[{const \hyperlink{class_table}{Table} \&}]{table }\end{DoxyParamCaption})}
+
+init a fast condition according to the table note that the condition is only effective if the table fields are not changed 
+\begin{DoxyParams}{Parameters}
+{\em table} & \\
+\hline
+{\em conditions} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a pair of the key and a flag if flag is false, the condition is always false in this situation, the condition may not be fully initialized to save time 
+\end{DoxyReturn}
+
+
+Definition at line 45 of file query.\+cpp.
+
+\mbox{\Hypertarget{class_complex_query_a111c6bb74ca841541a89c68c4e6a641f}\label{class_complex_query_a111c6bb74ca841541a89c68c4e6a641f}} 
+\index{Complex\+Query@{Complex\+Query}!test\+Key\+Condition@{test\+Key\+Condition}}
+\index{test\+Key\+Condition@{test\+Key\+Condition}!Complex\+Query@{Complex\+Query}}
+\subsubsection{\texorpdfstring{test\+Key\+Condition()}{testKeyCondition()}}
+{\footnotesize\ttfamily bool Complex\+Query\+::test\+Key\+Condition (\begin{DoxyParamCaption}\item[{\hyperlink{class_table}{Table} \&}]{table,  }\item[{std\+::function$<$ void(bool, Table\+::\+Object\+::\+Ptr \&\&)$>$}]{function }\end{DoxyParamCaption})}
+
+This function seems have small effect and causes somme bugs so it is not used actually 
+\begin{DoxyParams}{Parameters}
+{\em table} & \\
+\hline
+{\em function} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Definition at line 113 of file query.\+cpp.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_complex_query_ac65a30ad8b99278b03d6a64ad34a8a75}\label{class_complex_query_ac65a30ad8b99278b03d6a64ad34a8a75}} 
+\index{Complex\+Query@{Complex\+Query}!condition@{condition}}
+\index{condition@{condition}!Complex\+Query@{Complex\+Query}}
+\subsubsection{\texorpdfstring{condition}{condition}}
+{\footnotesize\ttfamily std\+::vector$<$\hyperlink{struct_query_condition}{Query\+Condition}$>$ Complex\+Query\+::condition\hspace{0.3cm}{\ttfamily [protected]}}
+
+The function used in where clause 
+
+Definition at line 105 of file query.\+h.
+
+\mbox{\Hypertarget{class_complex_query_a00f38ae7b87fefa8668d7bac95addd94}\label{class_complex_query_a00f38ae7b87fefa8668d7bac95addd94}} 
+\index{Complex\+Query@{Complex\+Query}!operands@{operands}}
+\index{operands@{operands}!Complex\+Query@{Complex\+Query}}
+\subsubsection{\texorpdfstring{operands}{operands}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::string$>$ Complex\+Query\+::operands\hspace{0.3cm}{\ttfamily [protected]}}
+
+The field names in the first () 
+
+Definition at line 103 of file query.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/query/query.\+h\item 
+src/query/query.\+cpp\end{DoxyCompactItemize}

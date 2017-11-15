@@ -25,7 +25,7 @@ QueryResult::Ptr SelectQuery::execute() {
         for (auto it = ++operands.begin(); it != operands.end(); ++it) {
             fieldsId.emplace_back(table.getFieldIndex(*it));
         }
-        auto result = initConditionFast(table);
+        auto result = initCondition(table);
         if (!result.second) {
             complete(std::make_unique<NullQueryResult>());
             return make_unique<NullQueryResult>();
@@ -89,7 +89,7 @@ void SelectTask::execute() {
     auto query = getQuery();
     try {
         for (auto it = begin; it != end; ++it) {
-            if (query->evalConditionFast(*it)) {
+            if (query->evalCondition(*it)) {
                 std::vector<Table::ValueType> tuple;
                 for (auto &index:query->fieldsId) {
                     tuple.emplace_back((*it)[index]);

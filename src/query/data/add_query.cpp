@@ -44,7 +44,7 @@ QueryResult::Ptr AddQuery::execute() {
         })) {
             return make_unique<NullQueryResult>();
         }*/
-        auto result = initConditionFast(table);
+        auto result = initCondition(table);
         if (!result.second) {
             complete(std::make_unique<RecordCountResult>(0));
             return make_unique<NullQueryResult>();
@@ -102,7 +102,7 @@ void AddTask::execute() {
     try {
         auto destId = query->fieldsId.back();
         for (auto it = begin; it != end; ++it) {
-            if (query->evalConditionFast(*it)) {
+            if (query->evalCondition(*it)) {
                 auto itId = query->fieldsId.begin();
                 auto result = (*it)[*itId];
                 for (++itId; itId != query->fieldsId.end() - 1; ++itId) {

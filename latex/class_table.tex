@@ -1,0 +1,390 @@
+\hypertarget{class_table}{}\section{Table Class Reference}
+\label{class_table}\index{Table@{Table}}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_table_1_1_iterator_impl}{Iterator\+Impl}
+\item 
+class \hyperlink{class_table_1_1_object_impl}{Object\+Impl}
+\end{DoxyCompactItemize}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_table_a7ec536bb39802e0f446dad42e08d4fdf}\label{class_table_a7ec536bb39802e0f446dad42e08d4fdf}} 
+typedef std\+::string {\bfseries Key\+Type}
+\item 
+\mbox{\Hypertarget{class_table_a3535e31e3b4cb2fef2b18ff98657fa85}\label{class_table_a3535e31e3b4cb2fef2b18ff98657fa85}} 
+typedef std\+::string {\bfseries Field\+Name\+Type}
+\item 
+\mbox{\Hypertarget{class_table_a3b5004cab41ef3fcf8708aefd44228b6}\label{class_table_a3b5004cab41ef3fcf8708aefd44228b6}} 
+typedef size\+\_\+t {\bfseries Field\+Index}
+\item 
+\mbox{\Hypertarget{class_table_aaa438add915f9459416dab957f52ee63}\label{class_table_aaa438add915f9459416dab957f52ee63}} 
+typedef int {\bfseries Value\+Type}
+\item 
+\mbox{\Hypertarget{class_table_af5796c55702b4b5e3eeb35670d9b242a}\label{class_table_af5796c55702b4b5e3eeb35670d9b242a}} 
+typedef size\+\_\+t {\bfseries Size\+Type}
+\item 
+\mbox{\Hypertarget{class_table_a15892db3d57f25fafe199f593614ffdf}\label{class_table_a15892db3d57f25fafe199f593614ffdf}} 
+typedef std\+::unique\+\_\+ptr$<$ \hyperlink{class_table}{Table} $>$ {\bfseries Ptr}
+\item 
+\mbox{\Hypertarget{class_table_a930877dd111fb5403afff7c400c25925}\label{class_table_a930877dd111fb5403afff7c400c25925}} 
+typedef \hyperlink{class_table_1_1_object_impl}{Object\+Impl}$<$ Data\+Iterator, Value\+Type $>$ {\bfseries Object}
+\item 
+\mbox{\Hypertarget{class_table_adbcee28c19fcaa0904e71f2d76b80c31}\label{class_table_adbcee28c19fcaa0904e71f2d76b80c31}} 
+typedef \hyperlink{class_table_1_1_object_impl}{Object\+Impl}$<$ Const\+Data\+Iterator, const Value\+Type $>$ {\bfseries Const\+Object}
+\item 
+\mbox{\Hypertarget{class_table_a41a3e845dfe45869c641cc564a70b328}\label{class_table_a41a3e845dfe45869c641cc564a70b328}} 
+typedef \hyperlink{class_table_1_1_iterator_impl}{Iterator\+Impl}$<$ \hyperlink{class_table_1_1_object_impl}{Object}, decltype(data.\+begin())$>$ {\bfseries Iterator}
+\item 
+\mbox{\Hypertarget{class_table_a745f59742a52fe738da52323c23dbe29}\label{class_table_a745f59742a52fe738da52323c23dbe29}} 
+typedef \hyperlink{class_table_1_1_iterator_impl}{Iterator\+Impl}$<$ \hyperlink{class_table_1_1_object_impl}{Const\+Object}, decltype(data.\+cbegin())$>$ {\bfseries Const\+Iterator}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_table_a875b5199dcecbdf2a2430856e4761d6b}\label{class_table_a875b5199dcecbdf2a2430856e4761d6b}} 
+{\bfseries Table} (const std\+::string \&\hyperlink{class_table_aac2cc68c2c50c66f7de7656fa495fc2a}{name})
+\item 
+\mbox{\Hypertarget{class_table_aeb192735d371cc146836b7a4c1fe627c}\label{class_table_aeb192735d371cc146836b7a4c1fe627c}} 
+{\footnotesize template$<$class Field\+I\+D\+Container $>$ }\\{\bfseries Table} (const std\+::string \&\hyperlink{class_table_aac2cc68c2c50c66f7de7656fa495fc2a}{name}, const Field\+I\+D\+Container \&\+\_\+fields)
+\item 
+\mbox{\Hypertarget{class_table_a56b5ff78a58e18398f8c36fac93b21d7}\label{class_table_a56b5ff78a58e18398f8c36fac93b21d7}} 
+{\footnotesize template$<$class Field\+I\+D\+Container $>$ }\\void {\bfseries init} (const Field\+I\+D\+Container \&fields)
+\item 
+\mbox{\Hypertarget{class_table_a9efda1846fa5fe1e1c11e79896c26211}\label{class_table_a9efda1846fa5fe1e1c11e79896c26211}} 
+{\bfseries Table} (std\+::string \hyperlink{class_table_aac2cc68c2c50c66f7de7656fa495fc2a}{name}, const \hyperlink{class_table}{Table} \&origin)
+\item 
+\mbox{\Hypertarget{class_table_a9d36a9931085cb0626c4c3361a5470b6}\label{class_table_a9d36a9931085cb0626c4c3361a5470b6}} 
+void {\bfseries copy} (const \hyperlink{class_table}{Table} \&origin)
+\item 
+\mbox{\Hypertarget{class_table_a5b8b8c25efea1b8da70b223cf9829c1a}\label{class_table_a5b8b8c25efea1b8da70b223cf9829c1a}} 
+void {\bfseries drop} ()
+\item 
+\mbox{\Hypertarget{class_table_ae2c8c050e99e9f85fd543a1768baa3a7}\label{class_table_ae2c8c050e99e9f85fd543a1768baa3a7}} 
+bool {\bfseries is\+Inited} () const
+\item 
+\mbox{\Hypertarget{class_table_aa7527dfb6c0bf79d75dcb18e85fba8ff}\label{class_table_aa7527dfb6c0bf79d75dcb18e85fba8ff}} 
+Field\+Index {\bfseries get\+Field\+Index} (const Field\+Name\+Type \&\hyperlink{class_table_ab68bc133d1d01f516d0bfb1a9c06e40f}{field}) const
+\item 
+\mbox{\Hypertarget{class_table_a4abc8b47696c07171b014c08c4df49b7}\label{class_table_a4abc8b47696c07171b014c08c4df49b7}} 
+{\footnotesize template$<$class Value\+Type\+Container $>$ }\\void {\bfseries insert\+By\+Index} (Key\+Type key, const Value\+Type\+Container \&data)
+\item 
+Object\+::\+Ptr \hyperlink{class_table_a71ca4f3dfa88d0b057cd63920c5028e9}{operator\mbox{[}$\,$\mbox{]}} (const Key\+Type \&key)
+\item 
+void \hyperlink{class_table_ad0e71468c62bca660627296be71dc590}{erase\+Unique} (Object\+::\+Ptr \&\&object)
+\item 
+void \hyperlink{class_table_a9597c9976c3b83f757171f44c4101120}{erase} (const \hyperlink{class_table_1_1_iterator_impl}{Iterator} \&it)
+\item 
+void \hyperlink{class_table_a2c4dc9ae2d3c20e2b20fab04b996ccc4}{move} (\hyperlink{class_table_1_1_iterator_impl}{Iterator} \&it)
+\item 
+void \hyperlink{class_table_ae064a04cc7772a51f163f81f0187446e}{swap\+Data} ()
+\item 
+bool \hyperlink{class_table_aa7b2e954e0631acf5fbfe3e801eca1e3}{duplicate} (\hyperlink{class_table_1_1_iterator_impl}{Iterator} \&it)
+\item 
+void \hyperlink{class_table_a3b94156f321448e74ad74b0276ca1a32}{merge\+Data} ()
+\item 
+void \hyperlink{class_table_aaee2603a21e2ad0de4e073ada88e4b8d}{set\+Name} (std\+::string \hyperlink{class_table_aac2cc68c2c50c66f7de7656fa495fc2a}{name})
+\item 
+const std\+::string \& \hyperlink{class_table_aac2cc68c2c50c66f7de7656fa495fc2a}{name} () const
+\item 
+bool \hyperlink{class_table_abb7690114d028b87e337540f42780cbb}{empty} () const
+\item 
+size\+\_\+t \hyperlink{class_table_aec548eba07f9b3aebcde324c19e19fde}{size} () const
+\item 
+const std\+::vector$<$ Field\+Name\+Type $>$ \& \hyperlink{class_table_ab68bc133d1d01f516d0bfb1a9c06e40f}{field} () const
+\item 
+size\+\_\+t \hyperlink{class_table_af94164c4dde76690be6b7f3a1d5e7733}{clear} ()
+\item 
+\hyperlink{class_table_1_1_iterator_impl}{Iterator} \hyperlink{class_table_a9df56e33923bbff648f98367d723ddb5}{begin} ()
+\item 
+\hyperlink{class_table_1_1_iterator_impl}{Iterator} \hyperlink{class_table_a5b5c1e536a44af329e2a9e35e469fde7}{end} ()
+\item 
+\hyperlink{class_table_1_1_iterator_impl}{Const\+Iterator} \hyperlink{class_table_a8b9f35b26e064b9104afcdc804e05883}{begin} () const
+\item 
+\hyperlink{class_table_1_1_iterator_impl}{Const\+Iterator} \hyperlink{class_table_a7fa70114351a55ad1602f48396d13359}{end} () const
+\item 
+\mbox{\Hypertarget{class_table_a7a5b44db06f077bea635ce5c0c24f0bf}\label{class_table_a7a5b44db06f077bea635ce5c0c24f0bf}} 
+void {\bfseries add\+Query} (\hyperlink{class_query}{Query} $\ast$query)
+\item 
+\mbox{\Hypertarget{class_table_a2a88ee4aa176f0763b90bc71a82813a8}\label{class_table_a2a88ee4aa176f0763b90bc71a82813a8}} 
+void {\bfseries complete\+Query} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_table_a18c1c0fc4538dcd9c38b66afa63b1739}\label{class_table_a18c1c0fc4538dcd9c38b66afa63b1739}} 
+static constexpr const Value\+Type {\bfseries Value\+Type\+Max} = I\+N\+T32\+\_\+\+M\+AX
+\item 
+\mbox{\Hypertarget{class_table_a91fea5fb967510c0c6e66efff8c39f7d}\label{class_table_a91fea5fb967510c0c6e66efff8c39f7d}} 
+static constexpr const Value\+Type {\bfseries Value\+Type\+Min} = I\+N\+T32\+\_\+\+M\+IN
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+std\+::ostream \& \hyperlink{class_table_ac91202688e17b1c145b7d98d90ace349}{operator$<$$<$} (std\+::ostream \&os, const \hyperlink{class_table}{Table} \&table)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 50 of file db\+\_\+table.\+h.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_table_a9df56e33923bbff648f98367d723ddb5}\label{class_table_a9df56e33923bbff648f98367d723ddb5}} 
+\index{Table@{Table}!begin@{begin}}
+\index{begin@{begin}!Table@{Table}}
+\subsubsection{\texorpdfstring{begin()}{begin()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \hyperlink{class_table_1_1_iterator_impl}{Iterator} Table\+::begin (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get a begin iterator similar to the standard iterator \begin{DoxyReturn}{Returns}
+begin iterator 
+\end{DoxyReturn}
+
+
+Definition at line 474 of file db\+\_\+table.\+h.
+
+\mbox{\Hypertarget{class_table_a8b9f35b26e064b9104afcdc804e05883}\label{class_table_a8b9f35b26e064b9104afcdc804e05883}} 
+\index{Table@{Table}!begin@{begin}}
+\index{begin@{begin}!Table@{Table}}
+\subsubsection{\texorpdfstring{begin()}{begin()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \hyperlink{class_table_1_1_iterator_impl}{Const\+Iterator} Table\+::begin (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get a const begin iterator similar to the standard iterator \begin{DoxyReturn}{Returns}
+const begin iterator 
+\end{DoxyReturn}
+
+
+Definition at line 486 of file db\+\_\+table.\+h.
+
+\mbox{\Hypertarget{class_table_af94164c4dde76690be6b7f3a1d5e7733}\label{class_table_af94164c4dde76690be6b7f3a1d5e7733}} 
+\index{Table@{Table}!clear@{clear}}
+\index{clear@{clear}!Table@{Table}}
+\subsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily size\+\_\+t Table\+::clear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Clear all content in the table \begin{DoxyReturn}{Returns}
+rows affected 
+\end{DoxyReturn}
+
+
+Definition at line 463 of file db\+\_\+table.\+h.
+
+\mbox{\Hypertarget{class_table_aa7b2e954e0631acf5fbfe3e801eca1e3}\label{class_table_aa7b2e954e0631acf5fbfe3e801eca1e3}} 
+\index{Table@{Table}!duplicate@{duplicate}}
+\index{duplicate@{duplicate}!Table@{Table}}
+\subsubsection{\texorpdfstring{duplicate()}{duplicate()}}
+{\footnotesize\ttfamily bool Table\+::duplicate (\begin{DoxyParamCaption}\item[{\hyperlink{class_table_1_1_iterator_impl}{Iterator} \&}]{it }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Duplicate it and put it into data\+New if \{key\}\+\_\+copy exists, nothing happens this function is used only in duplicate query 
+
+Definition at line 404 of file db\+\_\+table.\+h.
+
+\mbox{\Hypertarget{class_table_abb7690114d028b87e337540f42780cbb}\label{class_table_abb7690114d028b87e337540f42780cbb}} 
+\index{Table@{Table}!empty@{empty}}
+\index{empty@{empty}!Table@{Table}}
+\subsubsection{\texorpdfstring{empty()}{empty()}}
+{\footnotesize\ttfamily bool Table\+::empty (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return whether the table is empty \begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Definition at line 445 of file db\+\_\+table.\+h.
+
+\mbox{\Hypertarget{class_table_a5b5c1e536a44af329e2a9e35e469fde7}\label{class_table_a5b5c1e536a44af329e2a9e35e469fde7}} 
+\index{Table@{Table}!end@{end}}
+\index{end@{end}!Table@{Table}}
+\subsubsection{\texorpdfstring{end()}{end()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \hyperlink{class_table_1_1_iterator_impl}{Iterator} Table\+::end (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get a end iterator similar to the standard iterator \begin{DoxyReturn}{Returns}
+end iterator 
+\end{DoxyReturn}
+
+
+Definition at line 480 of file db\+\_\+table.\+h.
+
+\mbox{\Hypertarget{class_table_a7fa70114351a55ad1602f48396d13359}\label{class_table_a7fa70114351a55ad1602f48396d13359}} 
+\index{Table@{Table}!end@{end}}
+\index{end@{end}!Table@{Table}}
+\subsubsection{\texorpdfstring{end()}{end()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \hyperlink{class_table_1_1_iterator_impl}{Const\+Iterator} Table\+::end (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get a const end iterator similar to the standard iterator \begin{DoxyReturn}{Returns}
+const end iterator 
+\end{DoxyReturn}
+
+
+Definition at line 492 of file db\+\_\+table.\+h.
+
+\mbox{\Hypertarget{class_table_a9597c9976c3b83f757171f44c4101120}\label{class_table_a9597c9976c3b83f757171f44c4101120}} 
+\index{Table@{Table}!erase@{erase}}
+\index{erase@{erase}!Table@{Table}}
+\subsubsection{\texorpdfstring{erase()}{erase()}}
+{\footnotesize\ttfamily void Table\+::erase (\begin{DoxyParamCaption}\item[{const \hyperlink{class_table_1_1_iterator_impl}{Iterator} \&}]{it }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+thread safe function Erase the key in the table Caution\+: this function only erases the key in key\+Map, leaves data unchanged no other operation related to key\+Map can be applied before swap\+Data is called 
+\begin{DoxyParams}{Parameters}
+{\em it} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 368 of file db\+\_\+table.\+h.
+
+\mbox{\Hypertarget{class_table_ad0e71468c62bca660627296be71dc590}\label{class_table_ad0e71468c62bca660627296be71dc590}} 
+\index{Table@{Table}!erase\+Unique@{erase\+Unique}}
+\index{erase\+Unique@{erase\+Unique}!Table@{Table}}
+\subsubsection{\texorpdfstring{erase\+Unique()}{eraseUnique()}}
+{\footnotesize\ttfamily void Table\+::erase\+Unique (\begin{DoxyParamCaption}\item[{Object\+::\+Ptr \&\&}]{object }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+not thread safe function Remove only one datum only used when delete by key 
+\begin{DoxyParams}{Parameters}
+{\em it} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 355 of file db\+\_\+table.\+h.
+
+\mbox{\Hypertarget{class_table_ab68bc133d1d01f516d0bfb1a9c06e40f}\label{class_table_ab68bc133d1d01f516d0bfb1a9c06e40f}} 
+\index{Table@{Table}!field@{field}}
+\index{field@{field}!Table@{Table}}
+\subsubsection{\texorpdfstring{field()}{field()}}
+{\footnotesize\ttfamily const std\+::vector$<$Field\+Name\+Type$>$\& Table\+::field (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return the fields in the table \begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Definition at line 457 of file db\+\_\+table.\+h.
+
+\mbox{\Hypertarget{class_table_a3b94156f321448e74ad74b0276ca1a32}\label{class_table_a3b94156f321448e74ad74b0276ca1a32}} 
+\index{Table@{Table}!merge\+Data@{merge\+Data}}
+\index{merge\+Data@{merge\+Data}!Table@{Table}}
+\subsubsection{\texorpdfstring{merge\+Data()}{mergeData()}}
+{\footnotesize\ttfamily void Table\+::merge\+Data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+insert data\+New to the end of data then data\+New is cleared for future query this function is used only in duplicate query 
+
+Definition at line 421 of file db\+\_\+table.\+h.
+
+\mbox{\Hypertarget{class_table_a2c4dc9ae2d3c20e2b20fab04b996ccc4}\label{class_table_a2c4dc9ae2d3c20e2b20fab04b996ccc4}} 
+\index{Table@{Table}!move@{move}}
+\index{move@{move}!Table@{Table}}
+\subsubsection{\texorpdfstring{move()}{move()}}
+{\footnotesize\ttfamily void Table\+::move (\begin{DoxyParamCaption}\item[{\hyperlink{class_table_1_1_iterator_impl}{Iterator} \&}]{it }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+thread safe function Move datum from data to data\+New Caution\+: iterator it can\textquotesingle{}t be accessed again after \hyperlink{class_table_a2c4dc9ae2d3c20e2b20fab04b996ccc4}{move()} is called no other operation related to key\+Map can be applied before swap\+Data is called 
+\begin{DoxyParams}{Parameters}
+{\em it} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 381 of file db\+\_\+table.\+h.
+
+\mbox{\Hypertarget{class_table_aac2cc68c2c50c66f7de7656fa495fc2a}\label{class_table_aac2cc68c2c50c66f7de7656fa495fc2a}} 
+\index{Table@{Table}!name@{name}}
+\index{name@{name}!Table@{Table}}
+\subsubsection{\texorpdfstring{name()}{name()}}
+{\footnotesize\ttfamily const std\+::string\& Table\+::name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Get the name of the table \begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Definition at line 439 of file db\+\_\+table.\+h.
+
+\mbox{\Hypertarget{class_table_a71ca4f3dfa88d0b057cd63920c5028e9}\label{class_table_a71ca4f3dfa88d0b057cd63920c5028e9}} 
+\index{Table@{Table}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!Table@{Table}}
+\subsubsection{\texorpdfstring{operator[]()}{operator[]()}}
+{\footnotesize\ttfamily Object\+::\+Ptr Table\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{const Key\+Type \&}]{key }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Access the value according to the key 
+\begin{DoxyParams}{Parameters}
+{\em key} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the Object that K\+EY = key, or nullptr if key doesn\textquotesingle{}t exist 
+\end{DoxyReturn}
+
+
+Definition at line 339 of file db\+\_\+table.\+h.
+
+\mbox{\Hypertarget{class_table_aaee2603a21e2ad0de4e073ada88e4b8d}\label{class_table_aaee2603a21e2ad0de4e073ada88e4b8d}} 
+\index{Table@{Table}!set\+Name@{set\+Name}}
+\index{set\+Name@{set\+Name}!Table@{Table}}
+\subsubsection{\texorpdfstring{set\+Name()}{setName()}}
+{\footnotesize\ttfamily void Table\+::set\+Name (\begin{DoxyParamCaption}\item[{std\+::string}]{name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Set the name of the table 
+\begin{DoxyParams}{Parameters}
+{\em name} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 433 of file db\+\_\+table.\+h.
+
+\mbox{\Hypertarget{class_table_aec548eba07f9b3aebcde324c19e19fde}\label{class_table_aec548eba07f9b3aebcde324c19e19fde}} 
+\index{Table@{Table}!size@{size}}
+\index{size@{size}!Table@{Table}}
+\subsubsection{\texorpdfstring{size()}{size()}}
+{\footnotesize\ttfamily size\+\_\+t Table\+::size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return the num of data stored in the table \begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Definition at line 451 of file db\+\_\+table.\+h.
+
+\mbox{\Hypertarget{class_table_ae064a04cc7772a51f163f81f0187446e}\label{class_table_ae064a04cc7772a51f163f81f0187446e}} 
+\index{Table@{Table}!swap\+Data@{swap\+Data}}
+\index{swap\+Data@{swap\+Data}!Table@{Table}}
+\subsubsection{\texorpdfstring{swap\+Data()}{swapData()}}
+{\footnotesize\ttfamily void Table\+::swap\+Data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+not thread safe function Swap data and new\+Data vector\+::clear ensures that the capacity of data\+New unchanged so push\+\_\+back to data\+New is efficient 
+
+Definition at line 394 of file db\+\_\+table.\+h.
+
+
+
+\subsection{Friends And Related Function Documentation}
+\mbox{\Hypertarget{class_table_ac91202688e17b1c145b7d98d90ace349}\label{class_table_ac91202688e17b1c145b7d98d90ace349}} 
+\index{Table@{Table}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!Table@{Table}}
+\subsubsection{\texorpdfstring{operator$<$$<$}{operator<<}}
+{\footnotesize\ttfamily std\+::ostream\& operator$<$$<$ (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{os,  }\item[{const \hyperlink{class_table}{Table} \&}]{table }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+Overload the $<$$<$ operator for complete print of the table 
+\begin{DoxyParams}{Parameters}
+{\em os} & \\
+\hline
+{\em table} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the origin ostream 
+\end{DoxyReturn}
+
+
+Definition at line 94 of file db\+\_\+table.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/db/db\+\_\+table.\+h\item 
+src/db/db\+\_\+table.\+cpp\end{DoxyCompactItemize}

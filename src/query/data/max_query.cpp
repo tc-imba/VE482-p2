@@ -40,7 +40,7 @@ QueryResult::Ptr MaxQuery::execute() {
         })) {
             return make_unique<NullQueryResult>();
         }*/
-        auto result = initConditionFast(table);
+        auto result = initCondition(table);
         if (!result.second) {
             complete(std::make_unique<NullQueryResult>());
             return make_unique<NullQueryResult>();
@@ -106,7 +106,7 @@ void MaxTask::execute() {
         auto numFields = query->fieldsId.size();
         fieldsMax.insert(fieldsMax.end(), numFields, Table::ValueTypeMin);
         for (auto it = begin; it != end; ++it) {
-            if (query->evalConditionFast(*it)) {
+            if (query->evalCondition(*it)) {
                 for (int i = 0; i < numFields; ++i) {
                     fieldsMax[i] = std::max(fieldsMax[i], (*it)[query->fieldsId[i]]);
                 }

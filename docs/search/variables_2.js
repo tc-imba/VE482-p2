@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['condition',['condition',['../class_complex_query.html#ac65a30ad8b99278b03d6a64ad34a8a75',1,'ComplexQuery']]],
-  ['conditiontoken',['conditionToken',['../class_complex_query_builder.html#aa230f7984124087dba13a40f16d1c5a7',1,'ComplexQueryBuilder']]]
+  ['taskcomplete',['taskComplete',['../class_task_query.html#a3dc3e4c56ddea8ff025239fd9da358d3',1,'TaskQuery']]],
+  ['tasks',['tasks',['../class_task_query.html#a99c16ac776e6067ba79303396d398819',1,'TaskQuery']]],
+  ['tasksmutex',['tasksMutex',['../class_task_query.html#a147de82af025117cf5ae362dd4d75778',1,'TaskQuery']]],
+  ['taskssize',['tasksSize',['../class_task_query.html#a712ef51749dfd08ecdf6a33acaf6da4f',1,'TaskQuery']]]
 ];

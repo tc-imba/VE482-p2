@@ -1,0 +1,94 @@
+\hypertarget{class_query}{}\section{Query Class Reference}
+\label{class_query}\index{Query@{Query}}
+Inheritance diagram for Query\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=7.887324cm]{class_query}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_query_a0a0a7f0fc1097f196ecd56a44baec036}\label{class_query_a0a0a7f0fc1097f196ecd56a44baec036}} 
+typedef std\+::unique\+\_\+ptr$<$ \hyperlink{class_query}{Query} $>$ {\bfseries Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_query_a758043f481c17af17a48e120ff9ea741}\label{class_query_a758043f481c17af17a48e120ff9ea741}} 
+virtual Query\+Result\+::\+Ptr {\bfseries execute} ()=0
+\item 
+\mbox{\Hypertarget{class_query_afaa6bbe4624620f71e71e259d3f22e31}\label{class_query_afaa6bbe4624620f71e71e259d3f22e31}} 
+virtual std\+::string {\bfseries to\+String} ()=0
+\item 
+\mbox{\Hypertarget{class_query_af9372fbd5d47c9ab56f37a003a9d7953}\label{class_query_af9372fbd5d47c9ab56f37a003a9d7953}} 
+virtual Query\+Result\+::\+Ptr {\bfseries combine} (int task\+Complete)
+\item 
+\mbox{\Hypertarget{class_query_acf7e3add22f3f1317984787fd2e0a251}\label{class_query_acf7e3add22f3f1317984787fd2e0a251}} 
+virtual bool {\bfseries is\+Writer} () const =0
+\item 
+\mbox{\Hypertarget{class_query_aadb2c7d662d4d2a0ee7b5538c4bf90c4}\label{class_query_aadb2c7d662d4d2a0ee7b5538c4bf90c4}} 
+virtual bool {\bfseries is\+Instant} () const
+\item 
+\mbox{\Hypertarget{class_query_a1627ac6e59d31bc9b5b0e1a58315e8b7}\label{class_query_a1627ac6e59d31bc9b5b0e1a58315e8b7}} 
+const std\+::string \& {\bfseries get\+Table\+Name} ()
+\item 
+int \hyperlink{class_query_af59c2164a6ccfe1ad6cc0c6b8ae33938}{get\+Id} () const
+\item 
+int \hyperlink{class_query_a162c2530d5a3dc048759ec12788b5c90}{init\+Id} (int id)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_query_ae4aa2f36a804413761d4e131ea407a0b}\label{class_query_ae4aa2f36a804413761d4e131ea407a0b}} 
+std\+::string {\bfseries target\+Table}
+\item 
+\mbox{\Hypertarget{class_query_a3f961ca1a9c82eda79aef080b00a91ef}\label{class_query_a3f961ca1a9c82eda79aef080b00a91ef}} 
+int {\bfseries id} = -\/1
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 23 of file query\+\_\+base.\+h.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_query_af59c2164a6ccfe1ad6cc0c6b8ae33938}\label{class_query_af59c2164a6ccfe1ad6cc0c6b8ae33938}} 
+\index{Query@{Query}!get\+Id@{get\+Id}}
+\index{get\+Id@{get\+Id}!Query@{Query}}
+\subsubsection{\texorpdfstring{get\+Id()}{getId()}}
+{\footnotesize\ttfamily int Query\+::get\+Id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+get the unique id of this query \begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Definition at line 46 of file query\+\_\+base.\+h.
+
+\mbox{\Hypertarget{class_query_a162c2530d5a3dc048759ec12788b5c90}\label{class_query_a162c2530d5a3dc048759ec12788b5c90}} 
+\index{Query@{Query}!init\+Id@{init\+Id}}
+\index{init\+Id@{init\+Id}!Query@{Query}}
+\subsubsection{\texorpdfstring{init\+Id()}{initId()}}
+{\footnotesize\ttfamily int Query\+::init\+Id (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+will only work when first init the query id 
+\begin{DoxyParams}{Parameters}
+{\em id} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Definition at line 53 of file query\+\_\+base.\+h.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/query/query\+\_\+base.\+h\end{DoxyCompactItemize}

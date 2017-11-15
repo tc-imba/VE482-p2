@@ -1,0 +1,138 @@
+\hypertarget{class_database}{}\section{Database Class Reference}
+\label{class_database}\index{Database@{Database}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_database_adc114c831a4569d60c6334a943f48516}\label{class_database_adc114c831a4569d60c6334a943f48516}} 
+void {\bfseries register\+Table} (Table\+::\+Ptr \&\&table)
+\item 
+\hyperlink{class_table}{Table} \& \hyperlink{class_database_a1405a11517ac20b0036514120782cee5}{ensure\+Table} (const std\+::string \&table\+Name)
+\item 
+\mbox{\Hypertarget{class_database_a95a3310cac23f486f309bcc69fa034a4}\label{class_database_a95a3310cac23f486f309bcc69fa034a4}} 
+void {\bfseries drop\+Table} (std\+::string table\+Name)
+\item 
+\mbox{\Hypertarget{class_database_a6f6dad3936a8cf6274924156fa28c4b7}\label{class_database_a6f6dad3936a8cf6274924156fa28c4b7}} 
+void {\bfseries print\+All\+Table} ()
+\item 
+\mbox{\Hypertarget{class_database_a07b70401d5381678c781f0eb09cfeaa0}\label{class_database_a07b70401d5381678c781f0eb09cfeaa0}} 
+\hyperlink{class_table}{Table} \& {\bfseries operator\mbox{[}$\,$\mbox{]}} (std\+::string table\+Name)
+\item 
+\mbox{\Hypertarget{class_database_a7c76b022a64b9ef07e3255b937d28bea}\label{class_database_a7c76b022a64b9ef07e3255b937d28bea}} 
+const \hyperlink{class_table}{Table} \& {\bfseries operator\mbox{[}$\,$\mbox{]}} (std\+::string table\+Name) const
+\item 
+\mbox{\Hypertarget{class_database_a91a7742eb10d89e79b534ce3d093e40f}\label{class_database_a91a7742eb10d89e79b534ce3d093e40f}} 
+\hyperlink{class_database}{Database} \& {\bfseries operator=} (const \hyperlink{class_database}{Database} \&)=delete
+\item 
+\mbox{\Hypertarget{class_database_a1a54186b16f03c8e6e26b8361fe69ddd}\label{class_database_a1a54186b16f03c8e6e26b8361fe69ddd}} 
+\hyperlink{class_database}{Database} \& {\bfseries operator=} (\hyperlink{class_database}{Database} \&\&)=delete
+\item 
+\mbox{\Hypertarget{class_database_a83f8b6d2941a4aee50f225e08e97291c}\label{class_database_a83f8b6d2941a4aee50f225e08e97291c}} 
+{\bfseries Database} (const \hyperlink{class_database}{Database} \&)=delete
+\item 
+\mbox{\Hypertarget{class_database_a00d16c8b373c9bb4bad59550648c5393}\label{class_database_a00d16c8b373c9bb4bad59550648c5393}} 
+{\bfseries Database} (\hyperlink{class_database}{Database} \&\&)=delete
+\item 
+\mbox{\Hypertarget{class_database_acd5776560ea4d5ab583cceea209bb721}\label{class_database_acd5776560ea4d5ab583cceea209bb721}} 
+void {\bfseries update\+File\+Table\+Name} (const std\+::string \&file\+Name, const std\+::string \&table\+Name)
+\item 
+\mbox{\Hypertarget{class_database_a7819fe58fa0cc1bd3fd35b053be46895}\label{class_database_a7819fe58fa0cc1bd3fd35b053be46895}} 
+std\+::string {\bfseries get\+File\+Table\+Name} (const std\+::string \&file\+Name)
+\item 
+void \hyperlink{class_database_a537758fac6907e4d0f5e136a5c894a3d}{add\+Query} (Query\+::\+Ptr \&\&query)
+\item 
+void \hyperlink{class_database_a49110ec81b4011c47011ef3b0a348a70}{add\+Task} (\hyperlink{class_task}{Task} $\ast$task)
+\item 
+\mbox{\Hypertarget{class_database_a3821a8fc52aac97e6cfda234bc257c97}\label{class_database_a3821a8fc52aac97e6cfda234bc257c97}} 
+void {\bfseries add\+Result} (\hyperlink{class_query}{Query} $\ast$query, Query\+Result\+::\+Ptr \&\&result)
+\item 
+void \hyperlink{class_database_a55858cf28c9a4118ac97bdc9a1abf981}{complete\+Query} ()
+\item 
+\mbox{\Hypertarget{class_database_afbab61ba6d854b086cbe46b9921408f4}\label{class_database_afbab61ba6d854b086cbe46b9921408f4}} 
+void {\bfseries end\+Query} ()
+\item 
+\mbox{\Hypertarget{class_database_a45c9bb61f3ca877def1c97651e1f5a3d}\label{class_database_a45c9bb61f3ca877def1c97651e1f5a3d}} 
+bool {\bfseries is\+End} () const
+\item 
+\mbox{\Hypertarget{class_database_ac7de0114f3bbe1d269a57c398696ecfb}\label{class_database_ac7de0114f3bbe1d269a57c398696ecfb}} 
+void {\bfseries join\+Threads} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_database_a317c583698e8c788b146144de307df7e}\label{class_database_a317c583698e8c788b146144de307df7e}} 
+static \hyperlink{class_database}{Database} \& {\bfseries get\+Instance} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 16 of file db.\+h.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_database_a537758fac6907e4d0f5e136a5c894a3d}\label{class_database_a537758fac6907e4d0f5e136a5c894a3d}} 
+\index{Database@{Database}!add\+Query@{add\+Query}}
+\index{add\+Query@{add\+Query}!Database@{Database}}
+\subsubsection{\texorpdfstring{add\+Query()}{addQuery()}}
+{\footnotesize\ttfamily void Database\+::add\+Query (\begin{DoxyParamCaption}\item[{Query\+::\+Ptr \&\&}]{query }\end{DoxyParamCaption})}
+
+Add a parsed query after reading it dispatch the query according to its target table 
+\begin{DoxyParams}{Parameters}
+{\em query} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 117 of file db.\+cpp.
+
+\mbox{\Hypertarget{class_database_a49110ec81b4011c47011ef3b0a348a70}\label{class_database_a49110ec81b4011c47011ef3b0a348a70}} 
+\index{Database@{Database}!add\+Task@{add\+Task}}
+\index{add\+Task@{add\+Task}!Database@{Database}}
+\subsubsection{\texorpdfstring{add\+Task()}{addTask()}}
+{\footnotesize\ttfamily void Database\+::add\+Task (\begin{DoxyParamCaption}\item[{\hyperlink{class_task}{Task} $\ast$}]{task }\end{DoxyParamCaption})}
+
+Add a generated task after a query has been executed by a table idle working threads are waiting for the task 
+\begin{DoxyParams}{Parameters}
+{\em task} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 146 of file db.\+cpp.
+
+\mbox{\Hypertarget{class_database_a55858cf28c9a4118ac97bdc9a1abf981}\label{class_database_a55858cf28c9a4118ac97bdc9a1abf981}} 
+\index{Database@{Database}!complete\+Query@{complete\+Query}}
+\index{complete\+Query@{complete\+Query}!Database@{Database}}
+\subsubsection{\texorpdfstring{complete\+Query()}{completeQuery()}}
+{\footnotesize\ttfamily void Database\+::complete\+Query (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+try to output the query result in order 
+
+Definition at line 165 of file db.\+cpp.
+
+\mbox{\Hypertarget{class_database_a1405a11517ac20b0036514120782cee5}\label{class_database_a1405a11517ac20b0036514120782cee5}} 
+\index{Database@{Database}!ensure\+Table@{ensure\+Table}}
+\index{ensure\+Table@{ensure\+Table}!Database@{Database}}
+\subsubsection{\texorpdfstring{ensure\+Table()}{ensureTable()}}
+{\footnotesize\ttfamily \hyperlink{class_table}{Table} \& Database\+::ensure\+Table (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{table\+Name }\end{DoxyParamCaption})}
+
+get the table if it already exists create a table if table\+Name not found use tables\+Mutex, call it when needed if table\+Name must exist, use operator\mbox{[}\mbox{]} 
+\begin{DoxyParams}{Parameters}
+{\em table\+Name} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Definition at line 43 of file db.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/db/db.\+h\item 
+src/db/db.\+cpp\end{DoxyCompactItemize}

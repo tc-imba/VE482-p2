@@ -44,7 +44,7 @@ QueryResult::Ptr SumQuery::execute() {
         })) {
             return make_unique<NullQueryResult>();
         }*/
-        auto result = initConditionFast(table);
+        auto result = initCondition(table);
         if (!result.second) {
             std::vector<Table::ValueType> fieldsSum(fieldsId.size(), 0);
             complete(std::make_unique<AnswerResult>(std::move(fieldsSum)));
@@ -107,7 +107,7 @@ void SumTask::execute() {
         auto numFields = query->fieldsId.size();
         fieldsSum.insert(fieldsSum.end(), numFields, 0);
         for (auto it = begin; it != end; ++it) {
-            if (query->evalConditionFast(*it)) {
+            if (query->evalCondition(*it)) {
                 for (int i = 0; i < numFields; ++i) {
                     fieldsSum[i] += (*it)[query->fieldsId[i]];
                 }

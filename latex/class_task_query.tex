@@ -1,0 +1,153 @@
+\hypertarget{class_task_query}{}\section{Task\+Query Class Reference}
+\label{class_task_query}\index{Task\+Query@{Task\+Query}}
+Inheritance diagram for Task\+Query\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=10.000000cm]{class_task_query}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_task_query_a07799ce7089a4a84062b5e5813706425}\label{class_task_query_a07799ce7089a4a84062b5e5813706425}} 
+{\bfseries Task\+Query} (std\+::string target\+Table)
+\item 
+\mbox{\Hypertarget{class_task_query_af216a94f17cb6b35a534947cb4ef9892}\label{class_task_query_af216a94f17cb6b35a534947cb4ef9892}} 
+\hyperlink{class_task}{Task} $\ast$ {\bfseries get\+Task} (size\+\_\+t index) const
+\item 
+\mbox{\Hypertarget{class_task_query_ac5990fbd75ae30962dd7ef1369571889}\label{class_task_query_ac5990fbd75ae30962dd7ef1369571889}} 
+\hyperlink{class_task}{Task} $\ast$ {\bfseries get\+Task} (const std\+::vector$<$ std\+::unique\+\_\+ptr$<$ \hyperlink{class_task}{Task} $>$ $>$\+::iterator \&it) const
+\item 
+void \hyperlink{class_task_query_ad34220bba4a3fab50e5f59f63d7cf5e2}{start} ()
+\item 
+void \hyperlink{class_task_query_ab77bfd5f991d0cc596592966d3ed6193}{complete} ()
+\item 
+void \hyperlink{class_task_query_a91f0bc0a82e23db824e3ae6052026def}{complete} (Query\+Result\+::\+Ptr \&\&result)
+\item 
+{\footnotesize template$<$class Task\+Type $>$ }\\void \hyperlink{class_task_query_a9432212e101b6b393c13cf93e1211755}{add\+Iteration\+Task} (\hyperlink{class_database}{Database} \&db, \hyperlink{class_table}{Table} \&table)
+\item 
+{\footnotesize template$<$class Task\+Type $>$ }\\void \hyperlink{class_task_query_afb2a8505209d5f521570305f60203b2d}{add\+Unique\+Task} (\hyperlink{class_database}{Database} \&db, \hyperlink{class_table}{Table} $\ast$table=nullptr)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+size\+\_\+t \hyperlink{class_task_query_a712ef51749dfd08ecdf6a33acaf6da4f}{tasks\+Size} = 1
+\item 
+int \hyperlink{class_task_query_a3dc3e4c56ddea8ff025239fd9da358d3}{task\+Complete} = 0
+\item 
+std\+::vector$<$ std\+::unique\+\_\+ptr$<$ \hyperlink{class_task}{Task} $>$ $>$ \hyperlink{class_task_query_a99c16ac776e6067ba79303396d398819}{tasks}
+\item 
+std\+::mutex \hyperlink{class_task_query_a147de82af025117cf5ae362dd4d75778}{tasks\+Mutex}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 33 of file query.\+h.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_task_query_a9432212e101b6b393c13cf93e1211755}\label{class_task_query_a9432212e101b6b393c13cf93e1211755}} 
+\index{Task\+Query@{Task\+Query}!add\+Iteration\+Task@{add\+Iteration\+Task}}
+\index{add\+Iteration\+Task@{add\+Iteration\+Task}!Task\+Query@{Task\+Query}}
+\subsubsection{\texorpdfstring{add\+Iteration\+Task()}{addIterationTask()}}
+{\footnotesize\ttfamily template$<$class Task\+Type $>$ \\
+void Task\+Query\+::add\+Iteration\+Task (\begin{DoxyParamCaption}\item[{\hyperlink{class_database}{Database} \&}]{db,  }\item[{\hyperlink{class_table}{Table} \&}]{table }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+For iteration query, we can split them in this function 
+
+Definition at line 59 of file query.\+h.
+
+\mbox{\Hypertarget{class_task_query_afb2a8505209d5f521570305f60203b2d}\label{class_task_query_afb2a8505209d5f521570305f60203b2d}} 
+\index{Task\+Query@{Task\+Query}!add\+Unique\+Task@{add\+Unique\+Task}}
+\index{add\+Unique\+Task@{add\+Unique\+Task}!Task\+Query@{Task\+Query}}
+\subsubsection{\texorpdfstring{add\+Unique\+Task()}{addUniqueTask()}}
+{\footnotesize\ttfamily template$<$class Task\+Type $>$ \\
+void Task\+Query\+::add\+Unique\+Task (\begin{DoxyParamCaption}\item[{\hyperlink{class_database}{Database} \&}]{db,  }\item[{\hyperlink{class_table}{Table} $\ast$}]{table = {\ttfamily nullptr} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+For non-\/iteration query that should be done later 
+
+Definition at line 92 of file query.\+h.
+
+\mbox{\Hypertarget{class_task_query_ab77bfd5f991d0cc596592966d3ed6193}\label{class_task_query_ab77bfd5f991d0cc596592966d3ed6193}} 
+\index{Task\+Query@{Task\+Query}!complete@{complete}}
+\index{complete@{complete}!Task\+Query@{Task\+Query}}
+\subsubsection{\texorpdfstring{complete()}{complete()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Task\+Query\+::complete (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Complete a task add the complete query to the result vector here should add a unique id for each query -\/ ok should add a function to print results in correct order
+
+Definition at line 12 of file query.\+cpp.
+
+\mbox{\Hypertarget{class_task_query_a91f0bc0a82e23db824e3ae6052026def}\label{class_task_query_a91f0bc0a82e23db824e3ae6052026def}} 
+\index{Task\+Query@{Task\+Query}!complete@{complete}}
+\index{complete@{complete}!Task\+Query@{Task\+Query}}
+\subsubsection{\texorpdfstring{complete()}{complete()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Task\+Query\+::complete (\begin{DoxyParamCaption}\item[{Query\+Result\+::\+Ptr \&\&}]{result }\end{DoxyParamCaption})}
+
+Complete a query 
+
+Definition at line 26 of file query.\+cpp.
+
+\mbox{\Hypertarget{class_task_query_ad34220bba4a3fab50e5f59f63d7cf5e2}\label{class_task_query_ad34220bba4a3fab50e5f59f63d7cf5e2}} 
+\index{Task\+Query@{Task\+Query}!start@{start}}
+\index{start@{start}!Task\+Query@{Task\+Query}}
+\subsubsection{\texorpdfstring{start()}{start()}}
+{\footnotesize\ttfamily void Task\+Query\+::start (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Debug function for starting a query 
+
+Definition at line 8 of file query.\+cpp.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_task_query_a3dc3e4c56ddea8ff025239fd9da358d3}\label{class_task_query_a3dc3e4c56ddea8ff025239fd9da358d3}} 
+\index{Task\+Query@{Task\+Query}!task\+Complete@{task\+Complete}}
+\index{task\+Complete@{task\+Complete}!Task\+Query@{Task\+Query}}
+\subsubsection{\texorpdfstring{task\+Complete}{taskComplete}}
+{\footnotesize\ttfamily int Task\+Query\+::task\+Complete = 0\hspace{0.3cm}{\ttfamily [protected]}}
+
+Count the completed tasks, locked by tasks\+Mutex 
+
+Definition at line 38 of file query.\+h.
+
+\mbox{\Hypertarget{class_task_query_a99c16ac776e6067ba79303396d398819}\label{class_task_query_a99c16ac776e6067ba79303396d398819}} 
+\index{Task\+Query@{Task\+Query}!tasks@{tasks}}
+\index{tasks@{tasks}!Task\+Query@{Task\+Query}}
+\subsubsection{\texorpdfstring{tasks}{tasks}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::unique\+\_\+ptr$<$\hyperlink{class_task}{Task}$>$ $>$ Task\+Query\+::tasks\hspace{0.3cm}{\ttfamily [protected]}}
+
+The unique\+\_\+ptr of tasks are stored here 
+
+Definition at line 40 of file query.\+h.
+
+\mbox{\Hypertarget{class_task_query_a147de82af025117cf5ae362dd4d75778}\label{class_task_query_a147de82af025117cf5ae362dd4d75778}} 
+\index{Task\+Query@{Task\+Query}!tasks\+Mutex@{tasks\+Mutex}}
+\index{tasks\+Mutex@{tasks\+Mutex}!Task\+Query@{Task\+Query}}
+\subsubsection{\texorpdfstring{tasks\+Mutex}{tasksMutex}}
+{\footnotesize\ttfamily std\+::mutex Task\+Query\+::tasks\+Mutex\hspace{0.3cm}{\ttfamily [protected]}}
+
+protect task\+Complete and tasks 
+
+Definition at line 42 of file query.\+h.
+
+\mbox{\Hypertarget{class_task_query_a712ef51749dfd08ecdf6a33acaf6da4f}\label{class_task_query_a712ef51749dfd08ecdf6a33acaf6da4f}} 
+\index{Task\+Query@{Task\+Query}!tasks\+Size@{tasks\+Size}}
+\index{tasks\+Size@{tasks\+Size}!Task\+Query@{Task\+Query}}
+\subsubsection{\texorpdfstring{tasks\+Size}{tasksSize}}
+{\footnotesize\ttfamily size\+\_\+t Task\+Query\+::tasks\+Size = 1\hspace{0.3cm}{\ttfamily [protected]}}
+
+The size of tasks, defined to avoid locking 
+
+Definition at line 36 of file query.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/query/query.\+h\item 
+src/query/query.\+cpp\end{DoxyCompactItemize}

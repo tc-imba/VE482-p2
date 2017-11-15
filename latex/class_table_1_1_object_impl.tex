@@ -1,0 +1,78 @@
+\hypertarget{class_table_1_1_object_impl}{}\section{Table\+:\+:Object\+Impl$<$ Iterator, V\+Type $>$ Class Template Reference}
+\label{class_table_1_1_object_impl}\index{Table\+::\+Object\+Impl$<$ Iterator, V\+Type $>$@{Table\+::\+Object\+Impl$<$ Iterator, V\+Type $>$}}
+
+
+{\ttfamily \#include $<$db\+\_\+table.\+h$>$}
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_table_1_1_object_impl_a892fc764cb681fc422127e79d4ed63fe}\label{class_table_1_1_object_impl_a892fc764cb681fc422127e79d4ed63fe}} 
+typedef std\+::unique\+\_\+ptr$<$ \hyperlink{class_table_1_1_object_impl}{Object\+Impl} $>$ {\bfseries Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_table_1_1_object_impl_a0ed19396795beaef8460a89b8c35bd22}\label{class_table_1_1_object_impl_a0ed19396795beaef8460a89b8c35bd22}} 
+{\bfseries Object\+Impl} (\hyperlink{class_table_1_1_iterator_impl}{Iterator} datum\+It, const \hyperlink{class_table}{Table} $\ast$t)
+\item 
+\mbox{\Hypertarget{class_table_1_1_object_impl_a0c11ee86de9e1d82a35c09874c652c8e}\label{class_table_1_1_object_impl_a0c11ee86de9e1d82a35c09874c652c8e}} 
+{\bfseries Object\+Impl} (const \hyperlink{class_table_1_1_object_impl}{Object\+Impl} \&)=default
+\item 
+\mbox{\Hypertarget{class_table_1_1_object_impl_a2aeb205c5f5e60849e44b7356a9af11c}\label{class_table_1_1_object_impl_a2aeb205c5f5e60849e44b7356a9af11c}} 
+{\bfseries Object\+Impl} (\hyperlink{class_table_1_1_object_impl}{Object\+Impl} \&\&) noexcept=default
+\item 
+\mbox{\Hypertarget{class_table_1_1_object_impl_ada0904c0c8cab5db6d0e3715e027c779}\label{class_table_1_1_object_impl_ada0904c0c8cab5db6d0e3715e027c779}} 
+\hyperlink{class_table_1_1_object_impl}{Object\+Impl} \& {\bfseries operator=} (const \hyperlink{class_table_1_1_object_impl}{Object\+Impl} \&)=default
+\item 
+\mbox{\Hypertarget{class_table_1_1_object_impl_a2e1856b5d7f2c248587fdafa4f355564}\label{class_table_1_1_object_impl_a2e1856b5d7f2c248587fdafa4f355564}} 
+\hyperlink{class_table_1_1_object_impl}{Object\+Impl} \& {\bfseries operator=} (\hyperlink{class_table_1_1_object_impl}{Object\+Impl} \&\&) noexcept=default
+\item 
+\mbox{\Hypertarget{class_table_1_1_object_impl_ad5686067987189713bb677162b039c3a}\label{class_table_1_1_object_impl_ad5686067987189713bb677162b039c3a}} 
+Key\+Type {\bfseries key} () const
+\item 
+\mbox{\Hypertarget{class_table_1_1_object_impl_a85e6b4a92387a1e45a27655457d8b09f}\label{class_table_1_1_object_impl_a85e6b4a92387a1e45a27655457d8b09f}} 
+void {\bfseries set\+Key} (Key\+Type key)
+\item 
+\mbox{\Hypertarget{class_table_1_1_object_impl_a48dbf990928e6aeda1ba45a8428b2586}\label{class_table_1_1_object_impl_a48dbf990928e6aeda1ba45a8428b2586}} 
+V\+Type \& {\bfseries operator\mbox{[}$\,$\mbox{]}} (const Field\+Name\+Type \&\hyperlink{class_table_ab68bc133d1d01f516d0bfb1a9c06e40f}{field}) const
+\item 
+\mbox{\Hypertarget{class_table_1_1_object_impl_a4b9a905f7ace0a7267997ce3ea5e62af}\label{class_table_1_1_object_impl_a4b9a905f7ace0a7267997ce3ea5e62af}} 
+V\+Type \& {\bfseries operator\mbox{[}$\,$\mbox{]}} (const Field\+Index \&index) const
+\item 
+\mbox{\Hypertarget{class_table_1_1_object_impl_a3e36bfbea13c01dc0a6b9f6ec04587c6}\label{class_table_1_1_object_impl_a3e36bfbea13c01dc0a6b9f6ec04587c6}} 
+V\+Type \& {\bfseries get} (const Field\+Name\+Type \&\hyperlink{class_table_ab68bc133d1d01f516d0bfb1a9c06e40f}{field}) const
+\item 
+\mbox{\Hypertarget{class_table_1_1_object_impl_a86d26919b9bdd0f01a373ab162bf519d}\label{class_table_1_1_object_impl_a86d26919b9bdd0f01a373ab162bf519d}} 
+V\+Type \& {\bfseries get} (const Field\+Index \&index) const
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_table_1_1_object_impl_af888815e80064bc9fa1035c6265da86e}\label{class_table_1_1_object_impl_af888815e80064bc9fa1035c6265da86e}} 
+class {\bfseries Table}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$class Iterator, class V\+Type$>$\newline
+class Table\+::\+Object\+Impl$<$ Iterator, V\+Type $>$}
+
+A proxy class that provides abstraction on internal Implementation. Allows independent variation on the Representation for a table object
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Iterator} & \\
+\hline
+{\em V\+Type} & \\
+\hline
+\end{DoxyTemplParams}
+
+
+Definition at line 122 of file db\+\_\+table.\+h.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/db/db\+\_\+table.\+h\end{DoxyCompactItemize}

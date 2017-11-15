@@ -4,7 +4,7 @@
 
 A simple multi-thread key-value database by Lemonion. Inc. 
 
-See more information in our [official documentation](https://tc-imba.github.io/VE482-p2/)
+See more information in our official documentation [HTML](https://tc-imba.github.io/VE482-p2/)/[PDF](../latex/refman.pdf)
 
 ## Compilation
 
@@ -59,7 +59,9 @@ We use many tricks to improve performance:
 * Another great improvement is for those query with a condition 'KEY = someKey'. Making use of efficient random access, we keep a `keyMap` which stores index for given key. With this map, we can complete those query very efficiently, without iterating through data.
 * For those query without given key, we also improve the speed of evaluating condition. This is done by computing the condition explicitly for a specific query (by `std::function`), and simply pass this function to it. By doing so, we don't need to repeatedly compare string, convert string to integer, even switch among operators. This can save huge amount of time, because originally every datum use one general evaluating function. Now we just need to compute it once per query.
 * In some trivial cases atomic_int is used instead of having a mutex because it is much faster.
+
 ### Problems Solved
+
 Due to our sophisticated design, we ran into many problems. These are some of them:
 * We have encountered many problems about the query queue. The problem of LOAD query is the most difficult one, because it doesn't specify a table name. In our design, every table has a query queue so that we can decide the order to execute them, following reader/writer pattern. But LOAD doesn't have it, so it's very difficult to deicide where to put it, because the file may even not exist when the query is parsed and put into some queue. DUMP query is the reason we concern about this issue, so we solve it by keeping a map from filename to tablename. With this map, LOAD can decide whether the file is (or will be) created by DUMP or should exist already.
 * Another issue is COPYTABLE. This is the other query which can create a table, in which case it is responsible for starting the query queue to execute. And the problem is that COPYTABLE involves 2 table, so it should be pushed to both tables. And only when both query queues come to this query should it execute. This is done by keeping each other's pointer in it.

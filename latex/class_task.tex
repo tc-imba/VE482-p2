@@ -1,0 +1,87 @@
+\hypertarget{class_task}{}\section{Task Class Reference}
+\label{class_task}\index{Task@{Task}}
+Inheritance diagram for Task\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=12.000000cm]{class_task}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_task_a636a488a23020fcac3380e0fc876e55c}\label{class_task_a636a488a23020fcac3380e0fc876e55c}} 
+typedef std\+::unique\+\_\+ptr$<$ \hyperlink{class_task}{Task} $>$ {\bfseries Ptr}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_task_af0449cba22c5a93fea99a5cb100a24e9}\label{class_task_af0449cba22c5a93fea99a5cb100a24e9}} 
+{\bfseries Task} (\hyperlink{class_query}{Query} $\ast$query, \hyperlink{class_table}{Table} $\ast$table=nullptr)
+\item 
+\mbox{\Hypertarget{class_task_aa42dbfc5b52058cdc161d7a8b7b023bf}\label{class_task_aa42dbfc5b52058cdc161d7a8b7b023bf}} 
+{\bfseries Task} (\hyperlink{class_query}{Query} $\ast$query, \hyperlink{class_table}{Table} $\ast$table, \hyperlink{class_table_1_1_iterator_impl}{Table\+::\+Iterator} begin, \hyperlink{class_table_1_1_iterator_impl}{Table\+::\+Iterator} end)
+\item 
+\mbox{\Hypertarget{class_task_ade38031c3ed134ec20cbbcd58e575745}\label{class_task_ade38031c3ed134ec20cbbcd58e575745}} 
+virtual void {\bfseries execute} ()
+\item 
+\mbox{\Hypertarget{class_task_a2b5770928a7e40b46ec339d67f747b32}\label{class_task_a2b5770928a7e40b46ec339d67f747b32}} 
+Table\+::\+Size\+Type {\bfseries get\+Counter} () const
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_task_a755ffdd69b2a9e69afa239a7cf5bb768}\label{class_task_a755ffdd69b2a9e69afa239a7cf5bb768}} 
+virtual \hyperlink{class_task_query}{Task\+Query} $\ast$ {\bfseries get\+Query} () const
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_task_aba7c96b09298eb1d88c0cfba899a5370}\label{class_task_aba7c96b09298eb1d88c0cfba899a5370}} 
+\hyperlink{class_query}{Query} $\ast$ {\bfseries query}
+\item 
+\mbox{\Hypertarget{class_task_a19f21bd1d9c8b2cc7e91b4cef04f0566}\label{class_task_a19f21bd1d9c8b2cc7e91b4cef04f0566}} 
+\hyperlink{class_table}{Table} $\ast$ {\bfseries table} = nullptr
+\item 
+Table\+::\+Size\+Type \hyperlink{class_task_a797775a347a221efdaefe853a0977991}{counter} = 0
+\item 
+\mbox{\Hypertarget{class_task_ad33a49bbc4669f3293aa33c96dc79be1}\label{class_task_ad33a49bbc4669f3293aa33c96dc79be1}} 
+\hyperlink{class_table_1_1_iterator_impl}{Table\+::\+Iterator} {\bfseries begin}
+\item 
+\mbox{\Hypertarget{class_task_a65eeb1f03bdfdbc3f98c69daf652a2e0}\label{class_task_a65eeb1f03bdfdbc3f98c69daf652a2e0}} 
+\hyperlink{class_table_1_1_iterator_impl}{Table\+::\+Iterator} {\bfseries end}
+\item 
+\mbox{\Hypertarget{class_task_a42637d575d28f22528a8d90ed6c7bbe3}\label{class_task_a42637d575d28f22528a8d90ed6c7bbe3}} 
+Query\+Result\+::\+Ptr {\bfseries error\+Result} = nullptr
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_task_a6efef52d7a939622bbc934ff6b90ffe0}\label{class_task_a6efef52d7a939622bbc934ff6b90ffe0}} 
+class {\bfseries Database}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 12 of file task.\+h.
+
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_task_a797775a347a221efdaefe853a0977991}\label{class_task_a797775a347a221efdaefe853a0977991}} 
+\index{Task@{Task}!counter@{counter}}
+\index{counter@{counter}!Task@{Task}}
+\subsubsection{\texorpdfstring{counter}{counter}}
+{\footnotesize\ttfamily Table\+::\+Size\+Type Task\+::counter = 0\hspace{0.3cm}{\ttfamily [protected]}}
+
+Count affected rows in this task 
+
+Definition at line 17 of file task.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/query/task.\+h\item 
+src/query/task.\+cpp\end{DoxyCompactItemize}

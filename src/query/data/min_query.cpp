@@ -40,7 +40,7 @@ QueryResult::Ptr MinQuery::execute() {
         })) {
             return make_unique<NullQueryResult>();
         }*/
-        auto result = initConditionFast(table);
+        auto result = initCondition(table);
         if (!result.second) {
             complete(std::make_unique<NullQueryResult>());
             return make_unique<NullQueryResult>();
@@ -106,7 +106,7 @@ void MinTask::execute() {
         auto numFields = query->fieldsId.size();
         fieldsMin.insert(fieldsMin.end(), numFields, Table::ValueTypeMax);
         for (auto it = begin; it != end; ++it) {
-            if (query->evalConditionFast(*it)) {
+            if (query->evalCondition(*it)) {
                 for (int i = 0; i < numFields; ++i) {
                     fieldsMin[i] = std::min(fieldsMin[i], (*it)[query->fieldsId[i]]);
                 }

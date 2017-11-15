@@ -32,16 +32,14 @@ public:
 
 class TaskQuery : public Query {
 protected:
-    std::vector<std::unique_ptr<Task> > tasks;
+    /** The size of tasks, defined to avoid locking */
     size_t tasksSize = 1;
-    std::mutex tasksMutex;
-    /**
-     * Count the completed tasks
-     * atomic is used because only ++ and < is applied
-     * spin lock will be faster than mutex
-     * (have bug, use int now)
-     */
+    /** Count the completed tasks, locked by tasksMutex */
     int taskComplete = 0;
+    /** The unique_ptr of tasks are stored here */
+    std::vector<std::unique_ptr<Task> > tasks;
+    /** protect taskComplete and tasks */
+    std::mutex tasksMutex;
 public:
     TaskQuery() = default;
     explicit TaskQuery(std::string targetTable) { this->targetTable = std::move(targetTable); }
@@ -49,10 +47,14 @@ public:
     Task *getTask(size_t index) const { return tasks[index].get(); }
     Task *getTask(const std::vector<std::unique_ptr<Task> >::iterator &it) const { return it->get(); }
 
+    /** Debug function for starting a query */
     void start();
+    /** Complete a task */
     void complete();
+    /** Complete a query */
     void complete(QueryResult::Ptr &&result);
 
+    /** For iteration query, we can split them in this function */
     template<class TaskType>
     void addIterationTask(Database &db, Table &table) {
         auto begin = table.begin();
@@ -85,6 +87,7 @@ public:
         tasksMutex.unlock();
     }
 
+    /** For non-iteration query that should be done later */
     template<class TaskType>
     void addUniqueTask(Database &db, Table *table = nullptr) {
         auto task = std::unique_ptr<TaskType>(new TaskType(this, table));
@@ -96,13 +99,12 @@ public:
 
 class ComplexQuery : public TaskQuery {
 protected:
+    /** The field names in the first () */
     std::vector<std::string> operands;
+    /** The function used in where clause */
     std::vector<QueryCondition> condition;
-
 public:
-    bool evalCondition(const std::vector<QueryCondition> &conditions,
-                       const Table::Object &object);
-
+    typedef std::unique_ptr<ComplexQuery> Ptr;
     /**
      * init a fast condition according to the table
      * note that the condition is only effective if the table fields are not changed
@@ -112,7 +114,7 @@ public:
      * if flag is false, the condition is always false
      * in this situation, the condition may not be fully initialized to save time
      */
-    std::pair<std::string, bool> initConditionFast(const Table &table);
+    std::pair<std::string, bool> initCondition(const Table &table);
 
     /**
      * skip the evaluation of KEY
@@ -121,11 +123,17 @@ public:
      * @param object
      * @return
      */
-    bool evalConditionFast(const Table::Object &object);
+    bool evalCondition(const Table::Object &object);
 
+    /**
+     * This function seems have small effect and causes somme bugs
+     * so it is not used actually
+     * @param table
+     * @param function
+     * @return
+     */
     bool testKeyCondition(Table &table, std::function<void(bool, Table::Object::Ptr &&)> function);
 
-    typedef std::unique_ptr<ComplexQuery> Ptr;
 
     ComplexQuery(std::string targetTable,
                  std::vector<std::string> operands,
@@ -135,7 +143,10 @@ public:
               condition(std::move(condition)) {
     }
 
+    /** Get operands in the query */
     const std::vector<std::string> &getOperands() const { return operands; }
+
+    /** Get condition in the query, seems no use now */
     const std::vector<QueryCondition> &getCondition() { return condition; }
 };
 

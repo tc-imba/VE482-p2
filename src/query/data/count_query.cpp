@@ -30,7 +30,7 @@ QueryResult::Ptr CountQuery::execute() {
         })) {
             return make_unique<NullQueryResult>();
         }*/
-        auto result = initConditionFast(table);
+        auto result = initCondition(table);
         if (!result.second) {
             complete(std::make_unique<AnswerResult>(0));
             return make_unique<NullQueryResult>();
@@ -84,7 +84,7 @@ void CountTask::execute() {
     auto query = getQuery();
     try {
         for (auto it = begin; it != end; ++it) {
-            if (query->evalConditionFast(*it)) {
+            if (query->evalCondition(*it)) {
                 ++counter;
             }
         }

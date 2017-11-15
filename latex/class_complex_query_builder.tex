@@ -1,0 +1,49 @@
+\hypertarget{class_complex_query_builder}{}\section{Complex\+Query\+Builder Class Reference}
+\label{class_complex_query_builder}\index{Complex\+Query\+Builder@{Complex\+Query\+Builder}}
+Inheritance diagram for Complex\+Query\+Builder\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_complex_query_builder}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_complex_query_builder_aaf3f971daf43452502fc6fed296494e9}\label{class_complex_query_builder_aaf3f971daf43452502fc6fed296494e9}} 
+void {\bfseries clear} () override
+\item 
+\mbox{\Hypertarget{class_complex_query_builder_aab521c81b6ecb9bc4466a61cdf9ccfed}\label{class_complex_query_builder_aab521c81b6ecb9bc4466a61cdf9ccfed}} 
+Query\+::\+Ptr {\bfseries try\+Extract\+Query} (\hyperlink{struct_tokenized_query_string}{Tokenized\+Query\+String} \&query) override
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_complex_query_builder_a1169df1b39a76c283bea1f0f7ec601d9}\label{class_complex_query_builder_a1169df1b39a76c283bea1f0f7ec601d9}} 
+virtual void {\bfseries parse\+Token} (\hyperlink{struct_tokenized_query_string}{Tokenized\+Query\+String} \&query)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_complex_query_builder_ae8285f6ee5ac598c2593411badf674b7}\label{class_complex_query_builder_ae8285f6ee5ac598c2593411badf674b7}} 
+std\+::string {\bfseries target\+Table}
+\item 
+\mbox{\Hypertarget{class_complex_query_builder_a40cee0c08e7fc932cd1a2d418d23da94}\label{class_complex_query_builder_a40cee0c08e7fc932cd1a2d418d23da94}} 
+std\+::vector$<$ std\+::string $>$ {\bfseries operand\+Token}
+\item 
+\mbox{\Hypertarget{class_complex_query_builder_aa230f7984124087dba13a40f16d1c5a7}\label{class_complex_query_builder_aa230f7984124087dba13a40f16d1c5a7}} 
+std\+::vector$<$ \hyperlink{struct_query_condition}{Query\+Condition} $>$ {\bfseries condition\+Token}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 60 of file query\+\_\+builders.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/query\+\_\+builders.\+h\item 
+src/query\+\_\+builders.\+cpp\end{DoxyCompactItemize}
