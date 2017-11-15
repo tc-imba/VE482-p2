@@ -4,7 +4,7 @@
 
 A simple multi-thread key-value database by Lemonion. Inc. 
 
-See more information in our official documentation [HTML](https://tc-imba.github.io/VE482-p2/)/[PDF](../latex/refman.pdf)
+See more information in our official documentation [HTML](https://tc-imba.github.io/VE482-p2/html/index.html)/[PDF](https://tc-imba.github.io/VE482-p2/latex/refman.pdf)
 
 ## Compilation
 
