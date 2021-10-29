@@ -9,7 +9,7 @@ var searchData=
   ['subquery',['SubQuery',['../class_sub_query.html',1,'']]],
   ['subtask',['SubTask',['../class_sub_task.html',1,'']]],
   ['successmsgresult',['SuccessMsgResult',['../class_success_msg_result.html',1,'']]],
-  ['suceededqueryresult',['SuceededQueryResult',['../class_suceeded_query_result.html',1,'']]],
+  ['suceededqueryresult',['SucceededQueryResult',['../class_suceeded_query_result.html',1,'']]],
   ['sumquery',['SumQuery',['../class_sum_query.html',1,'']]],
   ['sumtask',['SumTask',['../class_sum_task.html',1,'']]],
   ['swapdata',['swapData',['../class_table.html#ae064a04cc7772a51f163f81f0187446e',1,'Table']]],
