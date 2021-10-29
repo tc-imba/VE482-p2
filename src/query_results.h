@@ -25,12 +25,12 @@ public:
     bool success() override { return false; }
 };
 
-class SuceededQueryResult : public QueryResult {
+class SucceededQueryResult : public QueryResult {
 public:
     bool success() override { return true; }
 };
 
-class NullQueryResult : public SuceededQueryResult {
+class NullQueryResult : public SucceededQueryResult {
 public:
     std::string toString() override {
         return std::string();
@@ -57,7 +57,7 @@ public:
     }
 };
 
-class SuccessMsgResult : public SuceededQueryResult {
+class SuccessMsgResult : public SucceededQueryResult {
     std::string msg;
 public:
 
@@ -95,7 +95,7 @@ public:
     }
 };
 
-class RecordCountResult : public SuceededQueryResult {
+class RecordCountResult : public SucceededQueryResult {
     const int affectedRows;
 public:
     explicit RecordCountResult(int count) : affectedRows(count) {}
@@ -105,7 +105,7 @@ public:
     }
 };
 
-class AnswerResult : public SuceededQueryResult {
+class AnswerResult : public SucceededQueryResult {
     std::string str;
 public:
     explicit AnswerResult(std::vector<int> &&answer) {
@@ -121,7 +121,7 @@ public:
     }
 };
 
-class SelectResult : public SuceededQueryResult {
+class SelectResult : public SucceededQueryResult {
     std::vector<std::pair<std::string, std::vector<int> > > results;
 public:
     explicit SelectResult(std::vector<std::pair<std::string, std::vector<int> > > &&results) : results(results) {}
